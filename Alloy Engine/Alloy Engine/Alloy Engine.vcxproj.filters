@@ -14,38 +14,56 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{253177ee-00f8-424f-99c0-8efa4392960b}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Src\Triangle_Pixel_Shader.hlsl">
-      <Filter>Resource Files</Filter>
-    </FxCompile>
-    <FxCompile Include="Src\Triangle_Vertex_Shader.hlsl">
-      <Filter>Resource Files</Filter>
-    </FxCompile>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{28efb635-3bb3-4cff-a763-b186a3f0e6b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Core">
+      <UniqueIdentifier>{e8d86d6c-df02-445b-b0ee-9e0776067e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\VBO">
+      <UniqueIdentifier>{e300aa97-1d2b-489b-936c-6c380b1e1566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\VBO">
+      <UniqueIdentifier>{52910a18-7eeb-4fa2-8730-d385f6955184}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\DebugSystem.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Window.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\Core</Filter>
     </ClInclude>
     <ClInclude Include="Src\Renderer.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Window.h">
+      <Filter>Headers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Triangle.h">
+      <Filter>Headers\VBO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\DebugSystem.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Src\main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Window.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Src\DebugSystem.cpp">
+      <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Src\Renderer.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Window.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Triangle.cpp">
+      <Filter>Source\VBO</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Src\Triangle_Pixel_Shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Triangle_Vertex_Shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

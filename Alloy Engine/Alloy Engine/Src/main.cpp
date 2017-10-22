@@ -2,14 +2,16 @@
 #include "DebugSystem.h"
 #include "Window.h"
 #include "Renderer.h"
+#include "Triangle.h"
 
 
 int CALLBACK WinMain(HINSTANCE app_instance, HINSTANCE prev_instance, LPSTR cmd_line, int cmd_count)
 {
 	Window window("Alloy Engine", 1024, 576);
 	Renderer renderer(window);
-	DebugSystem debugger;
+	Triangle test_triangle(renderer);
 
+	DebugSystem debugger;
 	debugger.CreateConsoleWindow();
 
 	MSG msg = { nullptr };
@@ -25,8 +27,9 @@ int CALLBACK WinMain(HINSTANCE app_instance, HINSTANCE prev_instance, LPSTR cmd_
 				break;
 		}
 
-		//if game update
+		//game update
 		renderer.BeginFrame();
+		test_triangle.Draw(renderer);
 		renderer.EndFrame();
 	}
 
