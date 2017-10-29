@@ -5,7 +5,7 @@
 #include "Triangle.h"
 
 
-int CALLBACK WinMain(HINSTANCE app_instance, HINSTANCE prev_instance, LPSTR cmd_line, int cmd_count)
+int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)
 {
 	Window window("Alloy Engine", 1024, 576);
 	Renderer renderer(window);
