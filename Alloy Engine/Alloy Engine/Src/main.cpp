@@ -1,7 +1,9 @@
 #include <Windows.h>
+#include <memory>
 #include "DebugSystem.h"
 #include "Window.h"
 #include "Renderer.h"
+#include "Game.h"
 #include "Triangle.h"
 
 
@@ -14,7 +16,9 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 	DebugSystem debugger;
 	debugger.CreateConsoleWindow();
 
-	MSG msg = { nullptr };
+	std::unique_ptr<Game> game = std::make_unique<Game>();
+
+	MSG msg { nullptr };
 
 	while (true)
 	{
@@ -27,9 +31,10 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 				break;
 		}
 
-		//game update
+		game->Tick();
 		renderer.BeginFrame();
-		test_triangle.Draw(renderer);
+		game->Draw(renderer);
+		test_triangle.Draw(renderer);//test
 		renderer.EndFrame();
 	}
 

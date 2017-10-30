@@ -31,7 +31,7 @@ Triangle::~Triangle()
 }
 
 
-void Triangle::Draw(Renderer &_renderer) const
+void Triangle::Draw(Renderer& _renderer) const
 {
 	auto device_context = _renderer.getDeviceContext();
 
@@ -50,7 +50,7 @@ void Triangle::Draw(Renderer &_renderer) const
 }
 
 
-void Triangle::CreateMesh(Renderer & _renderer)
+void Triangle::CreateMesh(Renderer& _renderer)
 {
 	// Create Vertices
 	Vertex vertices[]
@@ -75,7 +75,7 @@ void Triangle::CreateMesh(Renderer & _renderer)
 }
 
 
-void Triangle::CreateShaders(Renderer & _renderer)
+void Triangle::CreateShaders(Renderer& _renderer)
 {
 	std::ifstream vs_file("Triangle_Vertex_Shader.cso", std::ios::binary);
 	std::ifstream ps_file("Triangle_Pixel_Shader.cso", std::ios::binary);

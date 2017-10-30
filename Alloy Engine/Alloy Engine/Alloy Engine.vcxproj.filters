@@ -26,6 +26,9 @@
     <Filter Include="Source\VBO">
       <UniqueIdentifier>{52910a18-7eeb-4fa2-8730-d385f6955184}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\Structs">
+      <UniqueIdentifier>{0e89e30a-e1eb-4e11-8f81-a29b219e2783}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\DebugSystem.h">
@@ -39,6 +42,12 @@
     </ClInclude>
     <ClInclude Include="Src\Triangle.h">
       <Filter>Headers\VBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game.h">
+      <Filter>Headers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameData.h">
+      <Filter>Headers\Structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="Src\Triangle.cpp">
       <Filter>Source\VBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game.cpp">
+      <Filter>Source\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
