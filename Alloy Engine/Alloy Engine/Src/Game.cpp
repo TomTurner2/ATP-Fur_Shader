@@ -4,8 +4,8 @@
 
 Game::Game(Renderer& _renderer)
 {
-	test_triangle = std::make_unique<Triangle>(_renderer);
-	game_data = std::make_unique<GameData>();
+	m_test_triangle = std::make_unique<Triangle>(_renderer);
+	m_game_data = std::make_unique<GameData>();
 }
 
 
@@ -17,5 +17,5 @@ void Game::Tick()
 
 void Game::Draw(Renderer& _renderer) const
 {
-	test_triangle->Draw(_renderer);
+	m_test_triangle->Draw(_renderer);
 }

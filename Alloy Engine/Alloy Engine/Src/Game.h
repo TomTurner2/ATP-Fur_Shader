@@ -15,6 +15,6 @@ public:
 	void Draw(Renderer& _renderer) const;
 
 private:
-	std::unique_ptr<GameData> game_data { nullptr };
-	std::unique_ptr<Triangle> test_triangle { nullptr };
+	std::unique_ptr<GameData> m_game_data { nullptr };
+	std::unique_ptr<Triangle> m_test_triangle { nullptr };
 };
