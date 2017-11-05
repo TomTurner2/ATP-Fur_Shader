@@ -1,4 +1,12 @@
 #include "Game.h"
+#include "Triangle.h"
+
+
+Game::Game(Renderer& _renderer)
+{
+	test_triangle = std::make_unique<Triangle>(_renderer);
+	game_data = std::make_unique<GameData>();
+}
 
 
 void Game::Tick()
@@ -7,7 +15,7 @@ void Game::Tick()
 }
 
 
-void Game::Draw(Renderer& _renderer)
+void Game::Draw(Renderer& _renderer) const
 {
-	//draw objects here
+	test_triangle->Draw(_renderer);
 }

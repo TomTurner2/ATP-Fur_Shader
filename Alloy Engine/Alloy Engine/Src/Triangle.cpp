@@ -70,6 +70,7 @@ void Triangle::CreateMesh(Renderer& _renderer)
 	if (result == S_OK)
 		return;
 
+	//if error
 	MessageBox(nullptr, "[Triangle](CreateMesh) Failed to create vertex buffer", "Error", MB_OK);
 	exit(0);
 }
@@ -97,7 +98,7 @@ void Triangle::CreateShaders(Renderer& _renderer)
 	auto result = _renderer.getDevice()->CreateInputLayout(layout, 2, vs_data.data(),
 		vs_data.size(), &m_input_layout);
 
-	if (result != S_OK)
+	if (result == S_OK)
 		return;
 
 	MessageBox(nullptr, "[Triangle](CreateShaders) Failed to create shader input layout", "Error", MB_OK);
