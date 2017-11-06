@@ -13,6 +13,7 @@ public:
 	float z = 0;
 
 	static const Vector3 Zero;
+	static const Vector3 One;
 	static const Vector3 Up;
 	static const Vector3 Right;
 	static const Vector3 Forward;
@@ -35,6 +36,7 @@ public:
 	bool operator!=(const Vector3& _vector) const;
 
 	//static vector functions
+	static Vector3 ComponentProduct(const Vector3& _vector_a, const Vector3& _vector_b);
 	static Vector3 Cross(const Vector3& _vector_a, const Vector3& _vector_b);
 	static float Dot(const Vector3& _vector_a, const Vector3& _vector_b);
 	static float Distance(const Vector3& _vector_a, const Vector3& _vector_b);

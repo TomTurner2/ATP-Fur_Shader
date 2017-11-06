@@ -5,6 +5,7 @@
 
 //helper const values
 const Vector3 Vector3::Zero = Vector3(0, 0, 0);
+const Vector3 Vector3::One = Vector3(1, 1, 1);
 const Vector3 Vector3::Up = Vector3(0, 1, 0);
 const Vector3 Vector3::Right = Vector3(1, 0, 0);
 const Vector3 Vector3::Forward = Vector3(0, 0, 1);
@@ -12,6 +13,13 @@ const float Vector3::Epsilon = std::numeric_limits<float>::epsilon();
 
 
 Vector3::Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}//three value constructor
+
+
+Vector3 Vector3::ComponentProduct(const Vector3& _vector_a, const Vector3& _vector_b)
+{
+	return Vector3(_vector_a.x * _vector_b.x, _vector_a.y * _vector_b.y,
+		_vector_a.z * _vector_b.z);
+}
 
 
 Vector3 Vector3::Cross(const Vector3& _vector_a, const Vector3& _vector_b)
