@@ -29,6 +29,18 @@
     <Filter Include="Headers\Structs">
       <UniqueIdentifier>{0e89e30a-e1eb-4e11-8f81-a29b219e2783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\Game Objects">
+      <UniqueIdentifier>{7f8fd8ab-e196-457b-be36-84553536bc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Game Objects">
+      <UniqueIdentifier>{316b537b-fb4b-4a33-b21a-aea572614dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Math">
+      <UniqueIdentifier>{5ad89521-76f4-4f06-a5e0-23ecce7a2efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{42774e0b-86f1-44b4-8925-e2b8d6eb3770}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\DebugSystem.h">
@@ -49,6 +61,12 @@
     <ClInclude Include="Src\GameData.h">
       <Filter>Headers\Structs</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Headers\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Headers\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -68,6 +86,12 @@
     </ClCompile>
     <ClCompile Include="Src\Game.cpp">
       <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
