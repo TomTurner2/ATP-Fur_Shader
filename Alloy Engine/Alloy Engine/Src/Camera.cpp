@@ -22,7 +22,7 @@ void Camera::MoveForward(float _distance)
 	Vector3 new_pos = m_transform.GetPosition();
 	new_pos += m_transform.GetRelativeDir(Vector3::Forward) * _distance;
 
-	m_view_matrix.is_outdated = true;
+	m_view_matrix.first = true;
 }
 
 
@@ -31,7 +31,7 @@ void Camera::MoveRight(float _distance)
 	Vector3 new_pos = m_transform.GetPosition();
 	new_pos += m_transform.GetRelativeDir(Vector3::Right) * _distance;
 
-	m_view_matrix.is_outdated = true;
+	m_view_matrix.first = true;
 }
 
 
@@ -40,7 +40,7 @@ void Camera::MoveUp(float _distance)
 	Vector3 new_pos = m_transform.GetPosition();
 	new_pos += m_transform.GetRelativeDir(Vector3::Up) * _distance;
 
-	m_view_matrix.is_outdated = true;
+	m_view_matrix.first = true;
 }
 
 
@@ -58,16 +58,18 @@ void Camera::RotateUp(float _angle)
 
 Matrix Camera::GetViewMatrix()
 {
-	if (m_view_matrix.is_outdated)
+	if (m_view_matrix.first)
 	{
-		m_view_matrix.view_matrix = Matrix::LookAt(m_transform.GetPosition(),
-			m_transform.GetPosition() + m_transform.GetRelativeDir(Vector3::Forward),
+		Vector3 target = m_transform.GetPosition();
+		target += m_transform.GetRelativeDir(Vector3::Forward);//place look target just in front of the camera
+
+		m_view_matrix.second = Matrix::LookAt(m_transform.GetPosition(), target,
 			m_transform.GetRelativeDir(Vector3::Up));
 
-		m_view_matrix.is_outdated = false;
+		m_view_matrix.first = false;
 	}
 
-	return m_view_matrix.view_matrix;
+	return m_view_matrix.second;
 }
 
 

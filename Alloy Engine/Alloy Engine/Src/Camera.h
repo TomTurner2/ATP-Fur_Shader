@@ -23,11 +23,6 @@ public:
 
 private:
 	Matrix m_projection;
-
-	struct
-	{
-		Matrix view_matrix;
-		bool is_outdated;
-	} m_view_matrix;
+	std::pair<bool, Matrix> m_view_matrix;//dirty pattern to reduce unneccessary calculations
 };
 
