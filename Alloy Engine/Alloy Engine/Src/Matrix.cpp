@@ -89,3 +89,17 @@ Matrix Matrix::LookAt(const Vector3& _pos, Vector3& _look_target, const Vector3&
 		x_axis.z, y_axis.z, z_axis.z, 0.f,
 		-Vector3::Dot(x_axis, _pos), -Vector3::Dot(y_axis, _pos), -Vector3::Dot(z_axis, _pos), 1.f);
 }
+
+
+Matrix Matrix::PerspectiveProjection(float _fov, float _aspect, float _near_clip, float _far_clip)
+{
+	float y_scale = cosf(_fov / 2.f) / sinf(_fov / 2.f);
+	float x_scale = y_scale / _aspect;
+
+	return Matrix(
+		x_scale, 0.f, 0.f, 0.f,
+		0.f, y_scale, 0.f, 0.f,
+		0.f, 0.f, _far_clip / (_far_clip - _near_clip), 1.f,
+		0.f, 0.f, -_near_clip * _far_clip / (_far_clip - _near_clip), 0.f
+	);
+}

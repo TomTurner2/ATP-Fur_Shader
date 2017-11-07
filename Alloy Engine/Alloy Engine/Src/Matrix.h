@@ -32,5 +32,7 @@ public:
 	Matrix operator*(const Matrix& _matrix) const;
 
 	static Matrix LookAt(const Vector3& _pos,  Vector3& _look_target, const Vector3& _up);
+	static Matrix PerspectiveProjection(float _fov, float _aspect, float _near_clip, float _far_clip);
+	
 	static const Matrix Identity;
 };

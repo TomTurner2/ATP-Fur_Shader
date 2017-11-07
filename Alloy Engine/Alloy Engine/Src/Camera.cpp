@@ -1,15 +1,19 @@
 #include "Camera.h"
 
 
-Camera::Camera(const Vector3 _pos, const Quaternion _rot = Quaternion::Identity,
-	const Vector3 _scale = Vector3::One)
+Camera::Camera(const Vector3 _pos, const Quaternion _rot,
+	const Vector3 _scale, float _fov, float _aspect, float _near_clip, float _far_clip)
 {
 	m_transform = Transform(_pos, _rot, _scale);
+	m_projection = Matrix::PerspectiveProjection(_fov, _aspect, _near_clip, _far_clip);
 }
 
 
-Camera::Camera(const Vector3 _pos, const Vector3 _look_at, const Vector3 _up)
+Camera::Camera(const Vector3 _pos, const Vector3 _look_at, const Vector3 _up,
+	float _fov, float _aspect, float _near_clip, float _far_clip)
 {
+	//TODO: make transfrom and look at target
+	m_projection = Matrix::PerspectiveProjection(_fov, _aspect, _near_clip, _far_clip);
 }
 
 
@@ -64,4 +68,10 @@ Matrix Camera::GetViewMatrix()
 	}
 
 	return m_view_matrix.view_matrix;
+}
+
+
+Matrix Camera::GetProjectionMatrix() const
+{
+	return m_projection;
 }

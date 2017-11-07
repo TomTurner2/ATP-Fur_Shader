@@ -4,7 +4,6 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "Game.h"
-#include "Triangle.h"
 
 
 int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)

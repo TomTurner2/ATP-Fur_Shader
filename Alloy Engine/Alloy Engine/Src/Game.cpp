@@ -2,11 +2,15 @@
 #include "Triangle.h"
 #include "Camera.h"
 #include "Renderer.h"
+#include "TMath.h"
 
 
 Game::Game(Renderer& _renderer, InputManager& _input)
 {
-	m_camera = std::make_unique<Camera>(Vector3::Zero, Quaternion::Identity, Vector3::One);
+	m_camera = std::make_unique<Camera>(Vector3::Zero, Quaternion::Identity,
+		Vector3::One, TMath::Radians(80), 1024 / 576, 0.1f, 100);//TODO pass in window dimensions
+
+
 	m_test_triangle = std::make_unique<Triangle>(_renderer);
 	m_game_data = std::make_unique<GameData>();
 
@@ -43,8 +47,15 @@ void Game::Tick()
 void Game::Draw(Renderer& _renderer) const
 {
 	//update the camera info for rendering
-	_renderer.GetRenderData()->camera_matrix = m_camera->GetViewMatrix();
-	_renderer.GetRenderData()->camera_pos = m_camera->GetTransform().GetPosition();
+	UpdateCurrentRenderCamera(_renderer, *m_camera);
 
 	m_test_triangle->Draw(_renderer);
+}
+
+
+void Game::UpdateCurrentRenderCamera(Renderer& _renderer, Camera& _camera) const
+{
+	_renderer.GetRenderData()->camera_view_matrix = _camera.GetViewMatrix();
+	_renderer.GetRenderData()->camera_projection_matrix = _camera.GetProjectionMatrix();
+	_renderer.GetRenderData()->camera_pos = _camera.GetTransform().GetPosition();
 }

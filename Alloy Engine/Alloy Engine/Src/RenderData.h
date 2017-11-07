@@ -4,6 +4,7 @@
 
 struct RenderData
 {
-	Matrix camera_matrix;
+	Matrix camera_view_matrix;
+	Matrix camera_projection_matrix;
 	Vector3 camera_pos;
 };

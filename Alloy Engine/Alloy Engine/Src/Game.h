@@ -2,10 +2,9 @@
 #include "GameData.h"
 #include <memory>
 #include "Camera.h"
+#include "Triangle.h"
 
 class Renderer;
-class Triangle;
-//class Camera;
 
 class Game
 {
@@ -19,5 +18,7 @@ public:
 private:
 	std::unique_ptr<GameData> m_game_data { nullptr };
 	std::unique_ptr<Triangle> m_test_triangle { nullptr };
-	std::unique_ptr<Camera> m_camera{ nullptr };
+	std::unique_ptr<Camera> m_camera { nullptr };
+
+	void UpdateCurrentRenderCamera(Renderer& _renderer, Camera& _camera) const;
 };

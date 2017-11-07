@@ -4,8 +4,10 @@
 class Camera : public GameObject
 {
 public:
-	Camera(const Vector3 _pos, const Quaternion _rot, const Vector3 _scale);
-	Camera(const Vector3 _pos, const Vector3 _look_at , const Vector3 _up);
+	Camera(const Vector3 _pos, const Quaternion _rot, const Vector3 _scale,
+		float _fov, float _aspect, float _near_clip, float _far_clip);
+	Camera(const Vector3 _pos, const Vector3 _look_at , const Vector3 _up,
+		float _fov, float _aspect, float _near_clip, float _far_clip);
 
 	~Camera() = default;
 
@@ -17,8 +19,10 @@ public:
 	void RotateUp(float _angle);
 
 	Matrix GetViewMatrix();
+	Matrix GetProjectionMatrix() const;
 
 private:
+	Matrix m_projection;
 
 	struct
 	{

@@ -34,7 +34,7 @@ public:
 	const static Transform Identity;
 
 private:
-	Vector3 m_pos;
-	Quaternion m_rot;
-	Vector3 m_scale;
+	Vector3 m_pos = Vector3::Zero;
+	Quaternion m_rot = Quaternion::Identity;
+	Vector3 m_scale = Vector3::One;
 };

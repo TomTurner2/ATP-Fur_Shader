@@ -28,13 +28,19 @@
     <ClInclude Include="Src\GameObject.h" />
     <ClInclude Include="Src\InputManager.h" />
     <ClInclude Include="Src\KeyState.h" />
+    <ClInclude Include="Src\Macros.h" />
+    <ClInclude Include="Src\Material.h" />
+    <ClInclude Include="Src\TMath.h" />
     <ClInclude Include="Src\Matrix.h" />
+    <ClInclude Include="Src\Mesh.h" />
+    <ClInclude Include="Src\Model.h" />
     <ClInclude Include="Src\Quaternion.h" />
     <ClInclude Include="Src\RenderData.h" />
     <ClInclude Include="Src\Renderer.h" />
     <ClInclude Include="Src\Transform.h" />
     <ClInclude Include="Src\Triangle.h" />
     <ClInclude Include="Src\Vector3.h" />
+    <ClInclude Include="Src\Vertex.h" />
     <ClInclude Include="Src\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -44,7 +50,11 @@
     <ClCompile Include="Src\GameObject.cpp" />
     <ClCompile Include="Src\InputManager.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Material.cpp" />
+    <ClCompile Include="Src\TMath.cpp" />
     <ClCompile Include="Src\Matrix.cpp" />
+    <ClCompile Include="Src\Mesh.cpp" />
+    <ClCompile Include="Src\Model.cpp" />
     <ClCompile Include="Src\Quaternion.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
     <ClCompile Include="Src\Transform.cpp" />

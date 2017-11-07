@@ -41,6 +41,12 @@
     <Filter Include="Headers\Structs and Enums">
       <UniqueIdentifier>{0e89e30a-e1eb-4e11-8f81-a29b219e2783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\Materials">
+      <UniqueIdentifier>{7f4df9e6-6a5d-4970-aabe-a0524aebbaf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Materials">
+      <UniqueIdentifier>{219daa4d-b777-4989-a69f-5af1c7c28220}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\DebugSystem.h">
@@ -91,6 +97,24 @@
     <ClInclude Include="Src\Renderer.h">
       <Filter>Headers\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Model.h">
+      <Filter>Headers\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Mesh.h">
+      <Filter>Headers\VBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Macros.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Material.h">
+      <Filter>Headers\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Vertex.h">
+      <Filter>Headers\VBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TMath.h">
+      <Filter>Headers\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -131,6 +155,18 @@
     </ClCompile>
     <ClCompile Include="Src\Renderer.cpp">
       <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Model.cpp">
+      <Filter>Source\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Mesh.cpp">
+      <Filter>Source\VBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Material.cpp">
+      <Filter>Source\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TMath.cpp">
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,16 +3,8 @@
 #include <fstream>
 #include <vector>
 #include <iterator>
-
-
-#define SAFE_RELEASE(r) {if (r) { (r)->Release(); (r) = nullptr; } }
-
-
-struct Vertex
-{
-	float x, y;
-	float r, g, b;
-};
+#include "Vertex.h"
+#include "Macros.h"
 
 
 Triangle::Triangle(Renderer& _renderer)
@@ -42,7 +34,7 @@ void Triangle::Draw(Renderer& _renderer) const
 	device_context->PSSetShader(m_pixel_shader, nullptr, 0);
 
 	// Bind vertex buffer
-	UINT stride = sizeof(Vertex);// How far the VB must move to access the next vertex
+	UINT stride = sizeof(Vertex2D);// How far the VB must move to access the next vertex
 	UINT offset = 0;// Offset between each structure (used to skip info)
 
 	device_context->IASetVertexBuffers(0, 1, &m_vertex_buffer, &stride, &offset);
@@ -53,7 +45,7 @@ void Triangle::Draw(Renderer& _renderer) const
 void Triangle::CreateMesh(Renderer& _renderer)
 {
 	// Create Vertices
-	Vertex vertices[]
+	Vertex2D vertices[]
 	{
 		{ -1, -1, 1, 0, 0 },
 		{ 0, 1, 0, 1, 0 },
