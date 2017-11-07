@@ -14,14 +14,54 @@ Transform::Transform(const Vector3& _pos, const Quaternion& _rot, const Vector3&
 {}
 
 
-//Transform Transform::operator*(const Transform& _transform) const
-//{
-//	return Transform(
-//		m_pos + Vector3::ComponentProduct(_transform.m_pos * m_rot, m_scale),
-//		m_rot * _transform.m_rot,
-//		Vector3::ComponentProduct(m_scale, _transform.m_scale)
-//	);
-//}
+Vector3 Transform::GetPosition() const
+{
+	return m_pos;
+}
+
+
+Vector3 Transform::GetScale() const
+{
+	return m_scale;
+}
+
+
+Quaternion Transform::GetRotation() const
+{
+	return m_rot;
+}
+
+
+void Transform::SetRelativeDir(const Vector3& _dir, Vector3& _target)
+{
+	//Matrix look = Matrix::LookAt(_dir, _target, Vector3::Up);
+}
+
+
+void Transform::SetPosition(Vector3& _pos)
+{
+	m_pos = _pos;
+}
+
+
+void Transform::SetScale(Vector3& _scale)
+{
+	m_scale = _scale;
+}
+
+
+void Transform::SetRotation(Quaternion& _rot)
+{
+	m_rot = _rot;
+}
+
+
+Vector3 Transform::GetRelativeDir(const Vector3 _dir) const
+{
+	Vector3 dir = _dir;
+	dir = Vector3::Transform(dir, Quaternion::ToMatrix(m_rot));
+	return dir;
+}
 
 
 Matrix Transform::GetTransformMatrix() const
@@ -77,13 +117,13 @@ Transform Transform::FromTransformMatrix(const Matrix& _matrix)
 {
 	Vector3 pos(_matrix._14, _matrix._24, _matrix._34);
 
-	float sx = Vector3(_matrix._11, _matrix._21, _matrix._31).Magnitude();
-	float sy = Vector3(_matrix._12, _matrix._22, _matrix._32).Magnitude();
-	float sz = Vector3(_matrix._13, _matrix._23, _matrix._33).Magnitude();
+	float scale_x = Vector3(_matrix._11, _matrix._21, _matrix._31).Magnitude();
+	float scale_y = Vector3(_matrix._12, _matrix._22, _matrix._32).Magnitude();
+	float scale_z = Vector3(_matrix._13, _matrix._23, _matrix._33).Magnitude();
 
 	Quaternion rotation = Quaternion::FromMatrix(_matrix);
 
-	Vector3 scale = Vector3(sx, sy, sz);
+	Vector3 scale = Vector3(scale_x, scale_y, scale_z);
 
 	return Transform(pos, rotation, scale);
 }

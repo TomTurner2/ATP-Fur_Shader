@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include <memory>
+#include "Vector3.h"
 
 
 const Matrix Matrix::Identity = { 1.f, 0.f, 0.f, 0.f,  0.f, 1.f, 0.f, 0.f,
@@ -11,6 +12,13 @@ Matrix::Matrix()
 	, _21(0.f), _22(0.f), _23(0.f), _24(0.f)
 	, _31(0.f), _32(0.f), _33(0.f), _34(0.f)
 	, _41(0.f), _42(0.f), _43(0.f), _44(0.f)
+{}
+
+
+Matrix::Matrix(const float* _array) : _11(_array[0]), _12(_array[1]), _13(_array[2]), _14(_array[3])
+, _21(_array[4]), _22(_array[5]), _23(_array[6]), _24(_array[7])
+, _31(_array[8]), _32(_array[9]), _33(_array[10]), _34(_array[11])
+, _41(_array[12]), _42(_array[13]), _43(_array[14]), _44(_array[15])
 {}
 
 
@@ -66,4 +74,18 @@ Matrix Matrix::operator*(const Matrix& _matrix) const
 	}
 
 	return std::move(mult_matrix);
+}
+
+
+Matrix Matrix::LookAt(const Vector3& _pos, Vector3& _look_target, const Vector3& _up)
+{
+	Vector3 z_axis = (_look_target - _pos).Normalised();
+	Vector3 x_axis = Vector3::Cross(_up, z_axis).Normalised();
+	Vector3 y_axis = Vector3::Cross(z_axis, x_axis);
+
+	return Matrix(
+		x_axis.x, y_axis.x, z_axis.x, 0.f,
+		x_axis.y, y_axis.y, z_axis.y, 0.f,
+		x_axis.z, y_axis.z, z_axis.z, 0.f,
+		-Vector3::Dot(x_axis, _pos), -Vector3::Dot(y_axis, _pos), -Vector3::Dot(z_axis, _pos), 1.f);
 }

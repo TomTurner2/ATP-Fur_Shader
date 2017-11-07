@@ -1,4 +1,5 @@
 #pragma once
+#include "Matrix.h"
 
 
 class Vector3
@@ -46,6 +47,8 @@ public:
 	static void Normalise(Vector3& _vector);
 	static void SetMagnitude(Vector3& _vector, float _magnitude);
 	static void Clamp(Vector3& _vector, float _magnitude);
+	static Vector3 Transform(Vector3& _position, Matrix& _matrix);
+
 
 	//vector functions
 	Vector3 Cross(const Vector3& _vector_b) const;

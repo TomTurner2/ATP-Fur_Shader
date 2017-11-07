@@ -15,7 +15,8 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 	DebugSystem debugger;
 	debugger.CreateConsoleWindow();
 
-	std::unique_ptr<Game> game = std::make_unique<Game>(renderer);
+	std::unique_ptr<InputManager> input_manager = std::make_unique<InputManager>();
+	std::unique_ptr<Game> game = std::make_unique<Game>(renderer, *input_manager);
 
 	MSG msg { nullptr };
 
@@ -25,6 +26,8 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+
+			input_manager->ProcessMessage(msg.message, msg.wParam);
 
 			if (msg.message == WM_QUIT)
 				break;

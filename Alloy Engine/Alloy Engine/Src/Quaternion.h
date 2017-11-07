@@ -21,6 +21,7 @@ public:
 	Quaternion& operator*=(const Quaternion& _quaternion);
 
 	static Quaternion FromMatrix(const Matrix& _matrix);
+	static Matrix ToMatrix(const Quaternion& _quaternion);
 
 	static const Quaternion Identity;
 

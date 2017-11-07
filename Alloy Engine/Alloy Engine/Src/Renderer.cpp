@@ -8,6 +8,8 @@ Renderer::Renderer(Window& _window)
 	DXGI_SWAP_CHAIN_DESC swap_chain_desc = CreateSwapChainDesc(_window);
 	CreateDeviceContext(swap_chain_desc);
 	CreateRenderTarget();
+
+	m_render_data = std::make_unique<RenderData>();
 }
 
 
@@ -78,14 +80,20 @@ void Renderer::CreateRenderTarget()
 
 
 #pragma region Getters
-ID3D11Device* Renderer::getDevice() const
+ID3D11Device* Renderer::GetDevice() const
 {
 	return m_device;
 }
 
 
-ID3D11DeviceContext* Renderer::getDeviceContext() const
+ID3D11DeviceContext* Renderer::GetDeviceContext() const
 {
 	return m_device_context;
+}
+
+
+RenderData* Renderer::GetRenderData() const
+{
+	return m_render_data.get();
 }
 #pragma endregion 

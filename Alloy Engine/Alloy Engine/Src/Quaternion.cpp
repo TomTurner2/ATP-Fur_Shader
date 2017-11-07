@@ -72,6 +72,19 @@ Quaternion Quaternion::FromMatrix(const Matrix& _matrix)
 }
 
 
+Matrix Quaternion::ToMatrix(const Quaternion & _quaternion)
+{
+	float m[16] = {
+		_quaternion.w, -_quaternion.z,  _quaternion.y, _quaternion.x,
+		_quaternion.z,  _quaternion.w, -_quaternion.x, _quaternion.y,
+		-_quaternion.y,  _quaternion.x,  _quaternion.w, _quaternion.z,
+		-_quaternion.x, -_quaternion.y, -_quaternion.z, _quaternion.w
+	};
+
+	return Matrix(m);
+}
+
+
 void Quaternion::Normalize()
 {
 	float mag = sqrt(x * x + w * w + y * y + z * z);

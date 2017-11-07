@@ -20,24 +20,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Src\Camera.h" />
     <ClInclude Include="Src\DebugSystem.h" />
     <ClInclude Include="Src\Game.h" />
+    <ClInclude Include="Src\GameAction.h" />
     <ClInclude Include="Src\GameData.h" />
+    <ClInclude Include="Src\GameObject.h" />
+    <ClInclude Include="Src\InputManager.h" />
+    <ClInclude Include="Src\KeyState.h" />
+    <ClInclude Include="Src\Matrix.h" />
+    <ClInclude Include="Src\Quaternion.h" />
+    <ClInclude Include="Src\RenderData.h" />
     <ClInclude Include="Src\Renderer.h" />
+    <ClInclude Include="Src\Transform.h" />
     <ClInclude Include="Src\Triangle.h" />
+    <ClInclude Include="Src\Vector3.h" />
     <ClInclude Include="Src\Window.h" />
-    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Src\Camera.cpp" />
     <ClCompile Include="Src\DebugSystem.cpp" />
     <ClCompile Include="Src\Game.cpp" />
+    <ClCompile Include="Src\GameObject.cpp" />
+    <ClCompile Include="Src\InputManager.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Matrix.cpp" />
+    <ClCompile Include="Src\Quaternion.cpp" />
     <ClCompile Include="Src\Renderer.cpp" />
+    <ClCompile Include="Src\Transform.cpp" />
     <ClCompile Include="Src\Triangle.cpp" />
+    <ClCompile Include="Src\Vector3.cpp" />
     <ClCompile Include="Src\Window.cpp" />
-    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Src\Triangle_Pixel_Shader.hlsl">

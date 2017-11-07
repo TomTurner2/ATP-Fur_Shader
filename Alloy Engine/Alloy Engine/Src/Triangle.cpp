@@ -33,7 +33,7 @@ Triangle::~Triangle()
 
 void Triangle::Draw(Renderer& _renderer) const
 {
-	auto device_context = _renderer.getDeviceContext();
+	auto device_context = _renderer.GetDeviceContext();
 
 	// Bind shaders
 	device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -65,7 +65,7 @@ void Triangle::CreateMesh(Renderer& _renderer)
 	D3D11_SUBRESOURCE_DATA vertex_data = { nullptr };
 	vertex_data.pSysMem = vertices;
 
-	auto result = _renderer.getDevice()->CreateBuffer(&vertex_buffer_desc, &vertex_data, &m_vertex_buffer);
+	auto result = _renderer.GetDevice()->CreateBuffer(&vertex_buffer_desc, &vertex_data, &m_vertex_buffer);
 
 	if (result == S_OK)
 		return;
@@ -85,8 +85,8 @@ void Triangle::CreateShaders(Renderer& _renderer)
 	std::vector<char> vs_data = { std::istreambuf_iterator<char>(vs_file), std::istreambuf_iterator<char>() };
 	std::vector<char> ps_data = { std::istreambuf_iterator<char>(ps_file), std::istreambuf_iterator<char>() };
 
-	_renderer.getDevice()->CreateVertexShader(vs_data.data(), vs_data.size(), nullptr, &m_vertex_shader);
-	_renderer.getDevice()->CreatePixelShader(ps_data.data(), ps_data.size(), nullptr, &m_pixel_shader);
+	_renderer.GetDevice()->CreateVertexShader(vs_data.data(), vs_data.size(), nullptr, &m_vertex_shader);
+	_renderer.GetDevice()->CreatePixelShader(ps_data.data(), ps_data.size(), nullptr, &m_pixel_shader);
 
 	// Create input layouts
 	D3D11_INPUT_ELEMENT_DESC layout[]
@@ -95,7 +95,7 @@ void Triangle::CreateShaders(Renderer& _renderer)
 		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }// Append is offset
 	};
 
-	auto result = _renderer.getDevice()->CreateInputLayout(layout, 2, vs_data.data(),
+	auto result = _renderer.GetDevice()->CreateInputLayout(layout, 2, vs_data.data(),
 		vs_data.size(), &m_input_layout);
 
 	if (result == S_OK)

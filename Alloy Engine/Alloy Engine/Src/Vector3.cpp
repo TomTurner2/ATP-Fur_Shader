@@ -141,6 +141,22 @@ void Vector3::Clamp(Vector3& _vector, float _magnitude)
 }
 
 
+Vector3 Vector3::Transform(Vector3& _position, Matrix& _matrix)
+{
+	Vector3 transformed_vector = Vector3::Zero;
+	transformed_vector.x = (_position.x * _matrix._11) + (_position.y * _matrix._21) +
+		(_position.z * _matrix._31) + _matrix._41;
+
+	transformed_vector.y = (_position.x * _matrix._12) + (_position.y * _matrix._22) +
+		(_position.z * _matrix._32) + _matrix._42;
+
+	transformed_vector.z = (_position.x * _matrix._13) + (_position.y * _matrix._23) +
+		(_position.z * _matrix._33) + _matrix._43;
+
+	return transformed_vector;
+}
+
+
 void Vector3::SetMagnitude(float _magnitude)
 {
 	Vector3 mag = Vector3(x, y, z);
