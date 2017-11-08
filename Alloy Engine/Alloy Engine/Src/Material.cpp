@@ -93,6 +93,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 		{
 			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
 		}
+		m_vs_per_object.first = false;//is not outdated
 	}
 
 
@@ -106,6 +107,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 		{
 			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
 		}
+		m_vs_per_frame.first = false;
 	}
 
 
@@ -119,6 +121,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 		{
 			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
 		}
+		m_ps_per_frame.first = false;
 	}
 
 	// pass buffers to pipeline

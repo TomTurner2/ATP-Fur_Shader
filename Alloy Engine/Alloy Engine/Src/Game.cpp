@@ -26,19 +26,31 @@ void Game::Tick()
 {
 	if (m_game_data->input->GetGameAction(GameAction::FORWARD, InputManager::HELD) ||
 		m_game_data->input->GetGameAction(GameAction::FORWARD, InputManager::PRESSED))
-		printf("fwd ");
+	{
+		system("cls");
+		printf("Input Dir: fwd ");
+	}		
 
 	if (m_game_data->input->GetGameAction(GameAction::BACKWARD, InputManager::HELD) ||
-			m_game_data->input->GetGameAction(GameAction::BACKWARD, InputManager::PRESSED))
-			printf("back ");
+		m_game_data->input->GetGameAction(GameAction::BACKWARD, InputManager::PRESSED))
+	{
+		system("cls");
+		printf("Input Dir: back ");
+	}
 
 	if (m_game_data->input->GetGameAction(GameAction::LEFT, InputManager::HELD) ||
 		m_game_data->input->GetGameAction(GameAction::LEFT, InputManager::PRESSED))
-		printf("left ");
+	{
+		system("cls");
+		printf("Input Dir: left ");
+	}
 
 	if (m_game_data->input->GetGameAction(GameAction::RIGHT, InputManager::HELD) ||
 		m_game_data->input->GetGameAction(GameAction::RIGHT, InputManager::PRESSED))
-		printf("right ");
+	{
+		system("cls");
+		printf("Input Dir: right ");
+	}
 
 	//TODO: calculate dt and assign to fixed dt
 }
