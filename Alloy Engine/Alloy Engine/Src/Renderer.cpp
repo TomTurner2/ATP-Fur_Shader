@@ -24,7 +24,7 @@ void Renderer::BeginFrame() const
 	m_device_context->RSSetViewports(1, &viewport);
 
 	// Set clear colour
-	float clear_colour[] = { .349f, .341f, .290f, 1 };
+	float clear_colour[] = { 0.2, 0.2, 0.180, 1 };
 	m_device_context->ClearRenderTargetView(m_render_target_view, clear_colour);
 }
 

@@ -26,7 +26,7 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 
-			input_manager->ProcessMessage(msg.message, msg.wParam);
+			input_manager->ProcessMessage(msg.message, msg.wParam);//polls for input
 
 			if (msg.message == WM_QUIT)
 				break;
