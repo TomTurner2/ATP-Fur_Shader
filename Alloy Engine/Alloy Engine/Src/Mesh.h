@@ -9,7 +9,7 @@
 class Renderer;
 
 
-class Mesh : GameObject
+class Mesh : public GameObject
 {
 public:
 	Mesh(std::string _name);

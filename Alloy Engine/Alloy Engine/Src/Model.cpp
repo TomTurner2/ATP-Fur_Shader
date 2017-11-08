@@ -5,6 +5,16 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+
+void Model::Tick(GameData & _game_data)
+{
+	for (auto &mesh : m_meshes)
+	{
+		mesh.SetTransform(m_transform);
+	}
+}
+
+
 void Model::Draw(Renderer& _renderer)
 {
 	for (auto &mesh : m_meshes)
@@ -14,7 +24,7 @@ void Model::Draw(Renderer& _renderer)
 }
 
 
-void Model::LoadModel(std::string _model_name, Renderer& _renderer)
+void Model::LoadModel(std::string _model_name, Renderer& _renderer) const
 {
 	const aiScene* scene = aiImportFile(_model_name.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 

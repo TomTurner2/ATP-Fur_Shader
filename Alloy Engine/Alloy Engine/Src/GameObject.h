@@ -15,6 +15,7 @@ public:
 	virtual void Tick(GameData& _game_data);
 	virtual void Draw(Renderer& _renderer);
 
+	void SetTransform(Transform _transform);
 	void SetActive(bool _active);
 	void SetCanDraw(bool _can_draw);
 	void SetCanTick(bool _can_tick);

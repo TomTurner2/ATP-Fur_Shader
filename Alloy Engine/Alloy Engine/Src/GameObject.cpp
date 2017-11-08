@@ -16,6 +16,12 @@ void GameObject::Draw(Renderer & _renderer)
 }
 
 
+void GameObject::SetTransform(Transform _transform)
+{
+	m_transform = _transform;
+}
+
+
 void GameObject::SetActive(bool _active)
 {
 	m_can_draw = _active;
