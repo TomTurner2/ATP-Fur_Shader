@@ -3,6 +3,8 @@
 #include "Camera.h"
 #include "Renderer.h"
 #include "TMath.h"
+#include "Model.h"
+#include "Macros.h"
 
 
 Game::Game(Renderer& _renderer, InputManager& _input)
@@ -10,6 +12,10 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 	m_camera = std::make_unique<Camera>(Vector3::Zero, Quaternion::Identity,
 		Vector3::One, TMath::Radians(80), 1024 / 576, 0.1f, 100);//TODO pass in window dimensions
 
+	//model loading test
+	Model* test = new Model();
+	test->LoadModel("./Axe.obj", _renderer);
+	SAFE_DELETE(test);
 
 	m_test_triangle = std::make_unique<Triangle>(_renderer);
 	m_game_data = std::make_unique<GameData>();

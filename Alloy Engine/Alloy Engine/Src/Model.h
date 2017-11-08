@@ -12,7 +12,7 @@ public:
 
 	void Tick(GameData& _game_data) override;
 	void Draw(Renderer& _renderer) override;
-	void LoadModel(std::string _model_name, Renderer& _renderer);
+	void LoadModel(std::string _model_name, Renderer& _renderer) const;
 	void LoadAllModelMaterials(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer);
 	Mesh* GetMeshByName(std::string _name);
 

@@ -47,6 +47,9 @@
     <Filter Include="Source\Materials">
       <UniqueIdentifier>{219daa4d-b777-4989-a69f-5af1c7c28220}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{421cb877-f914-40cd-8fd9-f6e4d964a706}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\DebugSystem.h">
@@ -179,5 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Axe.obj">
+      <Filter>Resource Files\Models</Filter>
+    </Object>
   </ItemGroup>
 </Project>

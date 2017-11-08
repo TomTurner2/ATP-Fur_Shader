@@ -30,7 +30,8 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer) const
 
 	if (scene == nullptr)
 	{
-		printf("[Model](LoadModel) Failed to load model file");
+		printf("[Model](LoadModel) Failed to load model file\n" );
+		printf(aiGetErrorString());
 		return;
 	}
 
@@ -47,15 +48,13 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer) const
 		for (unsigned int vert_id = 0; vert_id < mesh->mNumVertices; ++vert_id)
 		{
 			aiVector3D vert = mesh->mVertices[vert_id];
-			aiColor4t<float>* colour = mesh->mColors[vert_id];
+			//aiColor4t<float>* colour = mesh->mColors[vert_id];
 
-			verts.push_back
-			(
-				Vertex3D 
-				{
-					vert.x, vert.y, vert.z, colour->r, colour->g, colour->b
-				}
-			);
+			Vertex3D vert_data = 
+			{
+				vert.x, vert.y, vert.z, 1, 1, 1
+			};
+			verts.push_back(vert_data);
 		}
 
 		std::vector<unsigned int> indicies;
