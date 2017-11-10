@@ -13,7 +13,7 @@ class Material
 {
 public:
 	Material() = default;
-	~Material();
+	virtual ~Material();
 
 	virtual void CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer);
 	virtual void UpdateBuffers(Renderer& _renderer);
@@ -35,11 +35,11 @@ private:
 	virtual void CreateBuffers(Renderer& _renderer);
 
 	//vertex buffers
-	ID3D11Buffer* m_vs_per_object_buffer;
-	ID3D11Buffer* m_vs_per_frame_buffer;
+	ID3D11Buffer* m_vs_per_object_buffer = nullptr;
+	ID3D11Buffer* m_vs_per_frame_buffer = nullptr;
 
 	//pixel buffers
-	ID3D11Buffer* m_ps_per_frame_buffer;
+	ID3D11Buffer* m_ps_per_frame_buffer = nullptr;
 
 	struct VSPerFrameBuffer
 	{
@@ -56,6 +56,7 @@ private:
 	struct PSPerFrameBuffer
 	{
 		Vector3 camera_position;
+		float extra;//buffer size must be a multiple of 16
 	};
 
 	//data to be passed to buffer (dirtyable pattern)

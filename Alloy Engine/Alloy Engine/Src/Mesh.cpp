@@ -12,8 +12,9 @@ Mesh::Mesh(std::string _name)
 
 Mesh::~Mesh()
 {
-	SAFE_RELEASE(m_vertex_buffer);
-	SAFE_DELETE(m_material);
+	//SAFE_RELEASE(m_vertex_buffer);
+	//SAFE_RELEASE(m_index_buffer);
+	//SAFE_DELETE(m_material);
 }
 
 
@@ -52,7 +53,7 @@ void Mesh::CreateMesh(const std::vector<Vertex3D>& _vertices, const std::vector<
 	indicie_buffer_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	indicie_buffer_desc.CPUAccessFlags = 0x00;
 	indicie_buffer_desc.MiscFlags = 0x00;
-	indicie_buffer_desc.ByteWidth = sizeof(std::uint32_t) * _indicies.size();
+	indicie_buffer_desc.ByteWidth = sizeof(unsigned int) * static_cast<UINT>(_indicies.size());
 	indicie_buffer_desc.Usage = D3D11_USAGE_IMMUTABLE;
 	indicie_buffer_desc.StructureByteStride = 0x00;
 
@@ -87,7 +88,7 @@ void Mesh::Draw(Renderer& _renderer)
 	// Bind vertex buffer
 	UINT stride = sizeof(Vertex3D);// How far the VB must move to access the next vertex
 	UINT offset = 0;// Offset between each structure (used to skip info)
-
+	
 	device_context->IASetVertexBuffers(0, 1, &m_vertex_buffer, &stride, &offset);
 	device_context->IASetIndexBuffer(m_index_buffer, DXGI_FORMAT_R32_UINT, 0);
 	device_context->Draw(m_indicie_count, 0);// Draw call

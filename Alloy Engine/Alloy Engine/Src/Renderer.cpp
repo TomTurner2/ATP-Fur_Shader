@@ -44,7 +44,7 @@ DXGI_SWAP_CHAIN_DESC Renderer::CreateSwapChainDesc(Window& _window) const
 	swap_chain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;// Colour format (RGB 32 bit)
 	swap_chain_desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swap_chain_desc.OutputWindow = _window.getHandle();// Set target
-	swap_chain_desc.SampleDesc.Count = 1;// Antialiasing
+	swap_chain_desc.SampleDesc.Count = 8;// Antialiasing
 	swap_chain_desc.Windowed = true;
 
 	return swap_chain_desc;

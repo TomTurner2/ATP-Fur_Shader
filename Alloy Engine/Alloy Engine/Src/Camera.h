@@ -11,6 +11,7 @@ public:
 
 	~Camera() = default;
 
+	void Tick(GameData& _game_data) override;
 	void MoveForward(float _distance);
 	void MoveRight(float _distance);
 	void MoveUp(float _distance);
@@ -24,5 +25,10 @@ public:
 private:
 	Matrix m_projection;
 	std::pair<bool, Matrix> m_view_matrix;//dirty pattern to reduce unneccessary calculations
+	float m_move_speed = 100;
+
+	Vector3 m_forward = Vector3::Forward;
+	Vector3 m_up = Vector3::Up;
+	Vector3 m_right = Vector3::Right;
 };
 

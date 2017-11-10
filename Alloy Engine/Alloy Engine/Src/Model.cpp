@@ -6,7 +6,7 @@
 #include <assimp/postprocess.h>
 
 
-void Model::Tick(GameData & _game_data)
+void Model::Tick(GameData& _game_data)
 {
 	for (auto &mesh : m_meshes)
 	{
@@ -24,7 +24,7 @@ void Model::Draw(Renderer& _renderer)
 }
 
 
-void Model::LoadModel(std::string _model_name, Renderer& _renderer) const
+void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 {
 	const aiScene* scene = aiImportFile(_model_name.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 
@@ -35,8 +35,7 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer) const
 		return;
 	}
 
-	std::vector<Mesh> meshes;
-	meshes.reserve(scene->mNumMeshes);
+	m_meshes.reserve(scene->mNumMeshes);
 
 	for (unsigned int mesh_id = 0; mesh_id < scene->mNumMeshes; ++mesh_id)
 	{
@@ -48,26 +47,32 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer) const
 		for (unsigned int vert_id = 0; vert_id < mesh->mNumVertices; ++vert_id)
 		{
 			aiVector3D vert = mesh->mVertices[vert_id];
-			//aiColor4t<float>* colour = mesh->mColors[vert_id];
+			Vector3 vertex_position = Vector3::Zero;
+			vertex_position.x = vert.x;
+			vertex_position.y = vert.y;
+			vertex_position.z = vert.z;
 
-			Vertex3D vert_data = 
-			{
-				vert.x, vert.y, vert.z, 1, 1, 1
-			};
+			aiVector3D normal_in = mesh->mNormals[vert_id];
+			Vector3 normal = Vector3::Zero;
+			normal.x = normal_in.x;
+			normal.y = normal_in.y;
+			normal.z = normal_in.z;
+
+			Vertex3D vert_data = { vertex_position, 1, normal, 1, };
 			verts.push_back(vert_data);
 		}
 
 		std::vector<unsigned int> indicies;
 		indicies.reserve(mesh->mNumFaces * 3);
-		for (unsigned int faceIdx = 0; faceIdx < mesh->mNumFaces; faceIdx++)
+		for (unsigned int faceIdx = 0; faceIdx < mesh->mNumFaces; ++faceIdx)
 		{
 			indicies.push_back(mesh->mFaces[faceIdx].mIndices[0]);
 			indicies.push_back(mesh->mFaces[faceIdx].mIndices[1]);
 			indicies.push_back(mesh->mFaces[faceIdx].mIndices[2]);
 		}
 
-		meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));
-		meshes.back().CreateMesh(verts, indicies, _renderer);
+		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));
+		m_meshes.back().CreateMesh(verts, indicies, _renderer);
 	}
 }
 

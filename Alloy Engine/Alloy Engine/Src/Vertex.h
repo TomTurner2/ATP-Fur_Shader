@@ -1,5 +1,8 @@
 #pragma once
 
+class Vector3;
+
+
 struct Vertex2D
 {
 	float x, y;
@@ -9,6 +12,8 @@ struct Vertex2D
 
 struct Vertex3D
 {
-	float x, y, z;
-	float r, g, b;
+	Vector3 position;
+	float one;//so it maps to float 4
+	Vector3 normal;
+	float two;
 };

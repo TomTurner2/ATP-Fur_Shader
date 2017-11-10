@@ -179,13 +179,15 @@
     <FxCompile Include="Src\Triangle_Vertex_Shader.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Src\Standard_Material_Vertex_Shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Standard_Material_Pixel_Shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Axe.obj">
-      <Filter>Resource Files\Models</Filter>
-    </Object>
+    <None Include="Axe.obj" />
   </ItemGroup>
 </Project>

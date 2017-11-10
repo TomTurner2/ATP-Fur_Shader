@@ -4,61 +4,38 @@
 #include "Renderer.h"
 #include "TMath.h"
 #include "Model.h"
-#include "Macros.h"
 
 
 Game::Game(Renderer& _renderer, InputManager& _input)
 {
-	m_camera = std::make_unique<Camera>(Vector3::Zero, Quaternion::Identity,
+	m_camera = std::make_unique<Camera>(Vector3::Zero, Quaternion(Vector3::Right, 90),
 		Vector3::One, TMath::Radians(80), 1024 / 576, 0.1f, 100);//TODO pass in window dimensions
 
 	//model loading test
-	Model* test = new Model();
-	test->LoadModel("./Axe.obj", _renderer);
-	SAFE_DELETE(test);
+	m_model = std::make_unique<Model>();
+	m_model->LoadModel("./Axe.obj", _renderer);
+	m_model->LoadAllModelMaterials("Standard_Material_Vertex_Shader.cso",
+		"Standard_Material_Pixel_Shader.cso", _renderer);//load shader
 
 	m_test_triangle = std::make_unique<Triangle>(_renderer);
 	m_game_data = std::make_unique<GameData>();
 
 	m_game_data->input = &_input;
-	m_game_data->input->BindKey(GameAction::FORWARD, "W");
-	m_game_data->input->BindKey(GameAction::BACKWARD, "S");
-	m_game_data->input->BindKey(GameAction::LEFT, "A");
-	m_game_data->input->BindKey(GameAction::RIGHT, "D");
+	m_game_data->input->BindKey(FORWARD, "W");
+	m_game_data->input->BindKey(BACKWARD, "S");
+	m_game_data->input->BindKey(LEFT, "A");
+	m_game_data->input->BindKey(RIGHT, "D");
+	m_game_data->input->BindKey(UP, "E");
+	m_game_data->input->BindKey(DOWN, "F");
 }
 
 
 void Game::Tick()
 {
-	if (m_game_data->input->GetGameAction(GameAction::FORWARD, InputManager::HELD) ||
-		m_game_data->input->GetGameAction(GameAction::FORWARD, InputManager::PRESSED))
-	{
-		system("cls");
-		printf("Input Dir: fwd ");
-	}		
+	m_game_data->delta_time = CalculateDeltaTime();
 
-	if (m_game_data->input->GetGameAction(GameAction::BACKWARD, InputManager::HELD) ||
-		m_game_data->input->GetGameAction(GameAction::BACKWARD, InputManager::PRESSED))
-	{
-		system("cls");
-		printf("Input Dir: back ");
-	}
-
-	if (m_game_data->input->GetGameAction(GameAction::LEFT, InputManager::HELD) ||
-		m_game_data->input->GetGameAction(GameAction::LEFT, InputManager::PRESSED))
-	{
-		system("cls");
-		printf("Input Dir: left ");
-	}
-
-	if (m_game_data->input->GetGameAction(GameAction::RIGHT, InputManager::HELD) ||
-		m_game_data->input->GetGameAction(GameAction::RIGHT, InputManager::PRESSED))
-	{
-		system("cls");
-		printf("Input Dir: right ");
-	}
-
-	//TODO: calculate dt and assign to fixed dt
+	m_camera->Tick(*m_game_data.get());
+	m_model->Tick(*m_game_data.get());
 }
 
 
@@ -68,6 +45,7 @@ void Game::Draw(Renderer& _renderer) const
 	UpdateCurrentRenderCamera(_renderer, *m_camera);
 
 	m_test_triangle->Draw(_renderer);
+	//m_model->Draw(_renderer);//test
 }
 
 
@@ -76,4 +54,13 @@ void Game::UpdateCurrentRenderCamera(Renderer& _renderer, Camera& _camera) const
 	_renderer.GetRenderData()->camera_view_matrix = _camera.GetViewMatrix();
 	_renderer.GetRenderData()->camera_projection_matrix = _camera.GetProjectionMatrix();
 	_renderer.GetRenderData()->camera_pos = _camera.GetTransform().GetPosition();
+}
+
+
+float Game::CalculateDeltaTime()
+{
+	DWORD currentTime = GetTickCount();
+	float  dt = min((float)(currentTime - m_playTime) / 1000.0f, 0.1f);
+	m_playTime = currentTime;
+	return dt;
 }
