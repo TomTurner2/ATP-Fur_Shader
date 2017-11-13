@@ -6,6 +6,14 @@
 #include <stdlib.h>
 
 
+Material::Material()
+{
+	m_vs_per_object.first = true;
+	m_vs_per_frame.first = true;
+	m_ps_per_frame.first = true;
+}
+
+
 Material::~Material()
 {
 	SAFE_RELEASE(m_vs_per_frame_buffer)

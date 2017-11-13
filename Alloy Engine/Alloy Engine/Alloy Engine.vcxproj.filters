@@ -188,6 +188,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Axe.obj" />
+    <None Include="Axe.obj">
+      <Filter>Resource Files\Models</Filter>
+    </None>
   </ItemGroup>
 </Project>

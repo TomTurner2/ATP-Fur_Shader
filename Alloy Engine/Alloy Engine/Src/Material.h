@@ -12,7 +12,7 @@ class Renderer;
 class Material
 {
 public:
-	Material() = default;
+	Material();
 	virtual ~Material();
 
 	virtual void CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer);

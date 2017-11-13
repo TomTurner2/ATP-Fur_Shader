@@ -8,8 +8,8 @@ Renderer::Renderer(Window& _window)
 	DXGI_SWAP_CHAIN_DESC swap_chain_desc = CreateSwapChainDesc(_window);
 	CreateDeviceContext(swap_chain_desc);
 	CreateRenderTarget();
-
 	m_render_data = std::make_unique<RenderData>();
+	m_target_window = &_window;
 }
 
 
@@ -19,8 +19,8 @@ void Renderer::BeginFrame() const
 	m_device_context->OMSetRenderTargets(1, &m_render_target_view, nullptr);
 
 	// Set viewport
-	auto viewport = CD3D11_VIEWPORT(0.f, 0.f, static_cast<float> (m_back_buffer_desc.Width),
-		static_cast<float> (m_back_buffer_desc.Height));
+	auto viewport = CD3D11_VIEWPORT(0.f, 0.f, m_target_window->GetWindowWidth(),
+		m_target_window->GetWindowHeight());
 	m_device_context->RSSetViewports(1, &viewport);
 
 	// Set clear colour
@@ -43,7 +43,7 @@ DXGI_SWAP_CHAIN_DESC Renderer::CreateSwapChainDesc(Window& _window) const
 	swap_chain_desc.BufferCount = 1;// Double buffer
 	swap_chain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;// Colour format (RGB 32 bit)
 	swap_chain_desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swap_chain_desc.OutputWindow = _window.getHandle();// Set target
+	swap_chain_desc.OutputWindow = _window.GetHandle();// Set target
 	swap_chain_desc.SampleDesc.Count = 8;// Antialiasing
 	swap_chain_desc.Windowed = true;
 
@@ -95,5 +95,11 @@ ID3D11DeviceContext* Renderer::GetDeviceContext() const
 RenderData* Renderer::GetRenderData() const
 {
 	return m_render_data.get();
+}
+
+
+Window * Renderer::GetTargetWindow() const
+{
+	return m_target_window;
 }
 #pragma endregion 

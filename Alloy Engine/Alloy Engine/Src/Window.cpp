@@ -32,21 +32,27 @@ Window::Window(std::string _window_title, unsigned int _width, unsigned int _hei
 		_initial_x_pos, _initial_y_pos, _width, _height, nullptr, nullptr, nullptr, nullptr);
 }
 
+float Window::GetAspectRatio() const
+{
+	float aspect_ratio = m_width / m_height;
+	return aspect_ratio;
+}
+
 
 #pragma region Getters
-HWND Window::getHandle() const
+HWND Window::GetHandle() const
 {
 	return m_handle;
 }
 
 
-unsigned int Window::getWindowWidth() const
+unsigned int Window::GetWindowWidth() const
 {
 	return m_width;
 }
 
 
-unsigned int Window::getWindowHeight() const
+unsigned int Window::GetWindowHeight() const
 {
 	return m_height;
 }

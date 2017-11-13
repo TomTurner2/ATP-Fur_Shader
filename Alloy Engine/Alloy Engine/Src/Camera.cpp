@@ -6,6 +6,7 @@ Camera::Camera(const Vector3 _pos, const Quaternion _rot,
 {
 	m_transform = Transform(_pos, _rot, _scale);
 	m_projection = Matrix::PerspectiveProjection(_fov, _aspect, _near_clip, _far_clip);
+	m_view_matrix.first = true;
 }
 
 

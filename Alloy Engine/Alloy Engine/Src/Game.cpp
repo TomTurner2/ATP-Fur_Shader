@@ -2,21 +2,24 @@
 #include "Triangle.h"
 #include "Camera.h"
 #include "Renderer.h"
+#include "Window.h"
 #include "TMath.h"
 #include "Model.h"
 
 
 Game::Game(Renderer& _renderer, InputManager& _input)
 {
-	m_camera = std::make_unique<Camera>(Vector3::Zero, Quaternion(Vector3::Right, 90),
-		Vector3::One, TMath::Radians(80), 1024 / 576, 0.1f, 10000);//TODO pass in window dimensions
+	m_camera = std::make_unique<Camera>(Vector3(21, 0, -85), Quaternion(Vector3::Forward, TMath::Radians(0)),
+		Vector3::One, TMath::Radians(80), _renderer.GetTargetWindow()->GetAspectRatio(), 0.1f, 10000);//TODO pass in window dimensions
 
 	//model loading test
 	m_model = std::make_unique<Model>();
 	m_model->LoadModel("./Axe.obj", _renderer);
 	m_model->LoadAllModelMaterials("Standard_Material_Vertex_Shader.cso",
 		"Standard_Material_Pixel_Shader.cso", _renderer);//load shader
-
+	m_model->GetTransform().SetScale(Vector3(1,1,1));
+	//m_model->GetTransform().SetRotation(Quaternion(Vector3::Up, 90));
+	
 	m_test_triangle = std::make_unique<Triangle>(_renderer);
 	m_game_data = std::make_unique<GameData>();
 
@@ -26,7 +29,7 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 	m_game_data->input->BindKey(LEFT, "A");
 	m_game_data->input->BindKey(RIGHT, "D");
 	m_game_data->input->BindKey(UP, "E");
-	m_game_data->input->BindKey(DOWN, "F");
+	m_game_data->input->BindKey(DOWN, "Q");
 }
 
 

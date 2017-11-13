@@ -16,6 +16,7 @@ public:
 	ID3D11Device* GetDevice() const;
 	ID3D11DeviceContext* GetDeviceContext() const;
 	RenderData* GetRenderData() const;
+	Window* GetTargetWindow() const;
 
 private:
 	IDXGISwapChain* m_swap_chain { nullptr };
@@ -25,6 +26,7 @@ private:
 	D3D11_TEXTURE2D_DESC m_back_buffer_desc;
 	DXGI_SWAP_CHAIN_DESC CreateSwapChainDesc(Window& _window) const;
 	std::unique_ptr<RenderData> m_render_data { nullptr };
+	Window* m_target_window { nullptr };
 
 	void CreateDeviceContext(DXGI_SWAP_CHAIN_DESC& _swap_chain);
 	void CreateRenderTarget();
