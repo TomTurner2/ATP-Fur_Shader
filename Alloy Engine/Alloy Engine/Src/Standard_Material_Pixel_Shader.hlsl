@@ -15,7 +15,7 @@ struct PixelIn
 
 float4 main(PixelIn pin) : SV_TARGET
 {
-	float4 diffuse = float4(0.f, 1.f, 0.f, 1.f);
+	float4 diffuse = float4(1.f, 0.f, 0.f, 1.f);
 
 	return saturate(diffuse);
 }

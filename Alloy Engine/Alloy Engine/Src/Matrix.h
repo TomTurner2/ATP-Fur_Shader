@@ -26,6 +26,8 @@ public:
 		float _m_41, float _m_42, float _m_43, float _m_44);
 	~Matrix() = default;
 
+
+	void Display() const;
 	Matrix Transpose() const;
 	float Determinant() const;
 

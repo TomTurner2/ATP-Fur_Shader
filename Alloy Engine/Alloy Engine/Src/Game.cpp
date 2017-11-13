@@ -9,7 +9,7 @@
 Game::Game(Renderer& _renderer, InputManager& _input)
 {
 	m_camera = std::make_unique<Camera>(Vector3::Zero, Quaternion(Vector3::Right, 90),
-		Vector3::One, TMath::Radians(80), 1024 / 576, 0.1f, 100);//TODO pass in window dimensions
+		Vector3::One, TMath::Radians(80), 1024 / 576, 0.1f, 10000);//TODO pass in window dimensions
 
 	//model loading test
 	m_model = std::make_unique<Model>();
@@ -44,8 +44,8 @@ void Game::Draw(Renderer& _renderer) const
 	//update the camera info for rendering
 	UpdateCurrentRenderCamera(_renderer, *m_camera);
 
-	m_test_triangle->Draw(_renderer);
-	//m_model->Draw(_renderer);//test
+	//m_test_triangle->Draw(_renderer);
+	m_model->Draw(_renderer);//test
 }
 
 
@@ -60,7 +60,7 @@ void Game::UpdateCurrentRenderCamera(Renderer& _renderer, Camera& _camera) const
 float Game::CalculateDeltaTime()
 {
 	DWORD currentTime = GetTickCount();
-	float  dt = min((float)(currentTime - m_playTime) / 1000.0f, 0.1f);
+	float  dt = min(static_cast<float>((currentTime - m_playTime) / 1000.0f), 0.1f);
 	m_playTime = currentTime;
 	return dt;
 }

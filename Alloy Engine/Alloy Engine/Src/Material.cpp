@@ -91,9 +91,11 @@ void Material::UpdateBuffers(Renderer& _renderer)
 
 	if (m_vs_per_object.first)//if outdated
 	{
-		D3D11_MAPPED_SUBRESOURCE vs_per_object_mapping;
+		D3D11_MAPPED_SUBRESOURCE vs_per_object_mapping { nullptr };
 		hr = _renderer.GetDeviceContext()->Map(m_vs_per_object_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0x00, &vs_per_object_mapping);//map across buffer
+			0, &vs_per_object_mapping);//map across buffer
+
+		memcpy(vs_per_object_mapping.pData, &m_vs_per_object.second, sizeof(VSPerObjectBuffer));
 
 		if (hr != MB_OK)
 		{
@@ -105,9 +107,11 @@ void Material::UpdateBuffers(Renderer& _renderer)
 
 	if (m_vs_per_frame.first)//if outdated
 	{
-		D3D11_MAPPED_SUBRESOURCE vs_per_frame_mapping;
+		D3D11_MAPPED_SUBRESOURCE vs_per_frame_mapping { nullptr };
 		hr = _renderer.GetDeviceContext()->Map(m_vs_per_frame_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0x00, &vs_per_frame_mapping);
+			0, &vs_per_frame_mapping);
+
+		memcpy(vs_per_frame_mapping.pData, &m_vs_per_frame.second, sizeof(VSPerFrameBuffer));
 
 		if (hr != MB_OK)
 		{
@@ -119,9 +123,11 @@ void Material::UpdateBuffers(Renderer& _renderer)
 
 	if (m_ps_per_frame.first)//if outdated
 	{
-		D3D11_MAPPED_SUBRESOURCE ps_per_frame_mapping;
+		D3D11_MAPPED_SUBRESOURCE ps_per_frame_mapping { nullptr };
 		hr = _renderer.GetDeviceContext()->Map(m_ps_per_frame_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0x00, &ps_per_frame_mapping);
+			0, &ps_per_frame_mapping);
+
+		memcpy(ps_per_frame_mapping.pData, &m_ps_per_frame.second, sizeof(PSPerFrameBuffer));
 
 		if (hr != MB_OK)
 		{

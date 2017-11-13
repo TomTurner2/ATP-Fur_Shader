@@ -32,6 +32,19 @@ Matrix::Matrix(float _m_11, float _m_12, float _m_13, float _m_14, float _m_21,
 {}
 
 
+void Matrix::Display() const
+{
+	for (unsigned int col = 0; col < 4; ++col)
+	{
+		for (unsigned int row = 0; row < 4; ++row)
+		{
+			printf("%f ", m[col][row]);
+		}
+		printf("\n");
+	}
+}
+
+
 Matrix Matrix::Transpose() const
 {
 	Matrix transpose;
