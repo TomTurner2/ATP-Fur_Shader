@@ -63,6 +63,7 @@ void Mesh::CreateMesh(const std::vector<Vertex3D>& _vertices, const std::vector<
 	result = _renderer.GetDevice()->CreateBuffer(&indicie_buffer_desc, &index_data, &m_index_buffer);
 
 	m_indicie_count = _indicies.size();
+	m_vertex_count = _vertices.size();
 
 	if (result != S_OK)
 		MessageBox(nullptr, "[Mesh](CreateMesh) Failed to create index buffer", "Error", MB_OK);
@@ -80,7 +81,7 @@ void Mesh::Draw(Renderer& _renderer)
 	m_material->UpdateBuffers(_renderer);
 
 	// Bind shaders
-	device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	device_context->IASetInputLayout(m_material->GetInputLayout());
 	device_context->VSSetShader(m_material->GetVertexShader(), nullptr, 0);
 	device_context->PSSetShader(m_material->GetPixelShader(), nullptr, 0);
@@ -91,5 +92,5 @@ void Mesh::Draw(Renderer& _renderer)
 	
 	device_context->IASetVertexBuffers(0, 1, &m_vertex_buffer, &stride, &offset);
 	device_context->IASetIndexBuffer(m_index_buffer, DXGI_FORMAT_R32_UINT, 0);
-	device_context->Draw(m_indicie_count, 0);// Draw call
+	device_context->Draw(m_vertex_count, 0);// Draw call
 }

@@ -40,7 +40,7 @@ PixelIn main(VertexIn vin)
 	vout.position = mul(vout.position, m_proj);
 
 	vout.world_position = mul(vin.position, m_model);//convert to world space
-
 	vout.normal = mul(vin.normal, m_model);//convert to world space normals
+
 	return vout;
 }

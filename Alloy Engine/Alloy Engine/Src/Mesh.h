@@ -27,4 +27,5 @@ private:
 	ID3D11Buffer* m_vertex_buffer { nullptr };
 	ID3D11Buffer* m_index_buffer{ nullptr };
 	unsigned int m_indicie_count = 0;
+	unsigned int m_vertex_count = 0;
 };

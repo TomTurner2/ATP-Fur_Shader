@@ -192,4 +192,9 @@
       <Filter>Resource Files\Models</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="Sphere.obj">
+      <Filter>Resource Files\Models</Filter>
+    </Object>
+  </ItemGroup>
 </Project>

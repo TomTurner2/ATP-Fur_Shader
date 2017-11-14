@@ -64,11 +64,13 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 
 		std::vector<unsigned int> indicies;
 		indicies.reserve(mesh->mNumFaces * 3);
+
 		for (unsigned int faceIdx = 0; faceIdx < mesh->mNumFaces; ++faceIdx)
 		{
-			indicies.push_back(mesh->mFaces[faceIdx].mIndices[0]);
-			indicies.push_back(mesh->mFaces[faceIdx].mIndices[1]);
-			indicies.push_back(mesh->mFaces[faceIdx].mIndices[2]);
+			for (unsigned int i = 0; i < mesh->mFaces[faceIdx].mNumIndices; ++i)
+			{
+				indicies.push_back(mesh->mFaces[faceIdx].mIndices[i]);
+			}
 		}
 
 		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));
