@@ -17,6 +17,8 @@ public:
 	ID3D11DeviceContext* GetDeviceContext() const;
 	RenderData* GetRenderData() const;
 	Window* GetTargetWindow() const;
+	std::pair<float, float> GetViewportDimensions() const;
+	float GetViewportAspectRatio() const;
 
 private:
 	IDXGISwapChain* m_swap_chain { nullptr };

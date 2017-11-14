@@ -19,8 +19,8 @@ void Renderer::BeginFrame() const
 	m_device_context->OMSetRenderTargets(1, &m_render_target_view, nullptr);
 
 	// Set viewport
-	auto viewport = CD3D11_VIEWPORT(0.f, 0.f, m_target_window->GetWindowWidth(),
-		m_target_window->GetWindowHeight());
+	auto viewport = CD3D11_VIEWPORT(0.f, 0.f, m_back_buffer_desc.Width,
+		m_back_buffer_desc.Width);
 	m_device_context->RSSetViewports(1, &viewport);
 
 	// Set clear colour
@@ -101,5 +101,18 @@ RenderData* Renderer::GetRenderData() const
 Window * Renderer::GetTargetWindow() const
 {
 	return m_target_window;
+}
+
+
+//returns width, height in a pair
+std::pair<float, float> Renderer::GetViewportDimensions() const
+{
+	return std::pair<float, float>(m_back_buffer_desc.Width, m_back_buffer_desc.Height);
+}
+
+
+float Renderer::GetViewportAspectRatio() const
+{
+	return m_back_buffer_desc.Width / m_back_buffer_desc.Height;
 }
 #pragma endregion 
