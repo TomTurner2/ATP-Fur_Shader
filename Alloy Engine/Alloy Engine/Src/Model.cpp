@@ -26,7 +26,7 @@ void Model::Draw(Renderer& _renderer)
 
 void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 {
-	const aiScene* scene = aiImportFile(_model_name.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = aiImportFile(_model_name.c_str(), 0);
 
 	if (scene == nullptr)
 	{

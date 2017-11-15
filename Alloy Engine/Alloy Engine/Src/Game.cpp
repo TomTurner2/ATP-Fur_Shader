@@ -14,7 +14,7 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 
 	//model loading test
 	m_model = std::make_unique<Model>();
-	m_model->LoadModel("./Sphere.obj", _renderer);
+	m_model->LoadModel("./Axe.obj", _renderer);
 	m_model->LoadAllModelMaterials("Standard_Material_Vertex_Shader.cso",
 		"Standard_Material_Pixel_Shader.cso", _renderer);//load shader
 	m_model->GetTransform().SetScale(Vector3(1,1,1));

@@ -62,7 +62,7 @@ void Mesh::CreateMesh(const std::vector<Vertex3D>& _vertices, const std::vector<
 
 	result = _renderer.GetDevice()->CreateBuffer(&indicie_buffer_desc, &index_data, &m_index_buffer);
 
-	m_indicie_count = _indicies.size();
+	m_indice_count = _indicies.size();
 	m_vertex_count = _vertices.size();
 
 	if (result != S_OK)
