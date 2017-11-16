@@ -20,7 +20,6 @@ private:
 	DWORD m_playTime;
 
 	std::unique_ptr<GameData> m_game_data { nullptr };
-	std::unique_ptr<Triangle> m_test_triangle { nullptr };
 	std::unique_ptr<Model> m_model { nullptr };
 	std::unique_ptr<Camera> m_camera { nullptr };
 

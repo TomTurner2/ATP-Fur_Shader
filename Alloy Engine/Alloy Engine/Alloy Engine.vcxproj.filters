@@ -185,16 +185,18 @@
     <FxCompile Include="Src\Standard_Material_Pixel_Shader.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Src\PBR_Common_Functions.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\PBR_Lighting.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Axe.obj">
       <Filter>Resource Files\Models</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Sphere.obj">
-      <Filter>Resource Files\Models</Filter>
-    </Object>
+    <None Include="Sphere.obj" />
   </ItemGroup>
 </Project>

@@ -10,16 +10,15 @@
 Game::Game(Renderer& _renderer, InputManager& _input)
 {
 	m_camera = std::make_unique<Camera>(Vector3(15, -48, -128), Quaternion(Vector3::Forward, TMath::Radians(0)),
-		Vector3::One, TMath::Radians(80), _renderer.GetViewportAspectRatio(), 0.1f, 10000);//TODO pass in window dimensions
+		Vector3::One, TMath::Radians(80), _renderer.GetViewportAspectRatio(), 0.1f, 10000);
 
 	//model loading test
 	m_model = std::make_unique<Model>();
-	m_model->LoadModel("./Axe.obj", _renderer);
+	m_model->LoadModel("./Sphere.obj", _renderer);
 	m_model->LoadAllModelMaterials("Standard_Material_Vertex_Shader.cso",
 		"Standard_Material_Pixel_Shader.cso", _renderer);//load shader
 	m_model->GetTransform().SetScale(Vector3(1,1,1));
 	
-	m_test_triangle = std::make_unique<Triangle>(_renderer);
 	m_game_data = std::make_unique<GameData>();
 
 	m_game_data->input = &_input;
@@ -45,8 +44,6 @@ void Game::Draw(Renderer& _renderer) const
 {
 	//update the camera info for rendering
 	UpdateCurrentRenderCamera(_renderer, *m_camera);
-
-	//m_test_triangle->Draw(_renderer);
 	m_model->Draw(_renderer);//test
 }
 
