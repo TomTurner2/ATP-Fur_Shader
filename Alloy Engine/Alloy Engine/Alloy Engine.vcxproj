@@ -185,25 +185,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include.;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\packages\AntTweakBar\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(ProjectDir)..\packages\AntTweakBar\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include.;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\packages\AntTweakBar\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(ProjectDir)..\packages\AntTweakBar\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include.;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\packages\AntTweakBar\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(ProjectDir)..\packages\AntTweakBar\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include.;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Src;$(ProjectDir)..\packages\AntTweakBar\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\packages\AntTweakBar\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(ProjectDir)..\packages\AntTweakBar\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -272,14 +272,5 @@
     <Import Project="..\packages\directxtk_desktop_2015.2017.9.22.1\build\native\directxtk_desktop_2015.targets" Condition="Exists('..\packages\directxtk_desktop_2015.2017.9.22.1\build\native\directxtk_desktop_2015.targets')" />
     <Import Project="..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets" Condition="Exists('..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" />
     <Import Project="..\packages\Assimp.3.0.0\build\native\Assimp.targets" Condition="Exists('..\packages\Assimp.3.0.0\build\native\Assimp.targets')" />
-    <Import Project="..\packages\AntTweakBar.redist.1.16.3\build\native\AntTweakBar.redist.targets" Condition="Exists('..\packages\AntTweakBar.redist.1.16.3\build\native\AntTweakBar.redist.targets')" />
-    <Import Project="..\packages\AntTweakBar.1.16.3\build\native\AntTweakBar.targets" Condition="Exists('..\packages\AntTweakBar.1.16.3\build\native\AntTweakBar.targets')" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\AntTweakBar.redist.1.16.3\build\native\AntTweakBar.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AntTweakBar.redist.1.16.3\build\native\AntTweakBar.redist.targets'))" />
-    <Error Condition="!Exists('..\packages\AntTweakBar.1.16.3\build\native\AntTweakBar.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AntTweakBar.1.16.3\build\native\AntTweakBar.targets'))" />
-  </Target>
 </Project>
