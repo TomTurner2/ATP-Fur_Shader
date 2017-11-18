@@ -12,12 +12,16 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 	m_camera = std::make_unique<Camera>(Vector3(15, -48, -128), Quaternion(Vector3::Forward, TMath::Radians(0)),
 		Vector3::One, TMath::Radians(80), _renderer.GetViewportAspectRatio(), 0.1f, 10000);
 
+	m_bar = TwNewBar("Hair_and_Fur");
+	TwDefine("Hair_and_Fur color='46 53 49' text=light ");
+	TwDefine("Hair_and_Fur alpha=255 ");
+
 	//model loading test
 	m_model = std::make_unique<Model>();
 	m_model->LoadModel("./Sphere.obj", _renderer);
 	m_model->LoadAllModelMaterials("Standard_Material_Vertex_Shader.cso",
 		"Standard_Material_Pixel_Shader.cso", _renderer);//load shader
-	m_model->GetTransform().SetScale(Vector3(1,1,1));
+	m_model->GetTransform().SetScale(Vector3(1000,1000,1000));
 	
 	m_game_data = std::make_unique<GameData>();
 

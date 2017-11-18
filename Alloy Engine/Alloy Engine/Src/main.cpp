@@ -13,6 +13,7 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 
 	DebugSystem debugger;
 	debugger.CreateConsoleWindow();
+	debugger.InitAntTweakBar(renderer);
 
 	std::unique_ptr<InputManager> input_manager = std::make_unique<InputManager>();
 	std::unique_ptr<Game> game = std::make_unique<Game>(renderer, *input_manager);
@@ -35,7 +36,8 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 		game->Tick();
 		renderer.BeginFrame();
 		game->Draw(renderer);
-		renderer.EndFrame();
+		debugger.DrawDebugUI();
+		renderer.EndFrame();	
 	}
 
 	return 0;

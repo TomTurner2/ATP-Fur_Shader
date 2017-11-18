@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Triangle.h"
 #include "Model.h"
+#include <AntTweakBar.h>
 
 class Renderer;
 
@@ -22,6 +23,7 @@ private:
 	std::unique_ptr<GameData> m_game_data { nullptr };
 	std::unique_ptr<Model> m_model { nullptr };
 	std::unique_ptr<Camera> m_camera { nullptr };
+	TwBar* m_bar { nullptr };
 
 	void UpdateCurrentRenderCamera(Renderer& _renderer, Camera& _camera) const;
 	float CalculateDeltaTime();

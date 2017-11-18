@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include "Window.h"
 #include <winuser.h>
-
+#include "AntTweakBar.h"
 
 LRESULT CALLBACK WinProc(HWND _handle, UINT _msg, WPARAM _wparam, LPARAM _lparam)
 {
@@ -10,6 +10,10 @@ LRESULT CALLBACK WinProc(HWND _handle, UINT _msg, WPARAM _wparam, LPARAM _lparam
 		PostQuitMessage(0);// Check for quit
 		return 0;
 	}
+
+	if (TwEventWin(_handle, _msg, _wparam, _lparam)) // send event message to AntTweakBar
+		return 0; // event has been handled by
+
 
 	return DefWindowProc(_handle, _msg, _wparam, _lparam);
 }
