@@ -14,6 +14,7 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 	CreateModel(_renderer);
 	CreateGameData(_input);
 	CreateDebugUI();
+	BindParamsToUI();
 }
 
 
@@ -21,9 +22,9 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 void Game::CreateLight()
 {
 	m_light.position = Vector3(50.0f, 50.0f, -250.0f);
-	m_light.r = 1;
-	m_light.g = 1;
-	m_light.b = 1;
+	m_light.colour[0] = 1;
+	m_light.colour[1] = 1;
+	m_light.colour[2] = 1;
 }
 
 
@@ -70,7 +71,24 @@ void Game::CreateDebugUI()
 
 void Game::BindParamsToUI()
 {
-	//TwAddVarRW(m_bar, "Light Colour", TW_TYPE_COLOR3F, &submarineColor, " colormode=hls ");
+	//bing light to UI
+	TwAddVarRW(m_bar, "Light Colour", TW_TYPE_COLOR3F, &m_light.colour, " colormode=rgb ");
+	TwAddVarRW(m_bar, "light_X", TW_TYPE_FLOAT, &m_light.position.x, "");
+	TwAddVarRW(m_bar, "light_Y", TW_TYPE_FLOAT, &m_light.position.y, "");
+	TwAddVarRW(m_bar, "light_Z", TW_TYPE_FLOAT, &m_light.position.z, "");
+
+	//move light position to group
+	TwDefine("Fur_Shader_Prototype/light_X   group=Light_Position");
+	TwDefine("Fur_Shader_Prototype/light_Y   group=Light_Position");
+	TwDefine("Fur_Shader_Prototype/light_Z   group=Light_Position");
+
+	TwAddVarRW(m_bar, "X", TW_TYPE_FLOAT, &m_light.position.x, "");
+	TwAddVarRW(m_bar, "Y", TW_TYPE_FLOAT, &m_light.position.y, "");
+	TwAddVarRW(m_bar, "Z", TW_TYPE_FLOAT, &m_light.position.z, "");
+
+	TwDefine("Fur_Shader_Prototype/light_X  label='X' ");
+	TwDefine("Fur_Shader_Prototype/light_Y  label='X' ");
+	TwDefine("Fur_Shader_Prototype/light_Z  label='X' ");
 }
 #pragma endregion
 
