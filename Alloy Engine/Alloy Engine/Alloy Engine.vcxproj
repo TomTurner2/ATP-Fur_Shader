@@ -28,6 +28,7 @@
     <ClInclude Include="Src\GameObject.h" />
     <ClInclude Include="Src\InputManager.h" />
     <ClInclude Include="Src\KeyState.h" />
+    <ClInclude Include="Src\Light.h" />
     <ClInclude Include="Src\Macros.h" />
     <ClInclude Include="Src\Material.h" />
     <ClInclude Include="Src\TMath.h" />

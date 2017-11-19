@@ -27,11 +27,11 @@ float3 DirectSpecularBRDF(float3 _roughness, float3 _specular_albedo, float3 _po
 
 	float alpha_squared = _roughness * _roughness;
 
-	float  d = alpha_squared / (Pi * pow(nrml_dot_half_vec * nrml_dot_half_vec * (alpha_squared - 1) + 1, 2.0f));//normal distribution
+	float  d = alpha_squared / (Pi * pow(nrml_dot_half_vec * nrml_dot_half_vec * (alpha_squared - 1) + 1, 2.0f));//beckmann distribution
 
-	float3 f = Schlick_Fresnel(_specular_albedo, half_vec, _light_dir);//fresnel
+	float3 f = SchlickFresnel(_specular_albedo, half_vec, _light_dir);//fresnel
 
-	float  g = G_Smith(_roughness, nrml_dot_view, nrml_dot_light);//geometry term
+	float  g = GSmith(_roughness, nrml_dot_view, nrml_dot_light);//geometry term
 
 	return d * f * g;
 }

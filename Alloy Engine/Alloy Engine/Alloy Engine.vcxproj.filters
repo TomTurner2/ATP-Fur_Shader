@@ -118,6 +118,9 @@
     <ClInclude Include="Src\TMath.h">
       <Filter>Headers\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Light.h">
+      <Filter>Headers\Structs and Enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -200,10 +203,6 @@
     <None Include="Sphere.obj">
       <Filter>Resource Files\Models</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Big_Cat.obj">
-      <Filter>Resource Files\Models</Filter>
-    </Object>
+    <None Include="Big_Cat.obj" />
   </ItemGroup>
 </Project>

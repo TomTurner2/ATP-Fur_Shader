@@ -1,4 +1,15 @@
-﻿  Renderer.cpp
+﻿  Game.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\memory(2054): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\game.cpp(33): note: see reference to function template instantiation 'std::unique_ptr<Camera,std::default_delete<_Ty>> std::make_unique<Camera,Vector3,Quaternion,const Vector3&,float,float,int,int>(Vector3 &&,Quaternion &&,const Vector3 &,float &&,float &&,int &&,int &&)' being compiled
+          with
+          [
+              _Ty=Camera
+          ]
+  Generating Code...
+  Compiling...
+  main.cpp
+  Triangle.cpp
+  Renderer.cpp
 c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\renderer.cpp(40): warning C4244: 'argument': conversion from 'const UINT' to 'FLOAT', possible loss of data
 c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\renderer.cpp(48): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
 c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\renderer.cpp(48): warning C4305: 'initializing': truncation from 'double' to 'float'
@@ -16,5 +27,15 @@ c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.1
               _Other1=const UINT &,
               _Other2=const UINT &
           ]
+  Mesh.cpp
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\mesh.cpp(40): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\mesh.cpp(65): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\mesh.cpp(66): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Material.cpp
+  DebugSystem.cpp
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\debugsystem.cpp(13): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(242): note: see declaration of 'freopen'
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\debugsystem.cpp(25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.exe
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.pdb (Partial PDB)
