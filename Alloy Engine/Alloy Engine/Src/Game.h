@@ -24,6 +24,7 @@ private:
 	std::unique_ptr<Model> m_model { nullptr };
 	std::unique_ptr<Camera> m_camera { nullptr };
 	TwBar* m_bar { nullptr };
+	float m_model_rot = 0;
 
 	void UpdateCurrentRenderCamera(Renderer& _renderer, Camera& _camera) const;
 	float CalculateDeltaTime();

@@ -20,7 +20,7 @@ float4 main(PixelIn pin) : SV_TARGET
 {
 	float3 diffuse_albedo = float3(0.5f, 0.5f, 0.5f);
 	float3 specular_albedo = float3(0.8f, 0.8f, 0.8f);
-	float roughness = 1;
+	float roughness = 0.1f;
 
 	float3 light_pos = float3(50.0f, 50.0f, -250.0f);
 	float3 light_colour = float3(1, 1, 1);

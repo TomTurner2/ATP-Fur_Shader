@@ -201,4 +201,9 @@
       <Filter>Resource Files\Models</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="Big_Cat.obj">
+      <Filter>Resource Files\Models</Filter>
+    </Object>
+  </ItemGroup>
 </Project>

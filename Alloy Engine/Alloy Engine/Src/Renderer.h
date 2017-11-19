@@ -9,6 +9,7 @@ class Renderer
 {
 public:
 	explicit Renderer(Window& _window);
+	~Renderer();
 
 	void BeginFrame() const;
 	void EndFrame() const;
@@ -30,6 +31,14 @@ private:
 	std::unique_ptr<RenderData> m_render_data { nullptr };
 	Window* m_target_window { nullptr };
 
+
+	ID3D11Texture2D* m_depthStencilBuffer;
+	ID3D11DepthStencilState* m_depthStencilState;
+	ID3D11DepthStencilView* m_depthStencilView;
+	ID3D11RasterizerState* m_rasterState;
+
+
 	void CreateDeviceContext(DXGI_SWAP_CHAIN_DESC& _swap_chain);
 	void CreateRenderTarget();
+	void CreateDepthBuffer();
 };

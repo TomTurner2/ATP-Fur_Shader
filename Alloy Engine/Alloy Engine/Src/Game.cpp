@@ -11,7 +11,7 @@
 Game::Game(Renderer& _renderer, InputManager& _input)
 {
 	m_camera = std::make_unique<Camera>(Vector3(0, -75, -190), Quaternion(Vector3::Forward, TMath::Radians(0)),
-		Vector3::One, TMath::Radians(80), _renderer.GetViewportAspectRatio(), 0.1f, 10000);
+		Vector3::One, TMath::Radians(70), _renderer.GetViewportAspectRatio(), 5, 500);
 
 	m_bar = TwNewBar("Hair_and_Fur");
 	TwDefine("Hair_and_Fur color='46 53 49' text=light ");
@@ -19,11 +19,11 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 
 	//model loading test
 	m_model = std::make_unique<Model>();
-	m_model->LoadModel("./Sphere.obj", _renderer);
+	m_model->LoadModel("./Axe.obj", _renderer);
 	m_model->LoadAllModelMaterials("Standard_Material_Vertex_Shader.cso",
 		"Standard_Material_Pixel_Shader.cso", _renderer);//load shader
 	m_model->GetTransform().SetScale(Vector3(1, 1, 1));
-	
+	m_model->GetTransform().SetRotation(Quaternion(Vector3::Up, 90));
 	m_game_data = std::make_unique<GameData>();
 
 	m_game_data->input = &_input;
