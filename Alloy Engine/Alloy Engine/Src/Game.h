@@ -24,6 +24,7 @@ private:
 	std::unique_ptr<Model> m_model { nullptr };
 	std::unique_ptr<Camera> m_camera { nullptr };
 	Light m_light;
+	float light_colour[3];
 	TwBar* m_bar { nullptr };
 	float m_model_rot = 0;
 	
@@ -32,6 +33,7 @@ private:
 	void CreateModel(Renderer& _renderer);
 	void CreateGameData(InputManager& _input);
 	void CreateDebugUI();
+	void BindParamsToUI();
 
 	void UpdateRenderData(Renderer& _renderer, Camera& _camera) const;
 	float CalculateDeltaTime();

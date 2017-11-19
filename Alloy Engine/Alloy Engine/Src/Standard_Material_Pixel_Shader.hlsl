@@ -7,6 +7,23 @@ cbuffer PerFrame : register(b0)
 }
 
 
+struct Light
+{
+	float3 position;
+	float r;
+	float g;
+	float b;
+};
+
+
+cbuffer PerScene : register(b1)
+{
+	Light light;
+	float extra;
+}
+
+
+
 // must be same as vs struct
 struct PixelIn
 {
@@ -22,8 +39,8 @@ float4 main(PixelIn pin) : SV_TARGET
 	float3 specular_albedo = float3(0.8f, 0.8f, 0.8f);
 	float roughness = 0.1f;
 
-	float3 light_pos = float3(50.0f, 50.0f, -250.0f);
-	float3 light_colour = float3(1, 1, 1);
+	float3 light_pos = light.position;//float3(50.0f, 50.0f, -250.0f);
+	float3 light_colour = float3(light.r, light.g, light.b);
 
 	float3 direct_lighting = DirectLighting(roughness, pin.normal, camera_pos,
 	light_colour, light_pos, diffuse_albedo, specular_albedo, pin.world_position);

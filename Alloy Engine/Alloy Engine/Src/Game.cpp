@@ -66,6 +66,12 @@ void Game::CreateDebugUI()
 	TwDefine("Fur_Shader_Prototype color='46 53 49' text=light ");
 	TwDefine("Fur_Shader_Prototype alpha=255");
 }
+
+
+void Game::BindParamsToUI()
+{
+	//TwAddVarRW(m_bar, "Light Colour", TW_TYPE_COLOR3F, &submarineColor, " colormode=hls ");
+}
 #pragma endregion
 
 

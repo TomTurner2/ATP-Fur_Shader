@@ -11,6 +11,7 @@ Material::Material()
 	m_vs_per_object.first = true;
 	m_vs_per_frame.first = true;
 	m_ps_per_frame.first = true;
+	m_ps_per_scene.first = true;
 }
 
 
@@ -90,6 +91,13 @@ void Material::CreateBuffers(Renderer& _renderer)
 	{
 		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
 	}
+
+	buffer_desc.ByteWidth = sizeof(m_ps_per_scene.second);
+	hr = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_scene_buffer);
+	if (hr != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
+	}
 }
 
 
@@ -144,11 +152,28 @@ void Material::UpdateBuffers(Renderer& _renderer)
 		m_ps_per_frame.first = false;
 	}
 
+
+	if (m_ps_per_scene.first)//if outdated
+	{
+		D3D11_MAPPED_SUBRESOURCE ps_per_scene_mapping{ nullptr };
+		hr = _renderer.GetDeviceContext()->Map(m_ps_per_scene_buffer, 0, D3D11_MAP_WRITE_DISCARD,
+			0, &ps_per_scene_mapping);
+
+		memcpy(ps_per_scene_mapping.pData, &m_ps_per_scene.second, sizeof(PSPerSceneBuffer));
+
+		if (hr != MB_OK)
+		{
+			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
+		}
+		m_ps_per_scene.first = false;
+	}
+
 	// pass buffers to pipeline
 	ID3D11Buffer* vs_buffers[] = { m_vs_per_object_buffer, m_vs_per_frame_buffer };
 	_renderer.GetDeviceContext()->VSSetConstantBuffers(0, _countof(vs_buffers), vs_buffers);//set both vs buffers
 
-	_renderer.GetDeviceContext()->PSSetConstantBuffers(0, 1, &m_ps_per_frame_buffer);//currently I only have one ps buffer, need to add scene buffer containing lights
+	ID3D11Buffer* ps_buffers[] = { m_ps_per_frame_buffer, m_ps_per_scene_buffer };
+	_renderer.GetDeviceContext()->PSSetConstantBuffers(0, _countof(ps_buffers), ps_buffers);
 }
 
 
@@ -195,4 +220,11 @@ void Material::SetCameraPosition(Vector3 _pos)
 {
 	m_ps_per_frame.second.camera_position = _pos;
 	m_ps_per_frame.first = true;
+}
+
+
+void Material::SetLight(Light _light)
+{
+	m_ps_per_scene.second.light = _light;
+	m_ps_per_scene.first = true;
 }

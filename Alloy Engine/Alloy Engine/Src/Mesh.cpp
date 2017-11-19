@@ -78,6 +78,7 @@ void Mesh::Draw(Renderer& _renderer)
 	m_material->SetProjection(_renderer.GetRenderData()->camera_projection_matrix.Transpose());
 	m_material->SetView(_renderer.GetRenderData()->camera_view_matrix.Transpose());
 	m_material->SetTransformMatrix(m_transform.GetTransformMatrix().Transpose());
+	m_material->SetLight(_renderer.GetRenderData()->light);
 	m_material->UpdateBuffers(_renderer);
 
 	// Bind shaders

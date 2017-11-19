@@ -3,6 +3,7 @@
 #include <string>
 #include "Matrix.h"
 #include "Vector3.h"
+#include "Light.h"
 
 
 class Renderer;
@@ -26,6 +27,7 @@ public:
 	void SetView(Matrix _view);
 	void SetProjection(Matrix _projection);
 	void SetCameraPosition(Vector3 _pos);
+	void SetLight(Light _light);
 
 private:
 	ID3D11VertexShader* m_vertex_shader = nullptr;
@@ -37,9 +39,10 @@ private:
 	//vertex buffers
 	ID3D11Buffer* m_vs_per_object_buffer = nullptr;
 	ID3D11Buffer* m_vs_per_frame_buffer = nullptr;
-
+	
 	//pixel buffers
 	ID3D11Buffer* m_ps_per_frame_buffer = nullptr;
+	ID3D11Buffer* m_ps_per_scene_buffer = nullptr;
 
 	struct VSPerFrameBuffer
 	{
@@ -52,15 +55,21 @@ private:
 		Matrix transform;
 	};
 
-
 	struct PSPerFrameBuffer
 	{
 		Vector3 camera_position;
 		float extra;//buffer size must be a multiple of 16
 	};
 
+	struct PSPerSceneBuffer
+	{
+		Light light;
+		double extra;
+	};
+
 	//data to be passed to buffer (dirtyable pattern)
 	std::pair<bool, VSPerObjectBuffer> m_vs_per_object;
 	std::pair<bool, VSPerFrameBuffer> m_vs_per_frame;
 	std::pair<bool, PSPerFrameBuffer> m_ps_per_frame;
+	std::pair<bool, PSPerSceneBuffer> m_ps_per_scene;
 };
