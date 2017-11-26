@@ -178,7 +178,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 	}
 
 
-	if (/*m_ps_per_object.first*/true)//if outdated
+	if (m_ps_per_object.first)//if outdated
 	{
 		D3D11_MAPPED_SUBRESOURCE ps_per_object_mapping{ nullptr };
 		hr = _renderer.GetDeviceContext()->Map(m_ps_per_object_buffer, 0, D3D11_MAP_WRITE_DISCARD,
@@ -243,6 +243,9 @@ void Material::SetProjection(Matrix _projection)
 
 void Material::SetCameraPosition(Vector3 _pos)
 {
+	if (m_ps_per_frame.second.camera_position == _pos)
+		return;
+
 	m_ps_per_frame.second.camera_position = _pos;
 	m_ps_per_frame.first = true;
 }
