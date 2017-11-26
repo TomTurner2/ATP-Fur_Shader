@@ -12,9 +12,7 @@ Mesh::Mesh(std::string _name)
 
 Mesh::~Mesh()
 {
-	//SAFE_RELEASE(m_vertex_buffer);
-	//SAFE_RELEASE(m_index_buffer);
-	//SAFE_DELETE(m_material);
+
 }
 
 

@@ -12,6 +12,7 @@ Material::Material()
 	m_vs_per_frame.first = true;
 	m_ps_per_frame.first = true;
 	m_ps_per_scene.first = true;
+	m_ps_per_object.first = true;
 }
 
 
@@ -98,6 +99,14 @@ void Material::CreateBuffers(Renderer& _renderer)
 	{
 		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
 	}
+
+
+	buffer_desc.ByteWidth = sizeof(m_ps_per_object.second);
+	hr = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_object_buffer);
+	if (hr != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
+	}
 }
 
 
@@ -168,11 +177,27 @@ void Material::UpdateBuffers(Renderer& _renderer)
 		m_ps_per_scene.first = false;
 	}
 
+
+	if (/*m_ps_per_object.first*/true)//if outdated
+	{
+		D3D11_MAPPED_SUBRESOURCE ps_per_object_mapping{ nullptr };
+		hr = _renderer.GetDeviceContext()->Map(m_ps_per_object_buffer, 0, D3D11_MAP_WRITE_DISCARD,
+			0, &ps_per_object_mapping);
+
+		memcpy(ps_per_object_mapping.pData, &m_ps_per_object.second, sizeof(PSPerObjectBuffer));
+
+		if (hr != MB_OK)
+		{
+			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
+		}
+		m_ps_per_object.first = false;
+	}
+
 	// pass buffers to pipeline
 	ID3D11Buffer* vs_buffers[] = { m_vs_per_object_buffer, m_vs_per_frame_buffer };
 	_renderer.GetDeviceContext()->VSSetConstantBuffers(0, _countof(vs_buffers), vs_buffers);//set both vs buffers
 
-	ID3D11Buffer* ps_buffers[] = { m_ps_per_frame_buffer, m_ps_per_scene_buffer };
+	ID3D11Buffer* ps_buffers[] = { m_ps_per_frame_buffer, m_ps_per_scene_buffer, m_ps_per_object_buffer };
 	_renderer.GetDeviceContext()->PSSetConstantBuffers(0, _countof(ps_buffers), ps_buffers);
 }
 
@@ -227,4 +252,11 @@ void Material::SetLight(Light _light)
 {
 	m_ps_per_scene.second.light = _light;
 	m_ps_per_scene.first = true;
+}
+
+
+void Material::SetMaterialParams(PBRMaterialParams _pbr_params)
+{
+	m_ps_per_object.second.material_params = _pbr_params;
+	m_ps_per_object.first = true;
 }

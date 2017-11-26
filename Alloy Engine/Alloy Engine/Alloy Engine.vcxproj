@@ -31,6 +31,7 @@
     <ClInclude Include="Src\Light.h" />
     <ClInclude Include="Src\Macros.h" />
     <ClInclude Include="Src\Material.h" />
+    <ClInclude Include="Src\PBRMaterialParams.h" />
     <ClInclude Include="Src\TMath.h" />
     <ClInclude Include="Src\Matrix.h" />
     <ClInclude Include="Src\Mesh.h" />

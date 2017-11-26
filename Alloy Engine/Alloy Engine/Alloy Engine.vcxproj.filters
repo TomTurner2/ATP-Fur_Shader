@@ -121,6 +121,9 @@
     <ClInclude Include="Src\Light.h">
       <Filter>Headers\Structs and Enums</Filter>
     </ClInclude>
+    <ClInclude Include="Src\PBRMaterialParams.h">
+      <Filter>Headers\Materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">

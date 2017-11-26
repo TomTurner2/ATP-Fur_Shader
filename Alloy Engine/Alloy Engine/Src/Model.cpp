@@ -93,6 +93,15 @@ void Model::LoadAllModelMaterials(std::string _vertex_shader, std::string _pixel
 }
 
 
+void Model::SetAllMaterialParams(PBRMaterialParams _pbr_params)
+{
+	for (auto &mesh : m_meshes)
+	{
+		mesh.GetMaterial()->SetMaterialParams(_pbr_params);
+	}
+}
+
+
 Mesh* Model::GetMeshByName(std::string _name)
 {
 	std::vector<Mesh>::iterator it = std::find_if(m_meshes.begin(),

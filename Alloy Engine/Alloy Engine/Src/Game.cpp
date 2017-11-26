@@ -81,14 +81,6 @@ void Game::BindParamsToUI()
 	TwDefine("Fur_Shader_Prototype/light_X   group=Light_Position");
 	TwDefine("Fur_Shader_Prototype/light_Y   group=Light_Position");
 	TwDefine("Fur_Shader_Prototype/light_Z   group=Light_Position");
-
-	TwAddVarRW(m_bar, "X", TW_TYPE_FLOAT, &m_light.position.x, "");
-	TwAddVarRW(m_bar, "Y", TW_TYPE_FLOAT, &m_light.position.y, "");
-	TwAddVarRW(m_bar, "Z", TW_TYPE_FLOAT, &m_light.position.z, "");
-
-	TwDefine("Fur_Shader_Prototype/light_X  label='X' ");
-	TwDefine("Fur_Shader_Prototype/light_Y  label='X' ");
-	TwDefine("Fur_Shader_Prototype/light_Z  label='X' ");
 }
 #pragma endregion
 
@@ -98,6 +90,7 @@ void Game::Tick()
 	m_game_data->delta_time = CalculateDeltaTime();
 	m_camera->Tick(*m_game_data.get());
 	m_model->Tick(*m_game_data.get());
+	m_model->SetAllMaterialParams(material);
 }
 
 

@@ -4,6 +4,7 @@
 #include "Matrix.h"
 #include "Vector3.h"
 #include "Light.h"
+#include "PBRMaterialParams.h"
 
 
 class Renderer;
@@ -28,6 +29,7 @@ public:
 	void SetProjection(Matrix _projection);
 	void SetCameraPosition(Vector3 _pos);
 	void SetLight(Light _light);
+	void SetMaterialParams(PBRMaterialParams _pbr_params);
 
 private:
 	ID3D11VertexShader* m_vertex_shader = nullptr;
@@ -43,6 +45,7 @@ private:
 	//pixel buffers
 	ID3D11Buffer* m_ps_per_frame_buffer = nullptr;
 	ID3D11Buffer* m_ps_per_scene_buffer = nullptr;
+	ID3D11Buffer* m_ps_per_object_buffer = nullptr;
 
 	struct VSPerFrameBuffer
 	{
@@ -67,9 +70,16 @@ private:
 		double extra;
 	};
 
+	struct PSPerObjectBuffer
+	{
+		PBRMaterialParams material_params;
+		float extra;
+	};
+
 	//data to be passed to buffer (dirtyable pattern)
 	std::pair<bool, VSPerObjectBuffer> m_vs_per_object;
 	std::pair<bool, VSPerFrameBuffer> m_vs_per_frame;
 	std::pair<bool, PSPerFrameBuffer> m_ps_per_frame;
 	std::pair<bool, PSPerSceneBuffer> m_ps_per_scene;
+	std::pair<bool, PSPerObjectBuffer> m_ps_per_object;
 };

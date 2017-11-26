@@ -23,6 +23,7 @@ private:
 	std::unique_ptr<GameData> m_game_data { nullptr };
 	std::unique_ptr<Model> m_model { nullptr };
 	std::unique_ptr<Camera> m_camera { nullptr };
+	PBRMaterialParams material;
 	Light m_light;
 	TwBar* m_bar { nullptr };
 	float m_model_rot = 0;
