@@ -197,12 +197,6 @@
     <FxCompile Include="Src\Standard_Material_Pixel_Shader.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Src\Base_VS_Buffers.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Src\Base_PS_Buffers.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -220,6 +214,12 @@
     </None>
     <None Include="Big_Cat.obj">
       <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="Src\Base_PS_Buffers.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Src\Base_VS_Buffers.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

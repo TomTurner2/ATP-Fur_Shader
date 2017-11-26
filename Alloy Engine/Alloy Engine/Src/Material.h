@@ -5,6 +5,7 @@
 #include "Vector3.h"
 #include "Light.h"
 #include "PBRMaterialParams.h"
+#include <vector>
 
 
 class Renderer;
@@ -31,17 +32,17 @@ public:
 	void SetLight(Light _light);
 	void SetMaterialParams(PBRMaterialParams _pbr_params);
 
-protected:
+private:
+	void SetBuffers(Renderer& _renderer);
+
 	ID3D11VertexShader* m_vertex_shader = nullptr;
 	ID3D11PixelShader* m_pixel_shader = nullptr;
 	ID3D11InputLayout* m_input_layout = nullptr;
 
-	virtual void CreateBuffers(Renderer& _renderer);
-
 	//vertex buffers
 	ID3D11Buffer* m_vs_per_object_buffer = nullptr;
 	ID3D11Buffer* m_vs_per_frame_buffer = nullptr;
-	
+
 	//pixel buffers
 	ID3D11Buffer* m_ps_per_frame_buffer = nullptr;
 	ID3D11Buffer* m_ps_per_scene_buffer = nullptr;
@@ -82,4 +83,12 @@ protected:
 	std::pair<bool, PSPerFrameBuffer> m_ps_per_frame;
 	std::pair<bool, PSPerSceneBuffer> m_ps_per_scene;
 	std::pair<bool, PSPerObjectBuffer> m_ps_per_object;
+
+protected:
+	virtual void CreateBuffers(Renderer& _renderer);
+	virtual void UpdateAndAddCustomBuffers();
+	
+	//inherited materials add buffers to these lists
+	std::vector<ID3D11Buffer*> m_vs_buffers;
+	std::vector<ID3D11Buffer*> m_ps_buffers;
 };

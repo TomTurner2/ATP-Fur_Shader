@@ -193,12 +193,32 @@ void Material::UpdateBuffers(Renderer& _renderer)
 		m_ps_per_object.first = false;
 	}
 
-	// pass buffers to pipeline
-	ID3D11Buffer* vs_buffers[] = { m_vs_per_object_buffer, m_vs_per_frame_buffer };
-	_renderer.GetDeviceContext()->VSSetConstantBuffers(0, _countof(vs_buffers), vs_buffers);//set both vs buffers
+	m_vs_buffers.clear();
+	m_vs_buffers.reserve(5);
+	m_vs_buffers.push_back(m_vs_per_object_buffer);
+	m_vs_buffers.push_back(m_vs_per_frame_buffer);
 
-	ID3D11Buffer* ps_buffers[] = { m_ps_per_frame_buffer, m_ps_per_scene_buffer, m_ps_per_object_buffer };
-	_renderer.GetDeviceContext()->PSSetConstantBuffers(0, _countof(ps_buffers), ps_buffers);
+	m_ps_buffers.clear();
+	m_ps_buffers.reserve(5);
+	m_ps_buffers.push_back(m_ps_per_frame_buffer);
+	m_ps_buffers.push_back(m_ps_per_scene_buffer);
+	m_ps_buffers.push_back(m_ps_per_object_buffer);
+
+	UpdateAndAddCustomBuffers();
+	SetBuffers(_renderer);
+}
+
+
+//map your buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers
+void Material::UpdateAndAddCustomBuffers()
+{
+}
+
+
+void Material::SetBuffers(Renderer& _renderer)
+{
+	_renderer.GetDeviceContext()->VSSetConstantBuffers(0, m_vs_buffers.size(), &m_vs_buffers[0]);
+	_renderer.GetDeviceContext()->PSSetConstantBuffers(0, m_ps_buffers.size(), &m_ps_buffers[0]);
 }
 
 
