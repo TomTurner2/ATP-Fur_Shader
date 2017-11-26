@@ -22,6 +22,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Camera.h" />
     <ClInclude Include="Src\DebugSystem.h" />
+    <ClInclude Include="Src\FurMaterial.h" />
     <ClInclude Include="Src\Game.h" />
     <ClInclude Include="Src\GameAction.h" />
     <ClInclude Include="Src\GameData.h" />
@@ -48,6 +49,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Camera.cpp" />
     <ClCompile Include="Src\DebugSystem.cpp" />
+    <ClCompile Include="Src\FurMaterial.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
     <ClCompile Include="Src\InputManager.cpp" />
@@ -77,6 +79,12 @@
       <FileType>Document</FileType>
     </None>
     <None Include="Src\PBR_Lighting.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Src\Base_VS_Buffers.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Src\Base_PS_Buffers.hlsl">
       <FileType>Document</FileType>
     </None>
     <FxCompile Include="Src\Standard_Material_Pixel_Shader.hlsl">

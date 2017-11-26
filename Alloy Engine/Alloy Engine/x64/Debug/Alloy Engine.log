@@ -1,4 +1,10 @@
-﻿  Material.cpp
-  LINK : C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.exe not found or not built by the last incremental link; performing full link
+﻿C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(28,8-46): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(34,13-61): warning X3206: 'GSmith': implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(23,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(23,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(23,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+  
+  compilation object save succeeded; see C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Standard_Material_Pixel_Shader.cso
+  compilation object save succeeded; see C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Standard_Material_Vertex_Shader.cso
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.exe
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.pdb (Partial PDB)

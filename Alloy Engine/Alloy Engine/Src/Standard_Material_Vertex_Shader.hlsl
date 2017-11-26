@@ -1,10 +1,4 @@
-//input
-struct VertexIn
-{
-	float4 position : POSITION;
-	float4 normal : NORMAL;
-};
-
+#include "Base_VS_Buffers.hlsl"
 
 //pixel that is output
 struct PixelIn
@@ -12,20 +6,6 @@ struct PixelIn
 	float4 position : SV_POSITION;
 	float4 world_position : POSITION;
 	float4 normal : NORMAL;
-};
-
-
-//input buffers
-cbuffer PerObject : register(b0)
-{
-	matrix m_model;
-};
-
-
-cbuffer PerFrame : register(b1)
-{
-	matrix m_view;
-	matrix m_proj;
 };
 
 

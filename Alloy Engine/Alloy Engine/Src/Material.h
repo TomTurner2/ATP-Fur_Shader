@@ -17,7 +17,7 @@ public:
 	Material();
 	virtual ~Material();
 
-	virtual void CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer);
+	void CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer);
 	virtual void UpdateBuffers(Renderer& _renderer);
 
 	ID3D11VertexShader* GetVertexShader() const;
@@ -31,7 +31,7 @@ public:
 	void SetLight(Light _light);
 	void SetMaterialParams(PBRMaterialParams _pbr_params);
 
-private:
+protected:
 	ID3D11VertexShader* m_vertex_shader = nullptr;
 	ID3D11PixelShader* m_pixel_shader = nullptr;
 	ID3D11InputLayout* m_input_layout = nullptr;
