@@ -1,32 +1,39 @@
-
-
-struct VertexIn
-{
-	float4 position : POSITION;
-	float4 normal : NORMAL;
-};
-
-
 struct FurLayer
 {
-	float4 position	: SV_Position;
-	float3 normal   : NORMAL;
+	float4 position	: SV_POSITION;
+	float4 world_position : POSITION;
+	float4 normal   : NORMAL;
 	int layer : LAYER;
 };
 
 
-[maxvertexcount(6)]
-void main(point VertexIn input[1], inout PointStream<FurLayer> output_stream )
+struct VertexOut
+{
+	float4 position : SV_POSITION;
+	float4 world_position : POSITION;
+	float4 normal : NORMAL;
+};
+
+
+void CreateShellVertex(inout TriangleStream<FurLayer> output_stream, float4 world_pos, float4 pos, float4 normal, int layer)
 {
 	FurLayer output;
+	output.world_position = world_pos;
+	output.position = pos;
+	output.normal = normal;
+	output.layer = layer;
+	output_stream.Append(output);
+}
 
-	int max_length = 5;
-	for (int i = 1; i < max_length + 1; ++i)
+
+[maxvertexcount(64)]
+void main(triangle VertexOut input[3], inout TriangleStream<FurLayer> output_stream)
+{
+	for (float i = 0; i < 10; ++i)
 	{
-		float3 shell_pos = input[0].position.xyz + (input[0].normal * i);
-		output.position = float4(shell_pos.x, shell_pos.y, shell_pos.z, 0);
-		output.normal = input[0].normal;
-		output.layer = i;
-		output_stream.Append(output);
+		CreateShellVertex(output_stream, input[0].world_position + (input[0].normal * i), input[0].position, input[0].normal, i);
+		CreateShellVertex(output_stream, input[1].world_position + (input[1].normal * i), input[1].position, input[1].normal, i);
+		CreateShellVertex(output_stream, input[2].world_position + (input[2].normal * i), input[2].position, input[2].normal, i);
+		output_stream.RestartStrip();
 	}
 }

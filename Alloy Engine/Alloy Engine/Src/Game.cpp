@@ -45,11 +45,9 @@ void Game::CreateModel(Renderer& _renderer)
 
 	m_fur_material = new FurMaterial();
 	m_fur_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
-		"Standard_Material_Pixel_Shader.cso", _renderer);
+		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
 
 	m_model->SetAllModelMaterials(m_fur_material);
-	m_model->GetTransform().SetScale(Vector3(1, 1, 1));
-	m_model->GetTransform().SetRotation(Quaternion(Vector3::Up, 90));
 }
 
 

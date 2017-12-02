@@ -23,6 +23,7 @@ Material::~Material()
 	SAFE_RELEASE(m_vertex_shader);
 	SAFE_RELEASE(m_ps_per_frame_buffer);
 	SAFE_RELEASE(m_pixel_shader);
+	SAFE_RELEASE(m_geometry_shader);
 	SAFE_RELEASE(m_input_layout);
 }
 
@@ -37,10 +38,10 @@ void Material::CreateShaders(std::string _vertex_shader, std::string _pixel_shad
 	std::vector<char> vs_data = { std::istreambuf_iterator<char>(vs_file), std::istreambuf_iterator<char>() };
 	std::vector<char> ps_data = { std::istreambuf_iterator<char>(ps_file), std::istreambuf_iterator<char>() };
 	std::vector<char> gs_data = { std::istreambuf_iterator<char>(gs_file), std::istreambuf_iterator<char>() };
-
-	_renderer.GetDevice()->CreateVertexShader(vs_data.data(), vs_data.size(), nullptr, &m_vertex_shader);
-	_renderer.GetDevice()->CreatePixelShader(ps_data.data(), ps_data.size(), nullptr, &m_pixel_shader);
-	_renderer.GetDevice()->CreateGeometryShader(gs_data.data(), gs_data.size(), nullptr, &m_geometry_shader);
+	HRESULT hr{};
+	hr = _renderer.GetDevice()->CreateVertexShader(vs_data.data(), vs_data.size(), nullptr, &m_vertex_shader);
+	hr = _renderer.GetDevice()->CreatePixelShader(ps_data.data(), ps_data.size(), nullptr, &m_pixel_shader);
+	hr =_renderer.GetDevice()->CreateGeometryShader(gs_data.data(), gs_data.size(), nullptr, &m_geometry_shader);
 
 	// Create input layouts
 	D3D11_INPUT_ELEMENT_DESC layout[]
@@ -217,8 +218,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 
 //map your buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers
 void Material::UpdateAndAddCustomBuffers()
-{
-}
+{}
 
 
 void Material::SetBuffers(Renderer& _renderer)
@@ -243,6 +243,12 @@ ID3D11VertexShader* Material::GetVertexShader() const
 ID3D11PixelShader* Material::GetPixelShader() const
 {
 	return m_pixel_shader;
+}
+
+
+ID3D11GeometryShader * Material::GetGeometryShader() const
+{
+	return m_geometry_shader;
 }
 
 

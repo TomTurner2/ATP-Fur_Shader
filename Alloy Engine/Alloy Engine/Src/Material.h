@@ -23,6 +23,7 @@ public:
 
 	ID3D11VertexShader* GetVertexShader() const;
 	ID3D11PixelShader* GetPixelShader() const;
+	ID3D11GeometryShader* GetGeometryShader() const;
 	ID3D11InputLayout* GetInputLayout() const;
 
 	void SetTransformMatrix(Matrix _transform);

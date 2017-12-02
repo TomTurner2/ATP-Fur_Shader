@@ -1,7 +1,7 @@
 #include "Base_VS_Buffers.hlsl"
 
 //pixel that is output
-struct PixelIn
+struct VertexOut
 {
 	float4 position : SV_POSITION;
 	float4 world_position : POSITION;
@@ -9,9 +9,9 @@ struct PixelIn
 };
 
 
-PixelIn main(VertexIn vin)
+VertexOut main(VertexIn vin)
 {
-	PixelIn vout;
+	VertexOut vout;
 
 	vout.position = mul(vin.position, m_model);//convert to object space
 

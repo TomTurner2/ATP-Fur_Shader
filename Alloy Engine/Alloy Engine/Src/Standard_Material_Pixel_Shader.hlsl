@@ -3,7 +3,7 @@
 
 
 // must be same as vs struct
-struct PixelIn
+struct VertexOut
 {
 	float4 position : SV_POSITION;
 	float4 world_position : POSITION;
@@ -11,7 +11,7 @@ struct PixelIn
 };
 
 
-float4 main(PixelIn pin) : SV_TARGET
+float4 main(VertexOut pin) : SV_TARGET
 {
 	float3 diffuse_albedo = float3(mat_params.diff[0], mat_params.diff[1], mat_params.diff[2]);
 	float3 specular_albedo = float3(mat_params.spec, mat_params.spec, mat_params.spec);

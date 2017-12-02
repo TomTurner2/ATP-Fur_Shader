@@ -22,7 +22,6 @@ Renderer::~Renderer()
 	SAFE_RELEASE(m_device);
 	SAFE_RELEASE(m_device_context);
 	SAFE_RELEASE(m_render_target_view);// Render texture for screen
-
 	SAFE_RELEASE(m_depthStencilBuffer);
 	SAFE_RELEASE(m_depthStencilState);
 	SAFE_RELEASE(m_depthStencilView);
@@ -196,7 +195,6 @@ void Renderer::CreateDepthBuffer()
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	m_device_context->OMSetRenderTargets(1, &m_render_target_view, m_depthStencilView);
 
-
 	D3D11_RASTERIZER_DESC rasterDesc;
 	rasterDesc.AntialiasedLineEnable = false;
 	rasterDesc.CullMode = D3D11_CULL_BACK;
@@ -241,7 +239,7 @@ RenderData* Renderer::GetRenderData() const
 }
 
 
-Window * Renderer::GetTargetWindow() const
+Window* Renderer::GetTargetWindow() const
 {
 	return m_target_window;
 }

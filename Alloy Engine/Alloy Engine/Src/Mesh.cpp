@@ -89,6 +89,10 @@ void Mesh::Draw(Renderer& _renderer)
 	device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	device_context->IASetInputLayout(m_material->GetInputLayout());
 	device_context->VSSetShader(m_material->GetVertexShader(), nullptr, 0);
+
+	//if (m_material->GetGeometryShader() != nullptr)
+	device_context->GSSetShader(m_material->GetGeometryShader(), nullptr, 0);
+
 	device_context->PSSetShader(m_material->GetPixelShader(), nullptr, 0);
 
 	// Bind vertex buffer
