@@ -6,7 +6,7 @@
 Mesh::Mesh(std::string _name)
 {
 	m_name = _name;
-	m_material = new Material();
+	//m_material = new Material();
 }
 
 
@@ -25,6 +25,12 @@ std::string Mesh::GetName() const
 Material* Mesh::GetMaterial() const
 {
 	return m_material;
+}
+
+
+void Mesh::SetMaterial(Material* _material)
+{
+	m_material = _material;
 }
 
 

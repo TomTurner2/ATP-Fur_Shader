@@ -5,6 +5,7 @@
 #include "Model.h"
 #include <AntTweakBar.h>
 #include "Light.h"
+#include "FurMaterial.h"
 
 class Renderer;
 
@@ -23,7 +24,8 @@ private:
 	std::unique_ptr<GameData> m_game_data { nullptr };
 	std::unique_ptr<Model> m_model { nullptr };
 	std::unique_ptr<Camera> m_camera { nullptr };
-	PBRMaterialParams material;
+	PBRMaterialParams material_params;
+	FurMaterial* m_fur_material{ nullptr };
 	Light m_light;
 	TwBar* m_bar { nullptr };
 	float m_model_rot = 0;

@@ -21,7 +21,7 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 #pragma region Creation Functions
 void Game::CreateLight()
 {
-	m_light.position = Vector3(50.0f, 50.0f, -250.0f);
+	m_light.position = Vector3(0, 6, -115.0f);
 	m_light.colour[0] = 1;
 	m_light.colour[1] = 1;
 	m_light.colour[2] = 1;
@@ -30,7 +30,7 @@ void Game::CreateLight()
 
 void Game::CreateCamera(Renderer & _renderer)
 {
-	m_camera = std::make_unique<Camera>(Vector3(0, -75, -190), Quaternion(Vector3::Forward, TMath::Radians(0)),
+	m_camera = std::make_unique<Camera>(Vector3(-3, -27, -138), Quaternion(Vector3::Forward, TMath::Radians(0)),
 		Vector3::One, TMath::Radians(70), _renderer.GetViewportAspectRatio(), 5, 500);
 }
 
@@ -38,9 +38,16 @@ void Game::CreateCamera(Renderer & _renderer)
 void Game::CreateModel(Renderer& _renderer)
 {
 	m_model = std::make_unique<Model>();
-	m_model->LoadModel("./Axe.obj", _renderer);
-	m_model->LoadAllModelMaterials("Standard_Material_Vertex_Shader.cso",
-		"Standard_Material_Pixel_Shader.cso", _renderer);//load shader
+	m_model->LoadModel("./Big_Cat.obj", _renderer);
+
+	material_params.roughness = 0.6f;
+	material_params.specular = 0.2f;
+
+	m_fur_material = new FurMaterial();
+	m_fur_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
+		"Standard_Material_Pixel_Shader.cso", _renderer);
+
+	m_model->SetAllModelMaterials(m_fur_material);
 	m_model->GetTransform().SetScale(Vector3(1, 1, 1));
 	m_model->GetTransform().SetRotation(Quaternion(Vector3::Up, 90));
 }
@@ -72,7 +79,7 @@ void Game::CreateDebugUI()
 void Game::BindParamsToUI()
 {
 	//bing light to UI
-	TwAddVarRW(m_bar, "Light Colour", TW_TYPE_COLOR3F, &m_light.colour, " colormode=rgb ");
+	TwAddVarRW(m_bar, "Light Colour", TW_TYPE_COLOR3F, &m_light.colour, " colormode=hls ");
 	TwAddVarRW(m_bar, "light_X", TW_TYPE_FLOAT, &m_light.position.x, "");
 	TwAddVarRW(m_bar, "light_Y", TW_TYPE_FLOAT, &m_light.position.y, "");
 	TwAddVarRW(m_bar, "light_Z", TW_TYPE_FLOAT, &m_light.position.z, "");
@@ -81,6 +88,17 @@ void Game::BindParamsToUI()
 	TwDefine("Fur_Shader_Prototype/light_X   group=Light_Position");
 	TwDefine("Fur_Shader_Prototype/light_Y   group=Light_Position");
 	TwDefine("Fur_Shader_Prototype/light_Z   group=Light_Position");
+
+
+	TwAddVarRW(m_bar, "Diffuse", TW_TYPE_COLOR3F, &material_params.diffuse, " colormode=hls ");
+	TwAddVarRW(m_bar, "Rough", TW_TYPE_FLOAT, &material_params.roughness, "");
+	TwAddVarRW(m_bar, "Specular", TW_TYPE_FLOAT, &material_params.specular, "");
+
+	TwDefine("Fur_Shader_Prototype/Rough  min=0.1 max=1 ");
+	TwDefine("Fur_Shader_Prototype/Specular  min=0.1 max=1 ");
+
+	TwDefine("Fur_Shader_Prototype/Rough   step=0.1 ");
+	TwDefine("Fur_Shader_Prototype/Specular   step=0.1 ");
 }
 #pragma endregion
 
@@ -90,7 +108,7 @@ void Game::Tick()
 	m_game_data->delta_time = CalculateDeltaTime();
 	m_camera->Tick(*m_game_data.get());
 	m_model->Tick(*m_game_data.get());
-	m_model->SetAllMaterialParams(material);
+	m_fur_material->SetMaterialParams(material_params);
 }
 
 

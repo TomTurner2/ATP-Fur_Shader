@@ -13,9 +13,9 @@ struct PixelIn
 
 float4 main(PixelIn pin) : SV_TARGET
 {
-	float3 diffuse_albedo = float3(0.5f, 0.5f, 0.5f);
-	float3 specular_albedo = float3(0.8f, 0.8f, 0.8f);
-	float roughness = 0.1f;
+	float3 diffuse_albedo = float3(mat_params.diff[0], mat_params.diff[1], mat_params.diff[2]);
+	float3 specular_albedo = float3(mat_params.spec, mat_params.spec, mat_params.spec);
+	float roughness = mat_params.rough;
 
 	float3 light_pos = light.position;
 	float3 light_colour = float3(light.r, light.g, light.b);

@@ -18,6 +18,7 @@ public:
 	std::string GetName() const;
 	Material* GetMaterial() const;
 
+	void SetMaterial(Material* _material);
 	void CreateMesh(const std::vector<Vertex3D>& _vertices, const std::vector<unsigned int>& _indicies, Renderer& _renderer);
 	void Draw(Renderer& _renderer) override;
 

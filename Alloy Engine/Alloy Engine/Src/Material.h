@@ -17,8 +17,8 @@ class Material
 public:
 	Material();
 	virtual ~Material();
-
-	void CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer);
+	
+	void CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer, std::string _geometry_shader = "");
 	virtual void UpdateBuffers(Renderer& _renderer);
 
 	ID3D11VertexShader* GetVertexShader() const;
@@ -35,18 +35,19 @@ public:
 private:
 	void SetBuffers(Renderer& _renderer);
 
-	ID3D11VertexShader* m_vertex_shader = nullptr;
-	ID3D11PixelShader* m_pixel_shader = nullptr;
-	ID3D11InputLayout* m_input_layout = nullptr;
+	ID3D11VertexShader* m_vertex_shader { nullptr };
+	ID3D11PixelShader* m_pixel_shader { nullptr };
+	ID3D11GeometryShader* m_geometry_shader { nullptr };
+	ID3D11InputLayout* m_input_layout { nullptr };
 
 	//vertex buffers
-	ID3D11Buffer* m_vs_per_object_buffer = nullptr;
-	ID3D11Buffer* m_vs_per_frame_buffer = nullptr;
+	ID3D11Buffer* m_vs_per_object_buffer { nullptr };
+	ID3D11Buffer* m_vs_per_frame_buffer { nullptr };
 
 	//pixel buffers
-	ID3D11Buffer* m_ps_per_frame_buffer = nullptr;
-	ID3D11Buffer* m_ps_per_scene_buffer = nullptr;
-	ID3D11Buffer* m_ps_per_object_buffer = nullptr;
+	ID3D11Buffer* m_ps_per_frame_buffer { nullptr };
+	ID3D11Buffer* m_ps_per_scene_buffer { nullptr };
+	ID3D11Buffer* m_ps_per_object_buffer { nullptr };
 
 	struct VSPerFrameBuffer
 	{
@@ -75,6 +76,7 @@ private:
 	{
 		PBRMaterialParams material_params;
 		float extra;
+		double more;
 	};
 
 	//data to be passed to buffer (dirtyable pattern)
@@ -91,4 +93,5 @@ protected:
 	//inherited materials add buffers to these lists
 	std::vector<ID3D11Buffer*> m_vs_buffers;
 	std::vector<ID3D11Buffer*> m_ps_buffers;
+	std::vector<ID3D11Buffer*> m_gs_buffers;
 };

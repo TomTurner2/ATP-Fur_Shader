@@ -27,17 +27,20 @@ Material::~Material()
 }
 
 
-void Material::CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer)
+void Material::CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer, std::string _geometry_shader)
 {
 	std::ifstream vs_file(_vertex_shader, std::ios::binary);
 	std::ifstream ps_file(_pixel_shader, std::ios::binary);
+	std::ifstream gs_file(_geometry_shader, std::ios::binary);
 
 	// Load file data
 	std::vector<char> vs_data = { std::istreambuf_iterator<char>(vs_file), std::istreambuf_iterator<char>() };
 	std::vector<char> ps_data = { std::istreambuf_iterator<char>(ps_file), std::istreambuf_iterator<char>() };
+	std::vector<char> gs_data = { std::istreambuf_iterator<char>(gs_file), std::istreambuf_iterator<char>() };
 
 	_renderer.GetDevice()->CreateVertexShader(vs_data.data(), vs_data.size(), nullptr, &m_vertex_shader);
 	_renderer.GetDevice()->CreatePixelShader(ps_data.data(), ps_data.size(), nullptr, &m_pixel_shader);
+	_renderer.GetDevice()->CreateGeometryShader(gs_data.data(), gs_data.size(), nullptr, &m_geometry_shader);
 
 	// Create input layouts
 	D3D11_INPUT_ELEMENT_DESC layout[]
@@ -204,6 +207,9 @@ void Material::UpdateBuffers(Renderer& _renderer)
 	m_ps_buffers.push_back(m_ps_per_scene_buffer);
 	m_ps_buffers.push_back(m_ps_per_object_buffer);
 
+	m_gs_buffers.clear();
+	m_gs_buffers.reserve(2);
+
 	UpdateAndAddCustomBuffers();
 	SetBuffers(_renderer);
 }
@@ -217,8 +223,14 @@ void Material::UpdateAndAddCustomBuffers()
 
 void Material::SetBuffers(Renderer& _renderer)
 {
-	_renderer.GetDeviceContext()->VSSetConstantBuffers(0, m_vs_buffers.size(), &m_vs_buffers[0]);
-	_renderer.GetDeviceContext()->PSSetConstantBuffers(0, m_ps_buffers.size(), &m_ps_buffers[0]);
+	if(m_vs_buffers.size() > 0)
+		_renderer.GetDeviceContext()->VSSetConstantBuffers(0, m_vs_buffers.size(), &m_vs_buffers[0]);
+
+	if(m_ps_buffers.size() > 0)
+		_renderer.GetDeviceContext()->PSSetConstantBuffers(0, m_ps_buffers.size(), &m_ps_buffers[0]);
+
+	if (m_gs_buffers.size() > 0)
+		_renderer.GetDeviceContext()->GSSetConstantBuffers(0, m_gs_buffers.size(), &m_gs_buffers[0]);
 }
 
 

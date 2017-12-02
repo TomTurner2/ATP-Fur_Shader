@@ -1,3 +1,5 @@
+//this file contains all the base vertex shader buffers
+
 //input
 struct VertexIn
 {

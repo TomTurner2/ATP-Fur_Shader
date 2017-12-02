@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include "Renderer.h"
 #include "AntTweakBar.h"
+#include "Window.h"
 
 
 void DebugSystem::CreateConsoleWindow() const
@@ -22,7 +23,7 @@ void DebugSystem::CreateConsoleWindow() const
 void DebugSystem::InitAntTweakBar(Renderer& _renderer) const
 {
 	TwInit(TW_DIRECT3D11, _renderer.GetDevice());
-	TwWindowSize(_renderer.GetViewportDimensions().first, _renderer.GetViewportDimensions().second);
+	TwWindowSize(_renderer.GetTargetWindow()->GetWindowWidth(), _renderer.GetTargetWindow()->GetWindowWidth());
 }
 
 

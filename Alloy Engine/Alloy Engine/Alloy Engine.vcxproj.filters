@@ -197,6 +197,9 @@
     <FxCompile Include="Src\Standard_Material_Pixel_Shader.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Src\Fur_Shell_Geometry_Shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

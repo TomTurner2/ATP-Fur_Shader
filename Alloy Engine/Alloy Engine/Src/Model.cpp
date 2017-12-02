@@ -86,9 +86,18 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 
 void Model::LoadAllModelMaterials(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer)
 {
-	for (auto mesh : m_meshes)
+	for (auto &mesh : m_meshes)
 	{
 		mesh.GetMaterial()->CreateShaders(_vertex_shader, _pixel_shader, _renderer);
+	}
+}
+
+
+void Model::SetAllModelMaterials(Material* _material)
+{
+	for (auto &mesh : m_meshes)
+	{
+		mesh.SetMaterial(_material);
 	}
 }
 

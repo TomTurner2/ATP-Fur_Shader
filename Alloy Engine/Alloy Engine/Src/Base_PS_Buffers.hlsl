@@ -1,3 +1,5 @@
+//this file contains all the base pixel shader constant buffers
+
 cbuffer PerFrame : register(b0)
 {
 	float4 camera_pos;
@@ -22,9 +24,9 @@ cbuffer PerScene : register(b1)
 
 struct PBRMaterialParams
 {
-	float roughness;
-	float3 mat_diffuse;
-	float3 mat_specular;	
+	float3 diff;
+	float rough;
+	float spec;
 };
 
 
