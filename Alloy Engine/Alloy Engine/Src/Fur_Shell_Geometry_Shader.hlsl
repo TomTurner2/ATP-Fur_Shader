@@ -6,6 +6,19 @@ struct FurLayer
 	int layer : LAYER;
 };
 
+//input buffers
+cbuffer PerObject : register(b0)
+{
+	matrix m_model;
+};
+
+
+cbuffer PerFrame : register(b1)
+{
+	matrix m_view;
+	matrix m_proj;
+};
+
 
 struct VertexOut
 {
@@ -15,13 +28,19 @@ struct VertexOut
 };
 
 
-void CreateShellVertex(inout TriangleStream<FurLayer> output_stream, float4 world_pos, float4 pos, float4 normal, int layer)
+void CreateShellVertex(inout TriangleStream<FurLayer> output_stream, float4 position, float4 normal, int layer)
 {
 	FurLayer output;
-	output.world_position = world_pos;
-	output.position = pos;
-	output.normal = normal;
+	
+	output.position = mul(position, m_model);//object to world
+
+	output.position = mul(output.position, m_view);
+	output.position = mul(output.position, m_proj);//convert to world screen view proj
+
+	output.world_position = mul(output.position, m_model);//object to world
+	output.normal = mul(normal, m_model);
 	output.layer = layer;
+
 	output_stream.Append(output);
 }
 
@@ -31,9 +50,9 @@ void main(triangle VertexOut input[3], inout TriangleStream<FurLayer> output_str
 {
 	for (float i = 0; i < 10; ++i)
 	{
-		CreateShellVertex(output_stream, input[0].world_position + (input[0].normal * i), input[0].position, input[0].normal, i);
-		CreateShellVertex(output_stream, input[1].world_position + (input[1].normal * i), input[1].position, input[1].normal, i);
-		CreateShellVertex(output_stream, input[2].world_position + (input[2].normal * i), input[2].position, input[2].normal, i);
+		CreateShellVertex(output_stream, input[0].position + (input[0].normal * i), input[0].normal, i);
+		CreateShellVertex(output_stream, input[1].position + (input[1].normal * i), input[1].normal, i);
+		CreateShellVertex(output_stream, input[2].position + (input[2].normal * i), input[2].normal, i);
 		output_stream.RestartStrip();
 	}
-}
+} 

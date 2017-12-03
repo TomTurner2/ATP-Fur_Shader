@@ -24,7 +24,7 @@ float4 main(FurLayer pin) : SV_TARGET
 	light_colour, light_pos, diffuse_albedo, specular_albedo, pin.world_position);
 
 	float percent = 10 * 0.1f;
-	float alpha = 1 - (percent * pin.layer);
+	//float alpha = 1 - (percent * pin.layer);
 
-	return float4(direct_lighting, alpha);
+	return float4(direct_lighting, 1);
 }

@@ -203,6 +203,9 @@
     <FxCompile Include="Src\Fur_Pixel_Shader.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Src\Fur_Vertex_Shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

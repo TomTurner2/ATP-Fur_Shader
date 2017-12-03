@@ -60,7 +60,7 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 			aiVector3D normal_in = mesh->mNormals[vert_id];
 			Vector3 normal = Vector3::Zero;
 			normal.x = normal_in.x;
-			normal.y = -normal_in.y;//invert y for directx
+			normal.y = normal_in.y;//invert y for directx
 			normal.z = normal_in.z;
 
 			Vertex3D vert_data = { vertex_position, 1, normal, 1, };

@@ -210,6 +210,8 @@ void Material::UpdateBuffers(Renderer& _renderer)
 
 	m_gs_buffers.clear();
 	m_gs_buffers.reserve(2);
+	m_gs_buffers.push_back(m_vs_per_object_buffer);
+	m_gs_buffers.push_back(m_vs_per_frame_buffer);
 
 	UpdateAndAddCustomBuffers();
 	SetBuffers(_renderer);

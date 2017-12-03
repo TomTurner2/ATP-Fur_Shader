@@ -44,7 +44,7 @@ void Game::CreateModel(Renderer& _renderer)
 	material_params.specular = 0.2f;
 
 	m_fur_material = new FurMaterial();
-	m_fur_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
+	m_fur_material->CreateShaders("Fur_Vertex_Shader.cso",
 		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
 
 	m_model->SetAllModelMaterials(m_fur_material);
