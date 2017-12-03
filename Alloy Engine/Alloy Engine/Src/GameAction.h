@@ -7,5 +7,7 @@ enum GameAction
 	LEFT,
 	RIGHT,
 	UP,
-	DOWN
+	DOWN,
+	QUIT,
+	SWITCH
 };

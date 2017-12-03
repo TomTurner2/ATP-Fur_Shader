@@ -17,6 +17,17 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 	BindParamsToUI();
 }
 
+void Game::SwitchMaterials()
+{
+	if (m_default_material_on)
+	{
+		m_model->SetAllModelMaterials(m_fur_gs_material);
+		return;
+	}
+
+	m_model->SetAllModelMaterials(m_fur_material);
+}
+
 
 #pragma region Creation Functions
 void Game::CreateLight()
@@ -42,9 +53,16 @@ void Game::CreateModel(Renderer& _renderer)
 
 	material_params.roughness = 0.6f;
 	material_params.specular = 0.2f;
+	material_params.diffuse[0] = 0.4; 
+	material_params.diffuse[1] = 0.71;
+	material_params.diffuse[2] = 0.858;
 
 	m_fur_material = new FurMaterial();
-	m_fur_material->CreateShaders("Fur_Vertex_Shader.cso",
+	m_fur_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
+		"Standard_Material_Pixel_Shader.cso", _renderer/*, "Fur_Shell_Geometry_Shader.cso"*/);
+
+	m_fur_gs_material = new FurMaterial();
+	m_fur_gs_material->CreateShaders("Fur_Vertex_Shader.cso",
 		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
 
 	m_model->SetAllModelMaterials(m_fur_material);
@@ -62,6 +80,8 @@ void Game::CreateGameData(InputManager& _input)
 	m_game_data->input->BindKey(RIGHT, "D");
 	m_game_data->input->BindKey(UP, "E");
 	m_game_data->input->BindKey(DOWN, "Q");
+	m_game_data->input->BindKey(QUIT, "X");
+	m_game_data->input->BindKey(SWITCH, "F");
 }
 
 
@@ -97,16 +117,25 @@ void Game::BindParamsToUI()
 
 	TwDefine("Fur_Shader_Prototype/Rough   step=0.1 ");
 	TwDefine("Fur_Shader_Prototype/Specular   step=0.1 ");
+
+	TwAddVarRW(m_bar, "Fur off", TW_TYPE_BOOLCPP, &m_default_material_on, "");
 }
 #pragma endregion
 
 
 void Game::Tick()
 {
+	if (m_game_data->input->GetGameAction(GameAction::QUIT, InputManager::PRESSED))
+		exit(0);
+
+	//if (m_game_data->input->GetGameAction(GameAction::SWITCH, InputManager::PRESSED))
+		SwitchMaterials();
+
 	m_game_data->delta_time = CalculateDeltaTime();
 	m_camera->Tick(*m_game_data.get());
 	m_model->Tick(*m_game_data.get());
 	m_fur_material->SetMaterialParams(material_params);
+	m_fur_gs_material->SetMaterialParams(material_params);
 }
 
 

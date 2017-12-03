@@ -8,7 +8,7 @@
 
 int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)
 {
-	Window window("Alloy Engine", 1024, 576);
+	Window window("Alloy Engine", 1366, 768);
 	Renderer renderer(window);
 
 	DebugSystem debugger;

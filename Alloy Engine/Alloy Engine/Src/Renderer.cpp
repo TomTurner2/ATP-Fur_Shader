@@ -12,7 +12,12 @@ Renderer::Renderer(Window& _window)
 	DXGI_SWAP_CHAIN_DESC swap_chain_desc = CreateSwapChainDesc(_window);
 	CreateDeviceContext(swap_chain_desc);
 	CreateRenderTarget();
-	CreateDepthBuffer();	
+	CreateDepthBuffer();
+	CreateDepthStencilState();
+	CreateDepthStencilView();
+	CreateRasterState();
+	CreateAlphaBlendStates();
+	TurnOnAlphaBlending();
 }
 
 
@@ -21,11 +26,13 @@ Renderer::~Renderer()
 	SAFE_RELEASE(m_swap_chain);
 	SAFE_RELEASE(m_device);
 	SAFE_RELEASE(m_device_context);
-	SAFE_RELEASE(m_render_target_view);// Render texture for screen
+	SAFE_RELEASE(m_render_target_view);
 	SAFE_RELEASE(m_depthStencilBuffer);
 	SAFE_RELEASE(m_depthStencilState);
 	SAFE_RELEASE(m_depthStencilView);
 	SAFE_RELEASE(m_rasterState);
+	SAFE_RELEASE(m_alphaDisableBlendingState);
+	SAFE_RELEASE(m_alphaEnableBlendingState);
 }
 
 
@@ -74,7 +81,7 @@ DXGI_SWAP_CHAIN_DESC Renderer::CreateSwapChainDesc(Window& _window) const
 	swap_chain_desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	swap_chain_desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 	swap_chain_desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-	swap_chain_desc.Flags = 0;
+	swap_chain_desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	return swap_chain_desc;
 }
@@ -113,8 +120,6 @@ void Renderer::CreateDepthBuffer()
 	HRESULT result{ 0 };
 
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 
 	// Initialize the description of the depth buffer.
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
@@ -139,6 +144,13 @@ void Renderer::CreateDepthBuffer()
 		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create Depth buffer", "Error", MB_OK);
 		exit(0);
 	}
+}
+
+
+void Renderer::CreateDepthStencilState()
+{
+	HRESULT result{};
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 
 	// Initialize the description of the stencil state.
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
@@ -174,6 +186,13 @@ void Renderer::CreateDepthBuffer()
 
 	// Set the depth stencil state.
 	m_device_context->OMSetDepthStencilState(m_depthStencilState, 1);
+}
+
+
+void Renderer::CreateDepthStencilView()
+{
+	HRESULT result{ 0 };
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 
 	// Initialize the depth stencil view.
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
@@ -194,7 +213,12 @@ void Renderer::CreateDepthBuffer()
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	m_device_context->OMSetRenderTargets(1, &m_render_target_view, m_depthStencilView);
+}
 
+
+void Renderer::CreateRasterState()
+{
+	HRESULT result{};
 	D3D11_RASTERIZER_DESC rasterDesc;
 	rasterDesc.AntialiasedLineEnable = false;
 	rasterDesc.CullMode = D3D11_CULL_BACK;
@@ -217,6 +241,68 @@ void Renderer::CreateDepthBuffer()
 
 	// Now set the rasterizer state.
 	m_device_context->RSSetState(m_rasterState);
+
+}
+
+
+void Renderer::CreateAlphaBlendStates()
+{
+	HRESULT result {};
+	D3D11_BLEND_DESC blendStateDescription;
+
+	ZeroMemory(&blendStateDescription, sizeof(D3D11_BLEND_DESC));
+	blendStateDescription.RenderTarget[0].BlendEnable = true;// Create an alpha enabled blend state description.
+
+	blendStateDescription.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendStateDescription.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendStateDescription.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendStateDescription.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendStateDescription.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendStateDescription.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendStateDescription.RenderTarget[0].RenderTargetWriteMask = 0x0f;
+	
+	result = m_device->CreateBlendState(&blendStateDescription, &m_alphaEnableBlendingState);// Create the blend state
+	if (FAILED(result))
+	{
+		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create blend state", "Error", MB_OK);
+		exit(0);
+	}
+
+	// Modify the description to create an alpha disabled blend state description.
+	blendStateDescription.RenderTarget[0].BlendEnable = false;
+
+	// Create the blend state using the description.
+	result = m_device->CreateBlendState(&blendStateDescription, &m_alphaDisableBlendingState);
+}
+
+
+void Renderer::TurnOnAlphaBlending() const
+{
+	float blendFactor[4];
+
+	// Setup the blend factor.
+	blendFactor[0] = 0.0f;
+	blendFactor[1] = 0.0f;
+	blendFactor[2] = 0.0f;
+	blendFactor[3] = 0.0f;
+
+	// Turn on the alpha blending.
+	m_device_context->OMSetBlendState(m_alphaEnableBlendingState, blendFactor, 0xffffffff);
+}
+
+
+void Renderer::TurnOffAlphaBlending() const
+{
+	float blendFactor[4];
+
+	// Setup the blend factor.
+	blendFactor[0] = 0.0f;
+	blendFactor[1] = 0.0f;
+	blendFactor[2] = 0.0f;
+	blendFactor[3] = 0.0f;
+
+	// Turn off the alpha blending.
+	m_device_context->OMSetBlendState(m_alphaDisableBlendingState, blendFactor, 0xffffffff);
 }
 
 
