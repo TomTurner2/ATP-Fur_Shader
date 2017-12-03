@@ -34,8 +34,8 @@ void CreateShellVertex(inout TriangleStream<FurLayer> output_stream, float4 posi
 	
 	output.position = mul(position, m_model);//object to world
 
-	output.position = mul(output.position, m_view);
-	output.position = mul(output.position, m_proj);//convert to world screen view proj
+	//output.position = mul(output.position, m_view);
+	//output.position = mul(output.position, m_proj);//convert to world screen view proj
 
 	output.world_position = mul(output.position, m_model);//object to world
 	output.normal = mul(normal, m_model);
@@ -48,7 +48,7 @@ void CreateShellVertex(inout TriangleStream<FurLayer> output_stream, float4 posi
 [maxvertexcount(64)]
 void main(triangle VertexOut input[3], inout TriangleStream<FurLayer> output_stream)
 {
-	for (float i = 0; i < 10; ++i)
+	for (float i = 0; i < 5; ++i)
 	{
 		CreateShellVertex(output_stream, input[0].position + (input[0].normal * i), input[0].normal, i);
 		CreateShellVertex(output_stream, input[1].position + (input[1].normal * i), input[1].normal, i);

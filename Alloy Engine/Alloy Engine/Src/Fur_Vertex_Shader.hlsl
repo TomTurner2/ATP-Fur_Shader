@@ -13,17 +13,14 @@ VertexOut main(VertexIn vin)
 {
 	VertexOut vout;
 
-	//vout.position = mul(vin.position, m_model);//convert to world space
+	vout.position = mul(vin.position, m_model);//convert to world space
 
-	////place in front of camera
-	//vout.position = mul(vout.position, m_view);
-	//vout.position = mul(vout.position, m_proj);
+	//place in front of camera
+	vout.position = mul(vout.position, m_view);
+	vout.position = mul(vout.position, m_proj);
 
-	//vout.world_position = mul(vin.position, m_model);//convert to world space
-	//vout.normal = mul(vin.normal, m_model);//convert to world space normals
-	vout.position = vin.position;
-	vout.world_position = vin.position;
-	vout.normal = vin.normal;
+	vout.world_position = mul(vin.position, m_model);//convert to world space
+	vout.normal = mul(vin.normal, m_model);//convert to world space normals
 
 	return vout;
 }

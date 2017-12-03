@@ -13,7 +13,7 @@ struct FurLayer
 
 float4 main(FurLayer pin) : SV_TARGET
 {
-	float3 diffuse_albedo = float3(mat_params.diff[0], mat_params.diff[1], mat_params.diff[2]);
+	float3 diffuse_albedo = float3(mat_params.diff[0], mat_params.diff[1], mat_params.diff[2]);//get material parameters
 	float3 specular_albedo = float3(mat_params.spec, mat_params.spec, mat_params.spec);
 	float roughness = mat_params.rough;
 
@@ -21,10 +21,13 @@ float4 main(FurLayer pin) : SV_TARGET
 	float3 light_colour = float3(light.r, light.g, light.b);
 
 	float3 direct_lighting = DirectLighting(roughness, pin.normal, camera_pos,
-	light_colour, light_pos, diffuse_albedo, specular_albedo, pin.world_position);
+	light_colour, light_pos, diffuse_albedo, specular_albedo, pin.world_position);//calculate lighting
 
-	float percent = 10 * 0.1f;
-	//float alpha = 1 - (percent * pin.layer);
+	
+	float alpha = 1 - (pin.layer / 5);//get alpha according to shell layer
 
-	return float4(direct_lighting, 1);
+	if (alpha < 0.05f)//if zero discard the pixel
+		discard;
+
+	return float4(direct_lighting, alpha);
 }
