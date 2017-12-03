@@ -30,17 +30,11 @@ struct VertexOut
 
 void CreateShellVertex(inout TriangleStream<FurLayer> output_stream, float4 position, float4 normal, int layer)
 {
-	FurLayer output;
-	
+	FurLayer output;	
 	output.position = mul(position, m_model);//object to world
-
-	//output.position = mul(output.position, m_view);
-	//output.position = mul(output.position, m_proj);//convert to world screen view proj
-
 	output.world_position = mul(output.position, m_model);//object to world
 	output.normal = mul(normal, m_model);
 	output.layer = layer;
-
 	output_stream.Append(output);
 }
 
