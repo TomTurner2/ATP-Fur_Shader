@@ -1,7 +1,4 @@
 ﻿  Game.cpp
-c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\game.cpp(56): warning C4305: '=': truncation from 'double' to 'float'
-c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\game.cpp(57): warning C4305: '=': truncation from 'double' to 'float'
-c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\game.cpp(58): warning C4305: '=': truncation from 'double' to 'float'
 c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\memory(2054): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\game.cpp(45): note: see reference to function template instantiation 'std::unique_ptr<Camera,std::default_delete<_Ty>> std::make_unique<Camera,Vector3,Quaternion,const Vector3&,float,float,int,int>(Vector3 &&,Quaternion &&,const Vector3 &,float &&,float &&,int &&,int &&)' being compiled
           with

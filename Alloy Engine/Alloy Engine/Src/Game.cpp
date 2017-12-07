@@ -53,9 +53,9 @@ void Game::CreateModel(Renderer& _renderer)
 
 	material_params.roughness = 0.6f;
 	material_params.specular = 0.2f;
-	material_params.diffuse[0] = 0.4; 
-	material_params.diffuse[1] = 0.71;
-	material_params.diffuse[2] = 0.858;
+	material_params.diffuse[0] = 0.392157f; 
+	material_params.diffuse[1] = 0.537255f;
+	material_params.diffuse[2] = 0.603922f;
 
 	m_fur_material = new FurMaterial();
 	m_fur_material->CreateShaders("Standard_Material_Vertex_Shader.cso",

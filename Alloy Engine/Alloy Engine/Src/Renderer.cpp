@@ -17,7 +17,7 @@ Renderer::Renderer(Window& _window)
 	CreateDepthStencilView();
 	CreateRasterState();
 	CreateAlphaBlendStates();
-	TurnOnAlphaBlending();
+	//TurnOnAlphaBlending();
 }
 
 
@@ -27,19 +27,19 @@ Renderer::~Renderer()
 	SAFE_RELEASE(m_device);
 	SAFE_RELEASE(m_device_context);
 	SAFE_RELEASE(m_render_target_view);
-	SAFE_RELEASE(m_depthStencilBuffer);
-	SAFE_RELEASE(m_depthStencilState);
-	SAFE_RELEASE(m_depthStencilView);
-	SAFE_RELEASE(m_rasterState);
-	SAFE_RELEASE(m_alphaDisableBlendingState);
-	SAFE_RELEASE(m_alphaEnableBlendingState);
+	SAFE_RELEASE(m_depth_stencil_buffer);
+	SAFE_RELEASE(m_depth_stencil_state);
+	SAFE_RELEASE(m_depth_stencil_view);
+	SAFE_RELEASE(m_raster_state);
+	SAFE_RELEASE(m_alpha_disable_blending_state);
+	SAFE_RELEASE(m_alpha_enable_blending_state);
 }
 
 
 void Renderer::BeginFrame() const
 {
 	// Bind render target
-	m_device_context->OMSetRenderTargets(1, &m_render_target_view, m_depthStencilView);
+	m_device_context->OMSetRenderTargets(1, &m_render_target_view, m_depth_stencil_view);
 
 	// Set viewport
 	auto viewport = CD3D11_VIEWPORT(0.f, 0.f, m_back_buffer_desc.Width,
@@ -54,7 +54,7 @@ void Renderer::BeginFrame() const
 	float clear_colour[] = { 0.2, 0.2, 0.180, 1 };
 	m_device_context->ClearRenderTargetView(m_render_target_view, clear_colour);
 
-	m_device_context->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	m_device_context->ClearDepthStencilView(m_depth_stencil_view, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 
@@ -138,7 +138,7 @@ void Renderer::CreateDepthBuffer()
 	depthBufferDesc.MiscFlags = 0;
 
 	// Create the texture for the depth buffer using the filled out description.
-	result = m_device->CreateTexture2D(&depthBufferDesc, nullptr, &m_depthStencilBuffer);
+	result = m_device->CreateTexture2D(&depthBufferDesc, nullptr, &m_depth_stencil_buffer);
 	if (result != S_OK)
 	{
 		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create Depth buffer", "Error", MB_OK);
@@ -177,7 +177,7 @@ void Renderer::CreateDepthStencilState()
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
 	// Create the depth stencil state.
-	result = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState);
+	result = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depth_stencil_state);
 	if (FAILED(result))
 	{
 		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create Depth stencil", "Error", MB_OK);
@@ -185,7 +185,7 @@ void Renderer::CreateDepthStencilState()
 	}
 
 	// Set the depth stencil state.
-	m_device_context->OMSetDepthStencilState(m_depthStencilState, 1);
+	m_device_context->OMSetDepthStencilState(m_depth_stencil_state, 1);
 }
 
 
@@ -204,7 +204,7 @@ void Renderer::CreateDepthStencilView()
 	depthStencilViewDesc.Flags = 0;
 
 	// Create the depth stencil view.
-	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView);
+	result = m_device->CreateDepthStencilView(m_depth_stencil_buffer, &depthStencilViewDesc, &m_depth_stencil_view);
 	if (FAILED(result))
 	{
 		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create Depth stencil view", "Error", MB_OK);
@@ -212,7 +212,7 @@ void Renderer::CreateDepthStencilView()
 	}
 
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
-	m_device_context->OMSetRenderTargets(1, &m_render_target_view, m_depthStencilView);
+	m_device_context->OMSetRenderTargets(1, &m_render_target_view, m_depth_stencil_view);
 }
 
 
@@ -232,7 +232,7 @@ void Renderer::CreateRasterState()
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
 
 	// Create the rasterizer state from the description we just filled out.
-	result = m_device->CreateRasterizerState(&rasterDesc, &m_rasterState);
+	result = m_device->CreateRasterizerState(&rasterDesc, &m_raster_state);
 	if (FAILED(result))
 	{
 		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create raster state", "Error", MB_OK);
@@ -240,7 +240,7 @@ void Renderer::CreateRasterState()
 	}
 
 	// Now set the rasterizer state.
-	m_device_context->RSSetState(m_rasterState);
+	m_device_context->RSSetState(m_raster_state);
 
 }
 
@@ -261,7 +261,7 @@ void Renderer::CreateAlphaBlendStates()
 	blendStateDescription.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	blendStateDescription.RenderTarget[0].RenderTargetWriteMask = 0x0f;
 	
-	result = m_device->CreateBlendState(&blendStateDescription, &m_alphaEnableBlendingState);// Create the blend state
+	result = m_device->CreateBlendState(&blendStateDescription, &m_alpha_enable_blending_state);// Create the blend state
 	if (FAILED(result))
 	{
 		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create blend state", "Error", MB_OK);
@@ -272,7 +272,7 @@ void Renderer::CreateAlphaBlendStates()
 	blendStateDescription.RenderTarget[0].BlendEnable = false;
 
 	// Create the blend state using the description.
-	result = m_device->CreateBlendState(&blendStateDescription, &m_alphaDisableBlendingState);
+	result = m_device->CreateBlendState(&blendStateDescription, &m_alpha_disable_blending_state);
 }
 
 
@@ -287,7 +287,7 @@ void Renderer::TurnOnAlphaBlending() const
 	blendFactor[3] = 0.0f;
 
 	// Turn on the alpha blending.
-	m_device_context->OMSetBlendState(m_alphaEnableBlendingState, blendFactor, 0xffffffff);
+	m_device_context->OMSetBlendState(m_alpha_enable_blending_state, blendFactor, 0xffffffff);
 }
 
 
@@ -302,7 +302,7 @@ void Renderer::TurnOffAlphaBlending() const
 	blendFactor[3] = 0.0f;
 
 	// Turn off the alpha blending.
-	m_device_context->OMSetBlendState(m_alphaDisableBlendingState, blendFactor, 0xffffffff);
+	m_device_context->OMSetBlendState(m_alpha_disable_blending_state, blendFactor, 0xffffffff);
 }
 
 

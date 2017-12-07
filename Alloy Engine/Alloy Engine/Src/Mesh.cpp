@@ -85,21 +85,21 @@ void Mesh::Draw(Renderer& _renderer)
 	m_material->SetLight(_renderer.GetRenderData()->light);
 	m_material->UpdateBuffers(_renderer);
 
-	// Bind shaders
 	device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	device_context->IASetInputLayout(m_material->GetInputLayout());
+
+	// Bind shaders
 	device_context->VSSetShader(m_material->GetVertexShader(), nullptr, 0);
-
-	//if (m_material->GetGeometryShader() != nullptr)
 	device_context->GSSetShader(m_material->GetGeometryShader(), nullptr, 0);
-
 	device_context->PSSetShader(m_material->GetPixelShader(), nullptr, 0);
 
 	// Bind vertex buffer
 	UINT stride = sizeof(Vertex3D);// How far the VB must move to access the next vertex
 	UINT offset = 0;// Offset between each structure (used to skip info)
 	
+	_renderer.TurnOnAlphaBlending();
 	device_context->IASetVertexBuffers(0, 1, &m_vertex_buffer, &stride, &offset);
 	device_context->IASetIndexBuffer(m_index_buffer, DXGI_FORMAT_R32_UINT, 0);
 	device_context->Draw(m_vertex_count, 0);// Draw call
+	_renderer.TurnOffAlphaBlending();
 }

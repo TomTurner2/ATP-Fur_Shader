@@ -36,12 +36,12 @@ private:
 	Window* m_target_window { nullptr };
 
 
-	ID3D11Texture2D* m_depthStencilBuffer { nullptr };
-	ID3D11DepthStencilState* m_depthStencilState { nullptr };
-	ID3D11DepthStencilView* m_depthStencilView { nullptr };
-	ID3D11RasterizerState* m_rasterState { nullptr };
-	ID3D11BlendState* m_alphaEnableBlendingState { nullptr };
-	ID3D11BlendState* m_alphaDisableBlendingState;
+	ID3D11Texture2D* m_depth_stencil_buffer { nullptr };
+	ID3D11DepthStencilState* m_depth_stencil_state { nullptr };
+	ID3D11DepthStencilView* m_depth_stencil_view { nullptr };
+	ID3D11RasterizerState* m_raster_state { nullptr };
+	ID3D11BlendState* m_alpha_enable_blending_state { nullptr };
+	ID3D11BlendState* m_alpha_disable_blending_state { nullptr };
 
 
 	DXGI_SWAP_CHAIN_DESC CreateSwapChainDesc(Window& _window) const;
