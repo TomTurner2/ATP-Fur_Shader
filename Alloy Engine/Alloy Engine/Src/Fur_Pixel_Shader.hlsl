@@ -7,6 +7,7 @@ struct FurLayer
 	float4 position	: SV_POSITION;
 	float4 world_position : POSITION;
 	float4 normal   : NORMAL;
+	float2 uv : TEXCOORD0;
 	int layer : LAYER;
 };
 
@@ -22,7 +23,6 @@ float4 main(FurLayer pin) : SV_TARGET
 
 	float3 direct_lighting = DirectLighting(roughness, pin.normal, camera_pos,
 	light_colour, light_pos, diffuse_albedo, specular_albedo, pin.world_position);//calculate lighting
-
 	
 	float alpha = 1 - (pin.layer / 5);//get alpha according to shell layer
 

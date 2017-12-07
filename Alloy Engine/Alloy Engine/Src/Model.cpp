@@ -51,19 +51,38 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 
 		for (unsigned int vert_id = 0; vert_id < mesh->mNumVertices; ++vert_id)
 		{
+			//get position
 			aiVector3D vert = mesh->mVertices[vert_id];
 			Vector3 vertex_position = Vector3::Zero;
 			vertex_position.x = vert.x;
 			vertex_position.y = vert.y;
 			vertex_position.z = vert.z;
 
+			//get normals
 			aiVector3D normal_in = mesh->mNormals[vert_id];
 			Vector3 normal = Vector3::Zero;
 			normal.x = normal_in.x;
 			normal.y = normal_in.y;
 			normal.z = normal_in.z;
 
-			Vertex3D vert_data = { vertex_position, 1, normal, 1, };
+			//get UV coordinates
+			float u = 0;
+			float v = 0;
+
+			if (mesh->HasTextureCoords(vert_id))
+			{
+				u = mesh->mTextureCoords[vert_id]->x;
+				v = mesh->mTextureCoords[vert_id]->y;
+			}
+
+			Vertex3D vert_data = 
+			{ 
+				vertex_position, 1,
+				normal, 1,
+				u,
+				v 
+			};
+
 			verts.push_back(vert_data);
 		}
 
@@ -78,8 +97,8 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 			}
 		}
 
-		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));
-		m_meshes.back().CreateMesh(verts, indicies, _renderer);
+		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));//add new mesh giving it its loaded name
+		m_meshes.back().CreateMesh(verts, indicies, _renderer);//create the mesh just added
 	}
 }
 

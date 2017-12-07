@@ -6,6 +6,7 @@ struct VertexOut
 	float4 position : SV_POSITION;
 	float4 world_position : POSITION;
 	float4 normal : NORMAL;
+	float2 uv : TEXCOORD0;
 };
 
 
@@ -21,6 +22,7 @@ VertexOut main(VertexIn vin)
 
 	vout.world_position = mul(vin.position, m_model);//convert to world space
 	vout.normal = mul(vin.normal, m_model);//convert to world space normals
+	vout.uv = vin.uv;
 
 	return vout;
 }

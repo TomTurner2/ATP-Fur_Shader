@@ -8,6 +8,7 @@ struct VertexOut
 	float4 position : SV_POSITION;
 	float4 world_position : POSITION;
 	float4 normal : NORMAL;
+	float2 uv : TEXCOORD0;
 };
 
 

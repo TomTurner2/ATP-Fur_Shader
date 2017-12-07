@@ -6,7 +6,6 @@
 Mesh::Mesh(std::string _name)
 {
 	m_name = _name;
-	//m_material = new Material();
 }
 
 

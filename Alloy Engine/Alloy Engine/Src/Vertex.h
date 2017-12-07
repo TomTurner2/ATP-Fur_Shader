@@ -16,4 +16,5 @@ struct Vertex3D
 	float one;//so it maps to float 4
 	Vector3 normal;
 	float two;
+	float u, v;
 };
