@@ -1,3 +1,7 @@
-﻿  Model.cpp
+﻿C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Shell_Geometry_Shader.hlsl(54,9-52): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Shell_Geometry_Shader.hlsl(57,9-56): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Shell_Geometry_Shader.hlsl(60,9-58): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Fur_Shell_Geometry_Shader.cso
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.exe
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.pdb (Partial PDB)

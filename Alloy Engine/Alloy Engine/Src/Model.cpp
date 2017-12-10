@@ -66,21 +66,15 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 			normal.z = normal_in.z;
 
 			//get UV coordinates
-			float u = 0;
-			float v = 0;
-
-			if (mesh->HasTextureCoords(vert_id))
-			{
-				u = mesh->mTextureCoords[vert_id]->x;
-				v = mesh->mTextureCoords[vert_id]->y;
-			}
+			float u = mesh->mTextureCoords[0][vert_id].x;
+			float v = 1-mesh->mTextureCoords[0][vert_id].y;
 
 			Vertex3D vert_data = 
 			{ 
 				vertex_position, 1,
 				normal, 1,
 				u,
-				v 
+				v
 			};
 
 			verts.push_back(vert_data);

@@ -11,22 +11,38 @@ struct FurLayer
 	int layer : LAYER;
 };
 
+Texture2D m_alpha : register(t3);
+Texture2D m_mask : register(t4);
+
 
 float4 main(FurLayer pin) : SV_TARGET
 {
-	float3 diffuse_albedo = float3(mat_params.diff[0], mat_params.diff[1], mat_params.diff[2]);//get material parameters
-	float3 specular_albedo = float3(mat_params.spec, mat_params.spec, mat_params.spec);
-	float roughness = mat_params.rough;
+	float3 albedo_tex = m_albedo.Sample(m_sampler_state, pin.uv);
+	float3 final_albedo = albedo_tex * mat_params.diff;
+
+	float4 specular_tex = m_specular.Sample(m_sampler_state, pin.uv);
+	float3 final_specular = float3(specular_tex.w, specular_tex.w, specular_tex.w) * mat_params.spec;//spec is stored in alpha
+
+	float4 roughness_tex = m_roughness.Sample(m_sampler_state, pin.uv);
+	float final_roughness = roughness_tex.x * mat_params.rough;//roughness stored in r channel
 
 	float3 light_pos = light.position;
-	float3 light_colour = float3(light.r, light.g, light.b);
+	float3 light_colour = float3(light.r, light.g, light.b) * light.intensity;
 
-	float3 direct_lighting = DirectLighting(roughness, pin.normal, camera_pos,
-	light_colour, light_pos, diffuse_albedo, specular_albedo, pin.world_position);//calculate lighting
+	float3 direct_lighting = DirectLighting(final_roughness, pin.normal, camera_pos,
+	light_colour, light_pos, final_albedo, final_specular, pin.world_position);
 	
-	float alpha = 1 - (pin.layer / 5);//get alpha according to shell layer
 
-	if (alpha < 0.05f)//if zero discard the pixel
+	float3 alpha_mask = m_alpha.Sample(m_sampler_state, pin.uv);
+	alpha_mask *= m_mask.Sample(m_sampler_state, pin.uv);
+	
+	float alpha = step(0.5f, alpha_mask.x);
+	alpha = step(lerp(0.5f, 0.1f, pin.layer), alpha);
+
+	if (pin.layer <= 0)
+		alpha = 1;
+
+	if (alpha < 0.5f && pin.layer > 0.1f)//if zero discard the pixel
 		discard;
 
 	return float4(direct_lighting, alpha);

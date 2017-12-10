@@ -12,6 +12,7 @@ struct Light
 	float r;
 	float g;
 	float b;
+	float intensity;
 };
 
 
@@ -36,3 +37,9 @@ cbuffer PerObject : register(b2)
 	float extra_two;
 }
 
+
+//default texture maps
+SamplerState m_sampler_state : register(s0);
+Texture2D m_albedo : register(t0);
+Texture2D m_roughness : register(t1);
+Texture2D m_specular : register(t2);

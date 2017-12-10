@@ -17,7 +17,7 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 	BindParamsToUI();
 }
 
-void Game::SwitchMaterials()
+void Game::SwitchMaterials() const
 {
 	if (m_default_material_on)
 	{
@@ -25,7 +25,7 @@ void Game::SwitchMaterials()
 		return;
 	}
 
-	m_model->SetAllModelMaterials(m_fur_material);
+	m_model->SetAllModelMaterials(m_standard_material);
 }
 
 
@@ -36,6 +36,7 @@ void Game::CreateLight()
 	m_light.colour[0] = 1;
 	m_light.colour[1] = 1;
 	m_light.colour[2] = 1;
+	m_light.intensity = 1;
 }
 
 
@@ -51,21 +52,26 @@ void Game::CreateModel(Renderer& _renderer)
 	m_model = std::make_unique<Model>();
 	m_model->LoadModel("./Big_Cat.obj", _renderer);
 
-	material_params.roughness = 0.6f;
-	material_params.specular = 0.2f;
-	material_params.diffuse[0] = 0.392157f; 
-	material_params.diffuse[1] = 0.537255f;
-	material_params.diffuse[2] = 0.603922f;
+	material_params.roughness = 1;
+	material_params.specular = 1;
+	material_params.diffuse[0] = 1; 
+	material_params.diffuse[1] = 1;
+	material_params.diffuse[2] = 1;
 
-	m_fur_material = new FurMaterial();
-	m_fur_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
-		"Standard_Material_Pixel_Shader.cso", _renderer/*, "Fur_Shell_Geometry_Shader.cso"*/);
+	m_standard_material = new Material();
+	m_standard_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
+		"Standard_Material_Pixel_Shader.cso", _renderer);
+	m_standard_material->LoadStandardTextures("./Big_Cat_Albedo.png",
+		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
 
 	m_fur_gs_material = new FurMaterial();
 	m_fur_gs_material->CreateShaders("Fur_Vertex_Shader.cso",
 		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
+	m_fur_gs_material->LoadStandardTextures("./Big_Cat_Albedo.png",
+		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
+	m_fur_gs_material->LoadFurTextures(_renderer, "./Big_Cat_Fur_Mask.png", "./Big_Cat_Fur_Alpha.png");
 
-	m_model->SetAllModelMaterials(m_fur_material);
+	m_model->SetAllModelMaterials(m_standard_material);
 }
 
 
@@ -98,6 +104,7 @@ void Game::BindParamsToUI()
 {
 	//bing light to UI
 	TwAddVarRW(m_bar, "Light Colour", TW_TYPE_COLOR3F, &m_light.colour, " colormode=hls ");
+	TwAddVarRW(m_bar, "light_intensity", TW_TYPE_FLOAT, &m_light.intensity, "");
 	TwAddVarRW(m_bar, "light_X", TW_TYPE_FLOAT, &m_light.position.x, "");
 	TwAddVarRW(m_bar, "light_Y", TW_TYPE_FLOAT, &m_light.position.y, "");
 	TwAddVarRW(m_bar, "light_Z", TW_TYPE_FLOAT, &m_light.position.z, "");
@@ -128,13 +135,12 @@ void Game::Tick()
 	if (m_game_data->input->GetGameAction(GameAction::QUIT, InputManager::PRESSED))
 		exit(0);
 
-	//if (m_game_data->input->GetGameAction(GameAction::SWITCH, InputManager::PRESSED))
-		SwitchMaterials();
+	SwitchMaterials();
 
 	m_game_data->delta_time = CalculateDeltaTime();
 	m_camera->Tick(*m_game_data.get());
 	m_model->Tick(*m_game_data.get());
-	m_fur_material->SetMaterialParams(material_params);
+	m_standard_material->SetMaterialParams(material_params);
 	m_fur_gs_material->SetMaterialParams(material_params);
 }
 

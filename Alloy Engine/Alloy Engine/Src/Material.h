@@ -6,6 +6,7 @@
 #include "Light.h"
 #include "PBRMaterialParams.h"
 #include <vector>
+#include "Texture.h"
 
 
 class Renderer;
@@ -19,6 +20,7 @@ public:
 	virtual ~Material();
 	
 	void CreateShaders(std::string _vertex_shader, std::string _pixel_shader, Renderer& _renderer, std::string _geometry_shader = "");
+	void LoadStandardTextures(std::string _albedo_path, std::string _roughness_path, std::string _specular_path, Renderer& _renderer);
 	virtual void UpdateBuffers(Renderer& _renderer);
 
 	ID3D11VertexShader* GetVertexShader() const;
@@ -50,6 +52,12 @@ private:
 	ID3D11Buffer* m_ps_per_scene_buffer { nullptr };
 	ID3D11Buffer* m_ps_per_object_buffer { nullptr };
 
+	//shader resources
+	ID3D11SamplerState* m_sample_state;
+	Texture* m_albedo_texture { nullptr };
+	Texture* m_specular_texture { nullptr };
+	Texture* m_rougness_texture { nullptr };
+
 	struct VSPerFrameBuffer
 	{
 		Matrix view;
@@ -70,7 +78,7 @@ private:
 	struct PSPerSceneBuffer
 	{
 		Light light;
-		double extra;
+		float extra;
 	};
 
 	struct PSPerObjectBuffer
@@ -95,4 +103,7 @@ protected:
 	std::vector<ID3D11Buffer*> m_vs_buffers;
 	std::vector<ID3D11Buffer*> m_ps_buffers;
 	std::vector<ID3D11Buffer*> m_gs_buffers;
+
+	std::vector<ID3D11ShaderResourceView*> m_ps_resources;
+	std::vector<ID3D11ShaderResourceView*> m_gs_resources;
 };

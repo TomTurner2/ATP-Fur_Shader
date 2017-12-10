@@ -4,10 +4,12 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "Game.h"
-
+#include "WICTextureLoader.h"
 
 int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)
 {
+	CoInitialize(nullptr);//initialise WIC texture loading
+
 	Window window("Alloy Engine", 1366, 768);
 	Renderer renderer(window);
 

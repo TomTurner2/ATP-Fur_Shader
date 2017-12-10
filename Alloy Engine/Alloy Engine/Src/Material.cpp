@@ -65,6 +65,14 @@ void Material::CreateShaders(std::string _vertex_shader, std::string _pixel_shad
 }
 
 
+void Material::LoadStandardTextures(std::string _albedo_path, std::string _roughness_path, std::string _specular_path, Renderer & _renderer)
+{
+	m_albedo_texture = new Texture(_renderer, _albedo_path);
+	m_rougness_texture = new Texture(_renderer, _roughness_path);
+	m_specular_texture = new Texture(_renderer, _specular_path);
+}
+
+
 void Material::CreateBuffers(Renderer& _renderer)
 {
 	D3D11_BUFFER_DESC buffer_desc = {};
@@ -111,6 +119,28 @@ void Material::CreateBuffers(Renderer& _renderer)
 	if (hr != MB_OK)
 	{
 		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
+	}
+
+	D3D11_SAMPLER_DESC sampler_desc;
+	sampler_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	sampler_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampler_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampler_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampler_desc.MipLODBias = 0.0f;
+	sampler_desc.MaxAnisotropy = 1;
+	sampler_desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	sampler_desc.BorderColor[0] = 0;
+	sampler_desc.BorderColor[1] = 0;
+	sampler_desc.BorderColor[2] = 0;
+	sampler_desc.BorderColor[3] = 0;
+	sampler_desc.MinLOD = 0;
+	sampler_desc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	hr = _renderer.GetDevice()->CreateSamplerState(&sampler_desc, &m_sample_state);
+	if (hr != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create sampler state", "Error", MB_OK);
 	}
 }
 
@@ -214,6 +244,14 @@ void Material::UpdateBuffers(Renderer& _renderer)
 	m_gs_buffers.push_back(m_vs_per_object_buffer);
 	m_gs_buffers.push_back(m_vs_per_frame_buffer);
 
+	m_ps_resources.clear();
+	m_ps_resources.reserve(5);
+	m_ps_resources.push_back(m_albedo_texture->GetTexture());
+	m_ps_resources.push_back(m_rougness_texture->GetTexture());
+	m_ps_resources.push_back(m_specular_texture->GetTexture());
+	
+	m_gs_resources.clear();
+
 	UpdateAndAddCustomBuffers();
 	SetBuffers(_renderer);
 }
@@ -234,6 +272,14 @@ void Material::SetBuffers(Renderer& _renderer)
 
 	if (m_gs_buffers.size() > 0)
 		_renderer.GetDeviceContext()->GSSetConstantBuffers(0, m_gs_buffers.size(), &m_gs_buffers[0]);
+
+	_renderer.GetDeviceContext()->PSSetSamplers(0, 1, &m_sample_state);
+
+	if (m_ps_resources.size() > 0)
+	_renderer.GetDeviceContext()->PSSetShaderResources(0, m_ps_resources.size(), &m_ps_resources[0]);
+
+	if (m_gs_resources.size() > 0)
+		_renderer.GetDeviceContext()->GSSetShaderResources(0, m_gs_resources.size(), &m_gs_resources[0]);
 }
 
 

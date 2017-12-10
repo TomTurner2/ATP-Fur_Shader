@@ -25,14 +25,14 @@ private:
 	std::unique_ptr<Model> m_model { nullptr };
 	std::unique_ptr<Camera> m_camera { nullptr };
 	PBRMaterialParams material_params;
-	FurMaterial* m_fur_material{ nullptr };
+	Material* m_standard_material{ nullptr };
 	FurMaterial* m_fur_gs_material{ nullptr };
 	Light m_light;
 	TwBar* m_bar { nullptr };
 	float m_model_rot = 0;
 	bool m_default_material_on = true;
 
-	void SwitchMaterials();
+	void SwitchMaterials() const;
 	void CreateLight();
 	void CreateCamera(Renderer& _renderer);
 	void CreateModel(Renderer& _renderer);

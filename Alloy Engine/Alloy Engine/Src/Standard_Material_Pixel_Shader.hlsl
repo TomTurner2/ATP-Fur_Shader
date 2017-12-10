@@ -14,15 +14,21 @@ struct VertexOut
 
 float4 main(VertexOut pin) : SV_TARGET
 {
-	float3 diffuse_albedo = float3(mat_params.diff[0], mat_params.diff[1], mat_params.diff[2]);
-	float3 specular_albedo = float3(mat_params.spec, mat_params.spec, mat_params.spec);
-	float roughness = mat_params.rough;
+	float3 albedo_tex = m_albedo.Sample(m_sampler_state, pin.uv);
+	float3 final_albedo = albedo_tex * mat_params.diff;
+
+	float4 specular_tex = m_specular.Sample(m_sampler_state, pin.uv);
+	float3 final_specular = float3(specular_tex.w * mat_params.spec, specular_tex.w * mat_params.spec,
+	specular_tex.w * mat_params.spec);
+
+	float4 roughness_tex = m_roughness.Sample(m_sampler_state, pin.uv);
+	float final_roughness = roughness_tex.w * mat_params.rough;
 
 	float3 light_pos = light.position;
-	float3 light_colour = float3(light.r, light.g, light.b);
+	float3 light_colour = float3(light.r, light.g, light.b) * light.intensity;
 
-	float3 direct_lighting = DirectLighting(roughness, pin.normal, camera_pos,
-	light_colour, light_pos, diffuse_albedo, specular_albedo, pin.world_position);
+	float3 direct_lighting = DirectLighting(final_roughness, pin.normal, camera_pos,
+	light_colour, light_pos, final_albedo, final_specular, pin.world_position);
 
 	return float4(direct_lighting, 1);
 }

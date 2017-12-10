@@ -50,6 +50,18 @@
     <Filter Include="Resource Files\Models">
       <UniqueIdentifier>{421cb877-f914-40cd-8fd9-f6e4d964a706}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd Party">
+      <UniqueIdentifier>{d515a70f-02a0-4c85-b93f-11d73e367d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd Party\DirectXTex Image loading">
+      <UniqueIdentifier>{9d64c64b-ee40-4882-a94c-4019ec5d81a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd Party\DirectXTex Image loading\Header">
+      <UniqueIdentifier>{0246db5e-bbd2-4cc9-9a8f-721447a0192c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd Party\DirectXTex Image loading\Source">
+      <UniqueIdentifier>{f6bceaba-ef0c-4dd5-b312-f585decfe170}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\DebugSystem.h">
@@ -127,6 +139,12 @@
     <ClInclude Include="Src\FurMaterial.h">
       <Filter>Headers\Materials</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Texture.h">
+      <Filter>Headers\VBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\WICTextureLoader.h">
+      <Filter>3rd Party\DirectXTex Image loading\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -182,6 +200,12 @@
     </ClCompile>
     <ClCompile Include="Src\FurMaterial.cpp">
       <Filter>Source\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Texture.cpp">
+      <Filter>Source\VBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\WICTextureLoader.cpp">
+      <Filter>3rd Party\DirectXTex Image loading\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
