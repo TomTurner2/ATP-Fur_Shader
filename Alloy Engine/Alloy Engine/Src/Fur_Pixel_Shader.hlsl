@@ -11,6 +11,19 @@ struct FurLayer
 	int layer : LAYER;
 };
 
+
+cbuffer FurParameters : register(b3)
+{
+	float fur_mask_multiplier;
+	float max_fur_length;
+	float layer_step;
+	float base_clip;
+	float end_clip;
+	float3 gravity;
+}
+
+
+
 Texture2D m_alpha : register(t3);
 Texture2D m_mask : register(t4);
 
@@ -36,13 +49,13 @@ float4 main(FurLayer pin) : SV_TARGET
 	float3 alpha_mask = m_alpha.Sample(m_sampler_state, pin.uv);
 	alpha_mask *= m_mask.Sample(m_sampler_state, pin.uv);
 	
-	float alpha = step(0.5f, alpha_mask.x);
-	alpha = step(lerp(0.5f, 0.1f, pin.layer), alpha);
+	float alpha = step(base_clip, alpha_mask.x);
+	//float alpha = step(lerp(base_clip, end_clip, pin.layer), alpha_mask.x);
 
 	if (pin.layer <= 0)
 		alpha = 1;
 
-	if (alpha < 0.5f && pin.layer > 0.1f)//if zero discard the pixel
+	if (alpha < 0.5f)//if zero discard the pixel
 		discard;
 
 	return float4(direct_lighting, alpha);

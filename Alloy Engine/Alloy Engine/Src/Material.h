@@ -97,7 +97,7 @@ private:
 
 protected:
 	virtual void CreateBuffers(Renderer& _renderer);
-	virtual void UpdateAndAddCustomBuffers();
+	virtual void UpdateAndAddCustomBuffers(Renderer& _renderer);
 	
 	//inherited materials add buffers to these lists
 	std::vector<ID3D11Buffer*> m_vs_buffers;

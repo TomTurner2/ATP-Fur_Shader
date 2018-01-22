@@ -23,6 +23,7 @@
     <ClInclude Include="Src\Camera.h" />
     <ClInclude Include="Src\DebugSystem.h" />
     <ClInclude Include="Src\FurMaterial.h" />
+    <ClInclude Include="Src\FurParameters.h" />
     <ClInclude Include="Src\Game.h" />
     <ClInclude Include="Src\GameAction.h" />
     <ClInclude Include="Src\GameData.h" />

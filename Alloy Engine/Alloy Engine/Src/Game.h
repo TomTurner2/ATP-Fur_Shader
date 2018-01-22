@@ -27,6 +27,7 @@ private:
 	PBRMaterialParams material_params;
 	Material* m_standard_material{ nullptr };
 	FurMaterial* m_fur_gs_material{ nullptr };
+	FurParameters m_fur_parameters;
 	Light m_light;
 	TwBar* m_bar { nullptr };
 	float m_model_rot = 0;

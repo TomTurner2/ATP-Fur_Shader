@@ -252,13 +252,13 @@ void Material::UpdateBuffers(Renderer& _renderer)
 	
 	m_gs_resources.clear();
 
-	UpdateAndAddCustomBuffers();
+	UpdateAndAddCustomBuffers(_renderer);
 	SetBuffers(_renderer);
 }
 
 
 //map your buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers
-void Material::UpdateAndAddCustomBuffers()
+void Material::UpdateAndAddCustomBuffers(Renderer& _renderer)
 {}
 
 

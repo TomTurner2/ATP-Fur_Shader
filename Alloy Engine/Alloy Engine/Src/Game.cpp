@@ -64,13 +64,21 @@ void Game::CreateModel(Renderer& _renderer)
 	m_standard_material->LoadStandardTextures("./Big_Cat_Albedo.png",
 		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
 
+	m_fur_parameters.fur_mask_multiplier = 1;
+	m_fur_parameters.base_clip = 0.5f;
+	m_fur_parameters.end_clip = 0.1f;
+	m_fur_parameters.max_fur_length = 2;
+	m_fur_parameters.layer_step = .25f;
+	m_fur_parameters.gravity = Vector3::Zero;
+	
+
 	m_fur_gs_material = new FurMaterial();
 	m_fur_gs_material->CreateShaders("Fur_Vertex_Shader.cso",
 		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
 	m_fur_gs_material->LoadStandardTextures("./Big_Cat_Albedo.png",
 		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
 	m_fur_gs_material->LoadFurTextures(_renderer, "./Big_Cat_Fur_Mask.png", "./Big_Cat_Fur_Alpha.png");
-
+	m_fur_gs_material->SetFurParameters(m_fur_parameters);
 	m_model->SetAllModelMaterials(m_standard_material);
 }
 
@@ -125,7 +133,26 @@ void Game::BindParamsToUI()
 	TwDefine("Fur_Shader_Prototype/Rough   step=0.1 ");
 	TwDefine("Fur_Shader_Prototype/Specular   step=0.1 ");
 
-	TwAddVarRW(m_bar, "Fur off", TW_TYPE_BOOLCPP, &m_default_material_on, "");
+	TwAddVarRW(m_bar, "Max_Length", TW_TYPE_FLOAT, &m_fur_parameters.max_fur_length, "");
+	TwAddVarRW(m_bar, "Layer_Step", TW_TYPE_FLOAT, &m_fur_parameters.layer_step, "");
+	TwAddVarRW(m_bar, "Base_Clip", TW_TYPE_FLOAT, &m_fur_parameters.base_clip, "");
+	TwAddVarRW(m_bar, "End_Clip", TW_TYPE_FLOAT, &m_fur_parameters.end_clip, "");
+
+	TwDefine("Fur_Shader_Prototype/Mask_Multiplier   step=0.1 ");
+	TwDefine("Fur_Shader_Prototype/Max_Length   step=0.1 ");
+	TwDefine("Fur_Shader_Prototype/Layer_Step   step=0.1 ");
+	TwDefine("Fur_Shader_Prototype/Base_Clip   step=0.01 ");
+	TwDefine("Fur_Shader_Prototype/End_Clip   step=0.01 ");
+
+	TwAddVarRW(m_bar, "Gravity_X", TW_TYPE_FLOAT, &m_fur_parameters.gravity.x, "");
+	TwAddVarRW(m_bar, "Gravity_Y", TW_TYPE_FLOAT, &m_fur_parameters.gravity.y, "");
+	TwAddVarRW(m_bar, "Gravity_Z", TW_TYPE_FLOAT, &m_fur_parameters.gravity.z, "");
+
+	TwDefine("Fur_Shader_Prototype/Gravity_X   group=Gravity_Direction");
+	TwDefine("Fur_Shader_Prototype/Gravity_Y   group=Gravity_Direction");
+	TwDefine("Fur_Shader_Prototype/Gravity_Z   group=Gravity_Direction");
+
+	TwAddVarRW(m_bar, "Fur on", TW_TYPE_BOOLCPP, &m_default_material_on, "");
 }
 #pragma endregion
 
@@ -142,6 +169,7 @@ void Game::Tick()
 	m_model->Tick(*m_game_data.get());
 	m_standard_material->SetMaterialParams(material_params);
 	m_fur_gs_material->SetMaterialParams(material_params);
+	m_fur_gs_material->SetFurParameters(m_fur_parameters);
 }
 
 
