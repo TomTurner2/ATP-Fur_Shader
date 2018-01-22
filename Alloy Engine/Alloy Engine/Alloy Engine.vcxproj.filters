@@ -239,9 +239,6 @@
     <None Include="Axe.obj">
       <Filter>Resource Files\Models</Filter>
     </None>
-    <None Include="Src\PBR_Common_Functions.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
     <None Include="Src\PBR_Lighting.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>

@@ -246,8 +246,11 @@ void Material::UpdateBuffers(Renderer& _renderer)
 
 	m_ps_resources.clear();
 	m_ps_resources.reserve(5);
-	m_ps_resources.push_back(m_albedo_texture->GetTexture());
+	if (m_albedo_texture != nullptr)
+		m_ps_resources.push_back(m_albedo_texture->GetTexture());
+	if (m_rougness_texture != nullptr)
 	m_ps_resources.push_back(m_rougness_texture->GetTexture());
+	if (m_specular_texture != nullptr)
 	m_ps_resources.push_back(m_specular_texture->GetTexture());
 	
 	m_gs_resources.clear();

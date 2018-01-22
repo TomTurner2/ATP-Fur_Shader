@@ -23,7 +23,6 @@ cbuffer FurParameters : register(b3)
 }
 
 
-
 Texture2D m_alpha : register(t3);
 Texture2D m_mask : register(t4);
 
@@ -48,14 +47,15 @@ float4 main(FurLayer pin) : SV_TARGET
 
 	float3 alpha_mask = m_alpha.Sample(m_sampler_state, pin.uv);
 	alpha_mask *= m_mask.Sample(m_sampler_state, pin.uv);
-	
-	float alpha = step(base_clip, alpha_mask.x);
-	//float alpha = step(lerp(base_clip, end_clip, pin.layer), alpha_mask.x);
+	alpha_mask = saturate(alpha_mask);
+	float alpha = smoothstep(base_clip, alpha_mask.x, 0.5f);
 
 	if (pin.layer <= 0)
 		alpha = 1;
 
-	if (alpha < 0.5f)//if zero discard the pixel
+	float threshold = 0.5f * pin.layer * end_clip;
+
+	if (alpha <= threshold )//if zero discard the pixel
 		discard;
 
 	return float4(direct_lighting, alpha);

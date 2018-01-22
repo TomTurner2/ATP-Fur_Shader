@@ -1,21 +1,36 @@
-#include "PBR_Common_Functions.hlsl"
+//Constants
+static const float Pi = 3.141592654f;
 
 
-/*
-	Lambertian reflectance.
-	http://en.wikipedia.org/wiki/Lambertian_reflectance
-*/
-float3 DirectDiffuseBRDF(float3 _diffuse_albedo, float _normal_dot_light)
+float GGX(float _nrml_dot_vec, float _a)
 {
-	return (_diffuse_albedo * _normal_dot_light) / Pi;//pi is from PBR_Common_Functions
+	float k = _a * 0.5f;
+	return _nrml_dot_vec / (_nrml_dot_vec * (1.0f - k) + k);
+}
+
+
+//Geometry term
+float GSmith(float _a, float _nrml_dot_vec, float _nrml_dot_light)
+{
+	return GGX(_nrml_dot_light, _a * _a) * GGX(_nrml_dot_vec, _a * _a);
+}
+
+
+//Fresnel term
+float3 SchlickFresnel(float3 _f, float3 _h, float3 _l)
+{
+	return _f + (1.0f - _f) * pow((1.0f - dot(_l, _h)), 5.0f);
 }
 
 
 
-/*
-	Microfacet BRDF Cook-Torrence approx.
-	http://www.codinglabs.net/article_physically_based_rendering_cook_torrance.aspx
-*/
+float3 DirectDiffuseBRDF(float3 _diffuse_albedo, float _normal_dot_light)
+{
+	return (_diffuse_albedo * _normal_dot_light) / Pi;
+}
+
+
+//Microfacet BRDF Cook Torrence
 float3 DirectSpecularBRDF(float3 _roughness, float3 _specular_albedo, float3 _position_world_space, float3 _normal_world_space, float3 _camera_pos, float3 _light_dir)
 {
 	float3 view_direction = normalize(_camera_pos - _position_world_space);
@@ -46,7 +61,7 @@ float3 DirectLighting(float _roughness, float3 _normal_world_space, float3 _came
 	float  light_distance = length(pixel_to_light);
 	float3 light_dir = pixel_to_light / light_distance;//calc light direction
 
-	float nrml_dot_light = saturate(dot(_normal_world_space, light_dir));
+	float nrml_dot_light = saturate(dot(_normal_world_space, light_dir));//calc falloff
 
 	if (nrml_dot_light > 0.0f)
 	{

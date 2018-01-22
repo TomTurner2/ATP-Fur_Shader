@@ -61,13 +61,11 @@ void Game::CreateModel(Renderer& _renderer)
 	m_standard_material = new Material();
 	m_standard_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
 		"Standard_Material_Pixel_Shader.cso", _renderer);
-	m_standard_material->LoadStandardTextures("./Big_Cat_Albedo.png",
-		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
 
 	m_fur_parameters.fur_mask_multiplier = 1;
-	m_fur_parameters.base_clip = 0.5f;
-	m_fur_parameters.end_clip = 0.1f;
-	m_fur_parameters.max_fur_length = 2;
+	m_fur_parameters.base_clip = 0.9f;
+	m_fur_parameters.end_clip = 0.9f;
+	m_fur_parameters.max_fur_length = 4;
 	m_fur_parameters.layer_step = .25f;
 	m_fur_parameters.gravity = Vector3::Zero;
 	
