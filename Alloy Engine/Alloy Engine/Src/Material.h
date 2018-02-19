@@ -75,17 +75,14 @@ private:
 		float extra;//buffer size must be a multiple of 16
 	};
 
-	struct PSPerSceneBuffer
+	struct __declspec(align(32)) PSPerSceneBuffer
 	{
 		Light light;
-		float extra;
 	};
 
-	struct PSPerObjectBuffer
+	struct __declspec(align(32)) PSPerObjectBuffer
 	{
 		PBRMaterialParams material_params;
-		float extra;
-		double more;
 	};
 
 	//data to be passed to buffer (dirtyable pattern)

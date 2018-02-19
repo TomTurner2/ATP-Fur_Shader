@@ -156,6 +156,8 @@ void Material::UpdateBuffers(Renderer& _renderer)
 			0, &vs_per_object_mapping);//map across buffer
 
 		memcpy(vs_per_object_mapping.pData, &m_vs_per_object.second, sizeof(VSPerObjectBuffer));
+		/*printf("VSPerObjectBuffer %d\n VSPerFrameBuffer %d\n PSPerFrameBuffer %d\n PSPerSceneBuffer %d\n PSPerObjectBuffer %d",
+			sizeof(VSPerObjectBuffer), sizeof(VSPerFrameBuffer), sizeof(PSPerFrameBuffer), sizeof(PSPerSceneBuffer), sizeof(PSPerObjectBuffer));*/
 
 		if (hr != MB_OK)
 		{
