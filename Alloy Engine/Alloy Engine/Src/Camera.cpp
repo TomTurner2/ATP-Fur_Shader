@@ -141,18 +141,6 @@ void Camera::MoveUp(float _distance)
 }
 
 
-void Camera::RotateRight(float _angle)
-{
-	//TODO: need to be able to set transform forward and right before rot can be done
-}
-
-
-void Camera::RotateUp(float _angle)
-{
-	//TODO: need to be able to set transform forward and right before rot can be done
-}
-
-
 Matrix Camera::GetViewMatrix()
 {
 	if (m_view_matrix.first)

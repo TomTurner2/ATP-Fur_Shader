@@ -66,7 +66,7 @@ void Game::CreateModel(Renderer& _renderer)
 	m_fur_parameters.base_clip = 0.9f;
 	m_fur_parameters.end_clip = 0.9f;
 	m_fur_parameters.max_fur_length = 4;
-	m_fur_parameters.layer_step = .25f;
+	m_fur_parameters.layer_count = 5;
 	m_fur_parameters.gravity = Vector3::Zero;
 	
 
@@ -132,13 +132,13 @@ void Game::BindParamsToUI()
 	TwDefine("Fur_Shader_Prototype/Specular   step=0.1 ");
 
 	TwAddVarRW(m_bar, "Max_Length", TW_TYPE_FLOAT, &m_fur_parameters.max_fur_length, "");
-	TwAddVarRW(m_bar, "Layer_Step", TW_TYPE_FLOAT, &m_fur_parameters.layer_step, "");
+	TwAddVarRW(m_bar, "Layer_Count", TW_TYPE_INT8, &m_fur_parameters.layer_count, "");
 	TwAddVarRW(m_bar, "Base_Clip", TW_TYPE_FLOAT, &m_fur_parameters.base_clip, "");
 	TwAddVarRW(m_bar, "End_Clip", TW_TYPE_FLOAT, &m_fur_parameters.end_clip, "");
 
 	TwDefine("Fur_Shader_Prototype/Mask_Multiplier   step=0.1 ");
 	TwDefine("Fur_Shader_Prototype/Max_Length   step=0.1 ");
-	TwDefine("Fur_Shader_Prototype/Layer_Step   step=0.1 ");
+	TwDefine("Fur_Shader_Prototype/Layer_Count   step=1 ");
 	TwDefine("Fur_Shader_Prototype/Base_Clip   step=0.01 ");
 	TwDefine("Fur_Shader_Prototype/End_Clip   step=0.01 ");
 

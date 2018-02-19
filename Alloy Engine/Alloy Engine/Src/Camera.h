@@ -16,9 +16,6 @@ public:
 	void MoveRight(float _distance);
 	void MoveUp(float _distance);
 
-	void RotateRight(float _angle);
-	void RotateUp(float _angle);
-
 	Matrix GetViewMatrix();
 	Matrix GetProjectionMatrix() const;
 

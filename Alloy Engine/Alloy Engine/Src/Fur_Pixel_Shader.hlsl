@@ -16,7 +16,7 @@ cbuffer FurParameters : register(b3)
 {
 	float fur_mask_multiplier;
 	float max_fur_length;
-	float layer_step;
+	int layer_count;
 	float base_clip;
 	float end_clip;
 	float3 gravity;
@@ -53,7 +53,7 @@ float4 main(FurLayer pin) : SV_TARGET
 	if (pin.layer <= 0)
 		alpha = 1;
 
-	float threshold = 0.5f * pin.layer * end_clip;
+	float threshold = 0.5f * pin.layer * base_clip;
 
 	if (alpha <= threshold )//if zero discard the pixel
 		discard;
