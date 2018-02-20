@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "WICTextureLoader.h"
 
+
 int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)
 {
 	CoInitialize(nullptr);//initialise WIC texture loading
@@ -14,7 +15,7 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 	Renderer renderer(window);
 
 	DebugSystem debugger;
-	debugger.CreateConsoleWindow();
+	//debugger.CreateConsoleWindow();
 	debugger.InitAntTweakBar(renderer);
 
 	std::unique_ptr<InputManager> input_manager = std::make_unique<InputManager>();

@@ -9,12 +9,6 @@ Mesh::Mesh(std::string _name)
 }
 
 
-Mesh::~Mesh()
-{
-
-}
-
-
 std::string Mesh::GetName() const
 {
 	return m_name;
@@ -24,6 +18,18 @@ std::string Mesh::GetName() const
 Material* Mesh::GetMaterial() const
 {
 	return m_material;
+}
+
+
+unsigned int Mesh::GetVertexCount() const
+{
+	return m_vertex_count;
+}
+
+
+unsigned int Mesh::GetIndiceCount() const
+{
+	return m_indice_count;
 }
 
 

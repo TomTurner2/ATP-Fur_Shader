@@ -26,56 +26,36 @@ void Camera::Tick(GameData& _game_data)
 	if (_game_data.input->GetGameAction(GameAction::FORWARD, InputManager::HELD) ||
 		_game_data.input->GetGameAction(GameAction::FORWARD, InputManager::PRESSED))
 	{
-		system("cls");
-		printf("Input Dir: fwd \n");
 		MoveForward(m_move_speed * _game_data.delta_time);
-
 		m_transform.GetPosition().Display();
-		printf("Veiw matrix \n");
 		m_view_matrix.second.Display();
-		printf("\nProjection matrix\n");
 		m_projection.Display();
 	}
 
 	if (_game_data.input->GetGameAction(GameAction::BACKWARD, InputManager::HELD) ||
 		_game_data.input->GetGameAction(GameAction::BACKWARD, InputManager::PRESSED))
 	{
-		system("cls");
-		printf("Input Dir: back \n");
 		MoveForward(-m_move_speed  * _game_data.delta_time);
-
 		m_transform.GetPosition().Display();
-		printf("View matrix \n");
 		m_view_matrix.second.Display();
-		printf("\nProjection matrix\n");
 		m_projection.Display();
 	}
 
 	if (_game_data.input->GetGameAction(GameAction::LEFT, InputManager::HELD) ||
 		_game_data.input->GetGameAction(GameAction::LEFT, InputManager::PRESSED))
 	{
-		system("cls");
-		printf("Input Dir: left \n");
 		MoveRight(-m_move_speed  * _game_data.delta_time);
-
 		m_transform.GetPosition().Display();
-		printf("View matrix \n");
 		m_view_matrix.second.Display();
-		printf("\nProjection matrix\n");
 		m_projection.Display();
 	}
 
 	if (_game_data.input->GetGameAction(GameAction::RIGHT, InputManager::HELD) ||
 		_game_data.input->GetGameAction(GameAction::RIGHT, InputManager::PRESSED))
 	{
-		system("cls");
-		printf("Input Dir: right \n");
 		MoveRight(m_move_speed  * _game_data.delta_time);
-
 		m_transform.GetPosition().Display();
-		printf("View matrix \n");
 		m_view_matrix.second.Display();
-		printf("\nProjection matrix\n");
 		m_projection.Display();
 	}
 
@@ -83,14 +63,9 @@ void Camera::Tick(GameData& _game_data)
 	if (_game_data.input->GetGameAction(GameAction::UP, InputManager::HELD) ||
 		_game_data.input->GetGameAction(GameAction::UP, InputManager::PRESSED))
 	{
-		system("cls");
-		printf("Input Dir: up \n");
 		MoveUp(m_move_speed  * _game_data.delta_time);
-
 		m_transform.GetPosition().Display();
-		printf("View matrix \n");
 		m_view_matrix.second.Display();
-		printf("\nProjection matrix\n");
 		m_projection.Display();
 	}
 
@@ -98,13 +73,9 @@ void Camera::Tick(GameData& _game_data)
 	if (_game_data.input->GetGameAction(GameAction::DOWN, InputManager::HELD) ||
 		_game_data.input->GetGameAction(GameAction::DOWN, InputManager::PRESSED))
 	{
-		system("cls");
-		printf("Input Dir: down \n");
 		MoveUp(-m_move_speed  * _game_data.delta_time);
 		m_transform.GetPosition().Display();
-		printf("View matrix \n");
 		m_view_matrix.second.Display();
-		printf("\nProjection matrix\n");
 		m_projection.Display();
 	}
 }

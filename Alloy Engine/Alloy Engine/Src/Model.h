@@ -17,6 +17,7 @@ public:
 	void SetAllModelMaterials(Material* _material);
 	void SetAllMaterialParams(PBRMaterialParams _pbr_params);
 	Mesh* GetMeshByName(std::string _name);
+	int GetVertexCount();
 
 private:
 	std::vector<Mesh> m_meshes;

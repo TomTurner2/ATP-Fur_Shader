@@ -134,3 +134,15 @@ Mesh* Model::GetMeshByName(std::string _name)
 
 	return nullptr;
 }
+
+
+int Model::GetVertexCount()
+{
+	int count = 0;
+	for (auto &mesh : m_meshes)
+	{
+		count += mesh.GetVertexCount();
+	}
+
+	return count;
+}

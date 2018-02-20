@@ -4,7 +4,6 @@
 #include <Windows.h>
 #include "Renderer.h"
 #include "AntTweakBar.h"
-#include "Window.h"
 
 
 void DebugSystem::CreateConsoleWindow() const
@@ -23,11 +22,38 @@ void DebugSystem::CreateConsoleWindow() const
 void DebugSystem::InitAntTweakBar(Renderer& _renderer) const
 {
 	TwInit(TW_DIRECT3D11, _renderer.GetDevice());
-	TwWindowSize(_renderer.GetTargetWindow()->GetWindowWidth(), _renderer.GetTargetWindow()->GetWindowWidth());
+	TwWindowSize(_renderer.GetViewportDimensions().first, _renderer.GetViewportDimensions().second);
 }
 
 
 void DebugSystem::DrawDebugUI() const
 {
 	TwDraw();
+}
+
+
+void DebugSystem::Log(std::string _message)
+{
+	if (AllocConsole())//only allow print if a console is allocated
+		return;
+	
+	printf("%s\n", _message.c_str());
+}
+
+
+void DebugSystem::LogWarning(std::string _message)
+{
+	if (AllocConsole())
+		return;
+
+	printf("[Warning] %s\n", _message.c_str());
+}
+
+
+void DebugSystem::LogError(std::string _message)
+{
+	if (AllocConsole())
+		return;
+
+	printf("[Error] %s\n", _message.c_str());
 }
