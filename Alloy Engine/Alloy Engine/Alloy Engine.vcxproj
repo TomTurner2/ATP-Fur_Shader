@@ -24,6 +24,7 @@
     <ClInclude Include="Src\DebugSystem.h" />
     <ClInclude Include="Src\FurMaterial.h" />
     <ClInclude Include="Src\FurParameters.h" />
+    <ClInclude Include="Src\FurTexture.h" />
     <ClInclude Include="Src\Game.h" />
     <ClInclude Include="Src\GameAction.h" />
     <ClInclude Include="Src\GameData.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Src\Camera.cpp" />
     <ClCompile Include="Src\DebugSystem.cpp" />
     <ClCompile Include="Src\FurMaterial.cpp" />
+    <ClCompile Include="Src\FurTexture.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
     <ClCompile Include="Src\InputManager.cpp" />

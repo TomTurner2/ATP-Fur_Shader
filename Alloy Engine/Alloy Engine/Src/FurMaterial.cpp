@@ -46,6 +46,7 @@ void FurMaterial::UpdateAndAddCustomBuffers(Renderer& _renderer)
 		0, &vs_per_object_mapping);//map across buffer
 
 	memcpy(vs_per_object_mapping.pData, &m_fur_params, sizeof(FurParameters));
+	_renderer.GetDeviceContext()->Unmap(m_fur_param_buffer, 0);
 
 	if (hr != MB_OK)
 	{

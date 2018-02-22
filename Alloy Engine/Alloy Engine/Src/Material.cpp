@@ -156,8 +156,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 			0, &vs_per_object_mapping);//map across buffer
 
 		memcpy(vs_per_object_mapping.pData, &m_vs_per_object.second, sizeof(VSPerObjectBuffer));
-		/*printf("VSPerObjectBuffer %d\n VSPerFrameBuffer %d\n PSPerFrameBuffer %d\n PSPerSceneBuffer %d\n PSPerObjectBuffer %d",
-			sizeof(VSPerObjectBuffer), sizeof(VSPerFrameBuffer), sizeof(PSPerFrameBuffer), sizeof(PSPerSceneBuffer), sizeof(PSPerObjectBuffer));*/
+		_renderer.GetDeviceContext()->Unmap(m_vs_per_object_buffer, 0);
 
 		if (hr != MB_OK)
 		{
@@ -174,6 +173,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 			0, &vs_per_frame_mapping);
 
 		memcpy(vs_per_frame_mapping.pData, &m_vs_per_frame.second, sizeof(VSPerFrameBuffer));
+		_renderer.GetDeviceContext()->Unmap(m_vs_per_frame_buffer, 0);
 
 		if (hr != MB_OK)
 		{
@@ -190,6 +190,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 			0, &ps_per_frame_mapping);
 
 		memcpy(ps_per_frame_mapping.pData, &m_ps_per_frame.second, sizeof(PSPerFrameBuffer));
+		_renderer.GetDeviceContext()->Unmap(m_ps_per_frame_buffer, 0);
 
 		if (hr != MB_OK)
 		{
@@ -206,6 +207,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 			0, &ps_per_scene_mapping);
 
 		memcpy(ps_per_scene_mapping.pData, &m_ps_per_scene.second, sizeof(PSPerSceneBuffer));
+		_renderer.GetDeviceContext()->Unmap(m_ps_per_scene_buffer, 0);
 
 		if (hr != MB_OK)
 		{
@@ -222,6 +224,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 			0, &ps_per_object_mapping);
 
 		memcpy(ps_per_object_mapping.pData, &m_ps_per_object.second, sizeof(PSPerObjectBuffer));
+		_renderer.GetDeviceContext()->Unmap(m_ps_per_object_buffer, 0);
 
 		if (hr != MB_OK)
 		{

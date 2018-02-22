@@ -148,6 +148,9 @@
     <ClInclude Include="Src\FurParameters.h">
       <Filter>Headers\Structs and Enums</Filter>
     </ClInclude>
+    <ClInclude Include="Src\FurTexture.h">
+      <Filter>Headers\VBO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -209,6 +212,9 @@
     </ClCompile>
     <ClCompile Include="Src\WICTextureLoader.cpp">
       <Filter>3rd Party\DirectXTex Image loading\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FurTexture.cpp">
+      <Filter>Source\VBO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

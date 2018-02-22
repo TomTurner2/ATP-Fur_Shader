@@ -5,11 +5,13 @@
 #include "Renderer.h"
 #include "Game.h"
 #include "WICTextureLoader.h"
+#include <ctime>
 
 
 int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)
 {
 	CoInitialize(nullptr);//initialise WIC texture loading
+	srand(time(nullptr));//seed rand
 
 	Window window("Alloy Engine", 1366, 768);
 	Renderer renderer(window);

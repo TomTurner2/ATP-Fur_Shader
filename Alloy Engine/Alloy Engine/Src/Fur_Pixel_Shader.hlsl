@@ -18,7 +18,7 @@ cbuffer FurParameters : register(b3)
 	float max_fur_length;
 	int layer_count;
 	float base_clip;
-	float end_clip;
+	float shadow_intensity;
 	float3 gravity;
 }
 
@@ -58,5 +58,7 @@ float4 main(FurLayer pin) : SV_TARGET
 	if (alpha <= threshold )//if zero discard the pixel
 		discard;
 
-	return float4(direct_lighting, alpha);
+	float shadow = lerp(shadow_intensity, 1, pin.layer);
+
+	return float4(direct_lighting * shadow, alpha);
 }

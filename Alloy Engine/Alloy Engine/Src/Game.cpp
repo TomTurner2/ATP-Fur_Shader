@@ -94,7 +94,7 @@ void Game::CreateModel(Renderer& _renderer)
 
 	m_fur_parameters.fur_mask_multiplier = 1;
 	m_fur_parameters.base_clip = 0.71f;
-	m_fur_parameters.end_clip = 0.9f;
+	m_fur_parameters.shadow_intensity = 0.85f;
 	m_fur_parameters.max_fur_length = 4;
 	m_fur_parameters.layer_count = 16;
 	m_fur_parameters.gravity = Vector3::Zero;
@@ -105,7 +105,7 @@ void Game::CreateModel(Renderer& _renderer)
 		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
 	m_fur_gs_material->LoadStandardTextures("./Big_Cat_Albedo.png",
 		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
-	m_fur_gs_material->LoadFurTextures(_renderer, "./Big_Cat_Fur_Mask.png", "./Big_Cat_Fur_Alpha.png");
+	m_fur_gs_material->LoadFurTextures(_renderer, "./Big_Cat_Fur_Mask.png", "./Fur_Alpha.png");
 	m_fur_gs_material->SetFurParameters(m_fur_parameters);
 
 
@@ -231,13 +231,13 @@ void Game::CreateFurBarElements()
 	TwAddVarRW(m_fur_bar, "Max_Length", TW_TYPE_FLOAT, &m_fur_parameters.max_fur_length, "");
 	TwAddVarRW(m_fur_bar, "Layer_Count", TW_TYPE_INT8, &m_fur_parameters.layer_count, "");
 	TwAddVarRW(m_fur_bar, "Base_Clip", TW_TYPE_FLOAT, &m_fur_parameters.base_clip, "");
-	TwAddVarRW(m_fur_bar, "End_Clip", TW_TYPE_FLOAT, &m_fur_parameters.end_clip, "");
+	TwAddVarRW(m_fur_bar, "Shadowing", TW_TYPE_FLOAT, &m_fur_parameters.shadow_intensity, "");
 
 	TwDefine("Fur_Shader_Prototype/Mask_Multiplier   step=0.1 ");
 	TwDefine("Fur_Shader_Prototype/Max_Length   step=0.1 min=0.1");
 	TwDefine("Fur_Shader_Prototype/Layer_Count   step=1 min=0 max= 16");
 	TwDefine("Fur_Shader_Prototype/Base_Clip   step=0.01 ");
-	TwDefine("Fur_Shader_Prototype/End_Clip   step=0.01 ");
+	TwDefine("Fur_Shader_Prototype/Shadowing   step=0.01 min=0 max= 1");
 
 	TwAddVarRW(m_fur_bar, "Gravity_X", TW_TYPE_FLOAT, &m_fur_parameters.gravity.x, "");
 	TwAddVarRW(m_fur_bar, "Gravity_Y", TW_TYPE_FLOAT, &m_fur_parameters.gravity.y, "");

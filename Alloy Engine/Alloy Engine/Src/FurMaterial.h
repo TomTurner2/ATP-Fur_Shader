@@ -1,6 +1,7 @@
 #pragma once
 #include "Material.h"
 #include "FurParameters.h"
+#include "FurTexture.h"
 
 class Texture;
 

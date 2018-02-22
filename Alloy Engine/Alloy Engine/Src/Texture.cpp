@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "Renderer.h"
 #include "WICTextureLoader.h"
-#include "Macros.h"
+
 
 wchar_t* CharToWChar(const char* _text)//stupid windows types
 {
@@ -36,13 +36,6 @@ void Texture::LoadTexture(Renderer & _renderer, std::string _path)
 		MessageBox(nullptr, "[Texture](Constructor) Failed to load texture", "Error", MB_OK);
 		exit(0);
 	}
-}
-
-
-Texture::~Texture()
-{
-	/*SAFE_RELEASE(m_texture);
-	SAFE_RELEASE(m_texture_resource);*/
 }
 
 
