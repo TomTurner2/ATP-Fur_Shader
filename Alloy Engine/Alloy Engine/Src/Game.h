@@ -3,13 +3,14 @@
 #include <memory>
 #include "Camera.h"
 #include "Model.h"
-#include <AntTweakBar.h>
 #include "Light.h"
 #include "FurMaterial.h"
 #include "TextureSet.h"
+#include "FurDemoUI.h"
 
 
 class Renderer;
+
 
 class Game
 {
@@ -20,10 +21,9 @@ public:
 	void Tick();
 	void Draw(Renderer& _renderer) const;
 
-	void SwitchMaterials();//Accessible by anttweak
+	void SwitchMaterials();//called by UI
 	void SwapModel();
 	void UpdateTextureInputs();
-
 
 private:
 	DWORD m_playTime;
@@ -34,49 +34,38 @@ private:
 	std::unique_ptr<Model> m_sphere { nullptr };
 	std::unique_ptr<Model> m_axe{ nullptr };
 
-	enum Models : int//enum must be in sim class so AntTweak function can access it
+	friend class FurDemoUI;//not good practice but this is a protoype
+	std::unique_ptr<FurDemoUI> m_demo_ui{ nullptr };	
+
+	enum Models : int
 	{
 		BIG_CAT,
 		SPHERE,
 		AXE
-	};
-
-
-	TwType m_tw_model_type;
-	Models m_model_type = BIG_CAT;
+	} m_model_type = BIG_CAT;
 	Model* m_current_model { nullptr };
 
-
-	enum TextureSets : int//enum must be in sim class so AntTweak function can access it
+	enum TextureSets : int
 	{
 		BIG_CAT_TEX,
 		GIRAFFE_TEX,
 		NO_TEX
-	};
-
-	TwType m_tw_texture_type;
-	TextureSets m_texture_set = BIG_CAT_TEX;
+	} m_texture_set = BIG_CAT_TEX;
 	std::map<TextureSets, TextureSet> m_textures;
 
-	enum FurTextureAlphas : int//enum must be in sim class so AntTweak function can access it
+	enum FurTextureAlphas : int
 	{
 		CHUNKY_ALPHA,
 		FINE_APHA
-	};
-
-	TwType m_tw_fur_alpha_texture_type;
-	FurTextureAlphas m_fur_alpha_texture = CHUNKY_ALPHA;
+	} m_fur_alpha_texture = CHUNKY_ALPHA;
 	std::map<FurTextureAlphas, Texture*> m_alpha_textures;
 
-	enum FurTextureMasks : int//enum must be in sim class so AntTweak function can access it
+	enum FurTextureMasks : int
 	{
 		BIG_CAT_MASK,
 		GIRAFFE_MASK,
 		NO_MASK
-	};
-
-	TwType m_tw_fur_mask_texture_type;
-	FurTextureMasks m_fur_mask_texture = BIG_CAT_MASK;
+	} m_fur_mask_texture = BIG_CAT_MASK;
 	std::map<FurTextureMasks, Texture*> m_mask_textures;
 
 
@@ -86,34 +75,25 @@ private:
 	FurParameters m_fur_parameters;
 	Light m_light;
 
-	TwBar* m_fur_bar { nullptr };
-	TwBar* m_light_bar { nullptr };
-	TwBar* m_model_bar { nullptr };
-	TwBar* m_texture_bar{ nullptr };
-	TwBar* m_help_bar { nullptr };
-
 	bool m_default_material_on = true;
-	int m_current_vertex_count = 0;
-	int m_current_fur_vertex_count = 0;
 
 	void CreateLight();
 	void CreateCamera(Renderer& _renderer);
-	void CreateModel(Renderer& _renderer);
+	void CreateModels(Renderer& _renderer);
 	void CreateGameData(InputManager& _input);
-	void LoadTextureSets(Renderer& _renderer);
+	void CreateMaterials(Renderer& _renderer);
+	void CreateStandardMaterial(Renderer& _renderer);
+	void CreateFurMaterial(Renderer& _renderer);
 
-	void CreateDebugUI();
-	void CreateFurBar();
-	void CreateFurBarElements();
-	void CreateLightBar();
-	void CreateLightBarElements();
-	void CreateModelBar();
-	void CreateModelBarElements();
-	void CreateHelpBar();
-	void CreateTextureBar();
-	void CreateTextureBarElements();
-	void UpdateVertexCount() const;
+	void LoadTextures(Renderer& _renderer);
+	void LoadTextureSet(Renderer& _renderer, TextureSets _set_identifier,
+		std::string _albedo_path, std::string _roughness_path, std::string _specular_path);
+	void LoadStandardTextures(Renderer& _renderer);
+	void LoadAlphaTextures(Renderer& _renderer);
+	void LoadMaskTextures(Renderer& _renderer);
 
+	void SetKeyBindings() const;
 	void UpdateRenderData(Renderer& _renderer, Camera& _camera) const;
+	void UpdateMaterialsParameters() const;
 	float CalculateDeltaTime();
 };

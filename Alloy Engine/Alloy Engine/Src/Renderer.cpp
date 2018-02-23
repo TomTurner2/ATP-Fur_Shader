@@ -220,7 +220,7 @@ void Renderer::CreateRasterState()
 	HRESULT result{};
 	D3D11_RASTERIZER_DESC rasterDesc;
 	rasterDesc.AntialiasedLineEnable = false;
-	rasterDesc.CullMode = D3D11_CULL_NONE;// should be for back face cull D3D11_CULL_BACK
+	rasterDesc.CullMode = D3D11_CULL_BACK;// should be for back face cull D3D11_CULL_BACK
 	rasterDesc.DepthBias = 0;
 	rasterDesc.DepthBiasClamp = 0.0f;
 	rasterDesc.DepthClipEnable = true;

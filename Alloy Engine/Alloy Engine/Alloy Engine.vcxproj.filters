@@ -154,6 +154,9 @@
     <ClInclude Include="Src\TextureSet.h">
       <Filter>Headers\Structs and Enums</Filter>
     </ClInclude>
+    <ClInclude Include="Src\FurDemoUI.h">
+      <Filter>Headers\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\main.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="Src\FurTexture.cpp">
       <Filter>Source\VBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FurDemoUI.cpp">
+      <Filter>Source\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

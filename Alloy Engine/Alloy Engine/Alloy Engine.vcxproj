@@ -22,6 +22,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Camera.h" />
     <ClInclude Include="Src\DebugSystem.h" />
+    <ClInclude Include="Src\FurDemoUI.h" />
     <ClInclude Include="Src\FurMaterial.h" />
     <ClInclude Include="Src\FurParameters.h" />
     <ClInclude Include="Src\FurTexture.h" />
@@ -54,6 +55,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Camera.cpp" />
     <ClCompile Include="Src\DebugSystem.cpp" />
+    <ClCompile Include="Src\FurDemoUI.cpp" />
     <ClCompile Include="Src\FurMaterial.cpp" />
     <ClCompile Include="Src\FurTexture.cpp" />
     <ClCompile Include="Src\Game.cpp" />
