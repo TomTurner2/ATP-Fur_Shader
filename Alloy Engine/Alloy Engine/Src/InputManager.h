@@ -21,6 +21,6 @@ public:
 	void BindKey(GameAction _action, std::string _key);
 
 private:
-	std::map<GameAction, KeyState> key_binds;
+	std::map<GameAction, KeyState> m_key_binds;
 };
 

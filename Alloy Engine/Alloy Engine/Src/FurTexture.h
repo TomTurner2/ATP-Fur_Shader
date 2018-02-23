@@ -4,7 +4,7 @@
 
 class Renderer;
 
-
+// This was abandoned as DirectX texture creation is disgusting.
 class FurTexture
 {
 public:

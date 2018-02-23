@@ -21,9 +21,9 @@ void FurTexture::GenerateFur(Renderer& _renderer, float _density)
 	int strand_count = static_cast<int>(_density * texture_size);
 	for (unsigned int i = 0; i < strand_count; ++i)
 	{
-		std::pair<unsigned int, unsigned int> rand_coord = GetRandomTexPosition();//random coord to place strand
+		std::pair<unsigned int, unsigned int> rand_coord = GetRandomTexPosition();// Random coord to place strand.
 
-		//convert to weird DirectX pixel layout
+		// Convert to weird DirectX pixel layout?
 		RGBA pixel;
 		pixel.r = 255;
 		pixel.g = 255;
@@ -70,19 +70,19 @@ void FurTexture::CreateTexture(Renderer& _renderer, unsigned int _width, unsigne
 	static const float start_colour = 0;
 	D3D11_SUBRESOURCE_DATA start_pixels = { &start_colour, sizeof(float), 0 };//set start pixels all to black with no alpha
 
-	HRESULT hr {};
+	HRESULT result {};
 	
-	hr = _renderer.GetDevice()->CreateTexture2D(&desc, &start_pixels, &m_texture_resource);
+	result = _renderer.GetDevice()->CreateTexture2D(&desc, &start_pixels, &m_texture_resource);
 
-	if (hr != MB_OK)
+	if (result != MB_OK)
 	{
 		MessageBox(nullptr, "[FurTexture](CreateTexture) Failed to create texture", "Error", MB_OK);
 		exit(0);
 	}
 
-	hr =_renderer.GetDevice()->CreateShaderResourceView(m_texture_resource, nullptr, &m_texture);
+	result =_renderer.GetDevice()->CreateShaderResourceView(m_texture_resource, nullptr, &m_texture);
 
-	if (hr != MB_OK)
+	if (result != MB_OK)
 	{
 		MessageBox(nullptr, "[FurTexture](CreateTexture) Failed to create texture resource view", "Error", MB_OK);
 		exit(0);
@@ -93,8 +93,8 @@ void FurTexture::CreateTexture(Renderer& _renderer, unsigned int _width, unsigne
 std::pair<unsigned int, unsigned int> FurTexture::GetRandomTexPosition() const
 {
 	static std::mt19937 m_random;
-	std::uniform_int_distribution<int> distribution_x(0, desc.Width);//ensures different rand value	
+	std::uniform_int_distribution<int> distribution_x(0, desc.Width);// Ensures different rand value.	
 	std::uniform_int_distribution<int> distribution_y(0, desc.Height);
 
-	return std::pair<unsigned int, unsigned int>(distribution_x(m_random), distribution_y(m_random));//because I'm too lazy to make a vec2
+	return std::pair<unsigned int, unsigned int>(distribution_x(m_random), distribution_y(m_random));// Because I'm too lazy to make a vec2.
 }

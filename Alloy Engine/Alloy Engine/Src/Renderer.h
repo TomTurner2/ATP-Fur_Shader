@@ -35,14 +35,12 @@ private:
 	std::unique_ptr<RenderData> m_render_data { nullptr };
 	Window* m_target_window { nullptr };
 
-
 	ID3D11Texture2D* m_depth_stencil_buffer { nullptr };
 	ID3D11DepthStencilState* m_depth_stencil_state { nullptr };
 	ID3D11DepthStencilView* m_depth_stencil_view { nullptr };
 	ID3D11RasterizerState* m_raster_state { nullptr };
 	ID3D11BlendState* m_alpha_enable_blending_state { nullptr };
 	ID3D11BlendState* m_alpha_disable_blending_state { nullptr };
-
 
 	DXGI_SWAP_CHAIN_DESC CreateSwapChainDesc(Window& _window) const;
 	void CreateDeviceContext(DXGI_SWAP_CHAIN_DESC& _swap_chain);
@@ -52,4 +50,7 @@ private:
 	void CreateDepthStencilView();
 	void CreateRasterState();
 	void CreateAlphaBlendStates();
+
+	void SetViewPort() const;
+	void ClearViews() const;
 };

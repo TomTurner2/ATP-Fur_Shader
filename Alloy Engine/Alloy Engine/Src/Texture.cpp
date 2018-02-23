@@ -5,7 +5,7 @@
 
 wchar_t* CharToWChar(const char* _text)//stupid windows types
 {
-	size_t size = strlen(_text) + 1;
+	auto size = strlen(_text) + 1;
 	static wchar_t* wa = nullptr;
 	if (wa)
 	{
@@ -26,12 +26,12 @@ Texture::Texture(Renderer& _renderer, std::string _path)
 
 void Texture::LoadTexture(Renderer & _renderer, std::string _path)
 {
-	HRESULT hr{};
+	HRESULT result{};
 
-	hr = DirectX::CreateWICTextureFromFile(_renderer.GetDevice(), CharToWChar(_path.c_str()),
+	result = DirectX::CreateWICTextureFromFile(_renderer.GetDevice(), CharToWChar(_path.c_str()),
 		&m_texture_resource, &m_texture, 4096);
 
-	if (hr != MB_OK)
+	if (result != MB_OK)
 	{
 		MessageBox(nullptr, "[Texture](Constructor) Failed to load texture", "Error", MB_OK);
 		exit(0);

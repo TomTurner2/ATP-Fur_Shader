@@ -1,18 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Headers">
       <UniqueIdentifier>{a3ee59d2-fc14-4581-8083-1b858cb68152}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{e2be5dad-d5d4-40d4-a5de-7ddfb1f24c08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders">
-      <UniqueIdentifier>{253177ee-00f8-424f-99c0-8efa4392960b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Core">
       <UniqueIdentifier>{28efb635-3bb3-4cff-a763-b186a3f0e6b8}</UniqueIdentifier>
@@ -47,9 +40,6 @@
     <Filter Include="Source\Materials">
       <UniqueIdentifier>{219daa4d-b777-4989-a69f-5af1c7c28220}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Models">
-      <UniqueIdentifier>{421cb877-f914-40cd-8fd9-f6e4d964a706}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3rd Party">
       <UniqueIdentifier>{d515a70f-02a0-4c85-b93f-11d73e367d6f}</UniqueIdentifier>
     </Filter>
@@ -61,6 +51,16 @@
     </Filter>
     <Filter Include="3rd Party\DirectXTex Image loading\Source">
       <UniqueIdentifier>{f6bceaba-ef0c-4dd5-b312-f585decfe170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files %28Shaders In Here%29">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files %28Shaders In Here%29\Shaders">
+      <UniqueIdentifier>{253177ee-00f8-424f-99c0-8efa4392960b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files %28Shaders In Here%29\Models">
+      <UniqueIdentifier>{421cb877-f914-40cd-8fd9-f6e4d964a706}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -228,46 +228,46 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Src\Triangle_Pixel_Shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Src\Triangle_Vertex_Shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Src\Standard_Material_Vertex_Shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Src\Standard_Material_Pixel_Shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Src\Fur_Shell_Geometry_Shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Src\Fur_Pixel_Shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Src\Fur_Vertex_Shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Axe.obj">
-      <Filter>Resource Files\Models</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Models</Filter>
     </None>
     <None Include="Src\PBR_Lighting.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </None>
     <None Include="Sphere.obj">
-      <Filter>Resource Files\Models</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Models</Filter>
     </None>
     <None Include="Big_Cat.obj">
-      <Filter>Resource Files\Models</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Models</Filter>
     </None>
     <None Include="Src\Base_PS_Buffers.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </None>
     <None Include="Src\Base_VS_Buffers.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

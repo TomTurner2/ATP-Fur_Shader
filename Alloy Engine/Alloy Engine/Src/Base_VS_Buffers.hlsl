@@ -1,6 +1,6 @@
-//this file contains all the base vertex shader buffers
+// This file contains all the base vertex shader buffers.
 
-//input
+
 struct VertexIn
 {
 	float4 position : POSITION;
@@ -9,7 +9,6 @@ struct VertexIn
 };
 
 
-//input buffers
 cbuffer PerObject : register(b0)
 {
 	matrix m_model;

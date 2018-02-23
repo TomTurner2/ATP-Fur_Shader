@@ -16,6 +16,7 @@ protected:
 	void CreateBuffers(Renderer& _renderer) override;
 	void UpdateAndAddCustomBuffers(Renderer& _renderer) override;
 
+	bool m_buffer_is_dirty = true;
 	Texture* m_fur_alpha{ nullptr };
 	Texture* m_fur_mask{ nullptr };
 	ID3D11Buffer* m_fur_param_buffer{ nullptr };

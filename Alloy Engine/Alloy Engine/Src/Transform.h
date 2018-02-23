@@ -13,8 +13,6 @@ public:
 	Transform(const Transform& _transform) = default;
 	~Transform() = default;
 
-	Transform operator*(const Transform& _transform) const;	// Combine transforms
-
 	Vector3 GetPosition() const;
 	Vector3 GetScale() const;
 	Quaternion GetRotation() const;

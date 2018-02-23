@@ -9,7 +9,7 @@ class Renderer;
 class GameObject
 {
 public:
-	GameObject();
+	GameObject() = default;
 	virtual ~GameObject() = default;
 
 	virtual void Tick(GameData& _game_data);

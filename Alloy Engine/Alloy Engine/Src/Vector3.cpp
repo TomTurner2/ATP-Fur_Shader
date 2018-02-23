@@ -279,7 +279,7 @@ bool Vector3::operator==(const Vector3& _vector) const
 {
 	return (x > _vector.x - Vector3::Epsilon && x < _vector.x + Vector3::Epsilon &&
 		y > _vector.y - Vector3::Epsilon && y < _vector.y + Vector3::Epsilon &&
-		z > _vector.z - Vector3::Epsilon && z < _vector.z + Vector3::Epsilon);//epsilon to avoid floating point inaccuracy
+		z > _vector.z - Vector3::Epsilon && z < _vector.z + Vector3::Epsilon);// Epsilon to avoid floating point inaccuracy.
 }
 
 
