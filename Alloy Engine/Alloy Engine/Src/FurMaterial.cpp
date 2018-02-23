@@ -15,6 +15,13 @@ void FurMaterial::SetFurParameters(FurParameters _fur_params)
 }
 
 
+void FurMaterial::SetFurTextures(Texture* _fur_alpha, Texture* _fur_mask)
+{
+	m_fur_alpha = _fur_alpha;
+	m_fur_mask = _fur_mask;
+}
+
+
 void FurMaterial::CreateBuffers(Renderer& _renderer)
 {
 	Material::CreateBuffers(_renderer);//create base constant buffers

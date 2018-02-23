@@ -6,6 +6,8 @@
 #include <AntTweakBar.h>
 #include "Light.h"
 #include "FurMaterial.h"
+#include "TextureSet.h"
+
 
 class Renderer;
 
@@ -20,6 +22,7 @@ public:
 
 	void SwitchMaterials();//Accessible by anttweak
 	void SwapModel();
+	void UpdateTextureInputs();
 
 
 private:
@@ -38,9 +41,44 @@ private:
 		AXE
 	};
 
+
 	TwType m_tw_model_type;
 	Models m_model_type = BIG_CAT;
-	Model* m_current_model{ nullptr };
+	Model* m_current_model { nullptr };
+
+
+	enum TextureSets : int//enum must be in sim class so AntTweak function can access it
+	{
+		BIG_CAT_TEX,
+		GIRAFFE_TEX,
+		NO_TEX
+	};
+
+	TwType m_tw_texture_type;
+	TextureSets m_texture_set = BIG_CAT_TEX;
+	std::map<TextureSets, TextureSet> m_textures;
+
+	enum FurTextureAlphas : int//enum must be in sim class so AntTweak function can access it
+	{
+		CHUNKY_ALPHA,
+		FINE_APHA
+	};
+
+	TwType m_tw_fur_alpha_texture_type;
+	FurTextureAlphas m_fur_alpha_texture = CHUNKY_ALPHA;
+	std::map<FurTextureAlphas, Texture*> m_alpha_textures;
+
+	enum FurTextureMasks : int//enum must be in sim class so AntTweak function can access it
+	{
+		BIG_CAT_MASK,
+		GIRAFFE_MASK,
+		NO_MASK
+	};
+
+	TwType m_tw_fur_mask_texture_type;
+	FurTextureMasks m_fur_mask_texture = BIG_CAT_MASK;
+	std::map<FurTextureMasks, Texture*> m_mask_textures;
+
 
 	PBRMaterialParams material_params;
 	Material* m_standard_material { nullptr };
@@ -51,6 +89,7 @@ private:
 	TwBar* m_fur_bar { nullptr };
 	TwBar* m_light_bar { nullptr };
 	TwBar* m_model_bar { nullptr };
+	TwBar* m_texture_bar{ nullptr };
 	TwBar* m_help_bar { nullptr };
 
 	bool m_default_material_on = true;
@@ -61,6 +100,7 @@ private:
 	void CreateCamera(Renderer& _renderer);
 	void CreateModel(Renderer& _renderer);
 	void CreateGameData(InputManager& _input);
+	void LoadTextureSets(Renderer& _renderer);
 
 	void CreateDebugUI();
 	void CreateFurBar();
@@ -70,6 +110,8 @@ private:
 	void CreateModelBar();
 	void CreateModelBarElements();
 	void CreateHelpBar();
+	void CreateTextureBar();
+	void CreateTextureBarElements();
 	void UpdateVertexCount() const;
 
 	void UpdateRenderData(Renderer& _renderer, Camera& _camera) const;

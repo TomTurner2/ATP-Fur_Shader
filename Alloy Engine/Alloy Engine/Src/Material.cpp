@@ -266,8 +266,7 @@ void Material::UpdateBuffers(Renderer& _renderer)
 
 
 //map your buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers
-void Material::UpdateAndAddCustomBuffers(Renderer& _renderer)
-{}
+void Material::UpdateAndAddCustomBuffers(Renderer& _renderer){}
 
 
 void Material::SetBuffers(Renderer& _renderer)
@@ -312,6 +311,14 @@ ID3D11GeometryShader * Material::GetGeometryShader() const
 ID3D11InputLayout* Material::GetInputLayout() const
 {
 	return m_input_layout;
+}
+
+
+void Material::SetStandardTextures(Texture* _albedo, Texture* _roughness, Texture* _specular)
+{
+	m_albedo_texture = _albedo;
+	m_rougness_texture = _roughness;
+	m_specular_texture = _specular;
 }
 
 

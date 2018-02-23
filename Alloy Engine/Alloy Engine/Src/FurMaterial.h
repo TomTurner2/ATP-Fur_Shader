@@ -10,6 +10,7 @@ class FurMaterial : public Material
 public:
 	void LoadFurTextures(Renderer& _renderer, std::string _fur_mask_path, std::string _fur_alpha_path);
 	void SetFurParameters(FurParameters _fur_params);
+	void SetFurTextures(Texture* _fur_alpha, Texture* _fur_mask);
 
 protected:
 	void CreateBuffers(Renderer& _renderer) override;

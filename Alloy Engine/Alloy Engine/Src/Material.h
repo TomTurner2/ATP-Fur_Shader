@@ -28,6 +28,7 @@ public:
 	ID3D11GeometryShader* GetGeometryShader() const;
 	ID3D11InputLayout* GetInputLayout() const;
 
+	void SetStandardTextures(Texture* _albedo, Texture* _roughness, Texture* _specular);
 	void SetTransformMatrix(Matrix _transform);
 	void SetView(Matrix _view);
 	void SetProjection(Matrix _projection);

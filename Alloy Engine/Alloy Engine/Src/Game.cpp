@@ -5,6 +5,7 @@
 #include "TMath.h"
 #include "Model.h"
 #include <AntTweakBar.h>
+#include "TextureSet.h"
 
 
 Game::Game(Renderer& _renderer, InputManager& _input)
@@ -53,6 +54,21 @@ void Game::SwapModel()
 }
 
 
+void Game::UpdateTextureInputs()
+{
+	auto texture_set = m_textures.find(m_texture_set);
+	m_fur_gs_material->SetStandardTextures(texture_set->second.albedo,
+		texture_set->second.roughness, texture_set->second.specular);
+
+	auto alpha = m_alpha_textures.find(m_fur_alpha_texture);
+	auto mask = m_mask_textures.find(m_fur_mask_texture);
+	m_fur_gs_material->SetFurTextures(alpha->second, mask->second);
+}
+
+
+
+
+
 #pragma region Creation Functions
 void Game::CreateLight()
 {
@@ -94,18 +110,22 @@ void Game::CreateModel(Renderer& _renderer)
 
 	m_fur_parameters.fur_mask_multiplier = 1;
 	m_fur_parameters.base_clip = 0.71f;
-	m_fur_parameters.shadow_intensity = 0.85f;
+	m_fur_parameters.shadow_intensity = 0.95f;
 	m_fur_parameters.max_fur_length = 4;
 	m_fur_parameters.layer_count = 16;
 	m_fur_parameters.gravity = Vector3::Zero;
 	
 
+	LoadTextureSets(_renderer);
+	auto start_tex = m_textures.find(BIG_CAT_TEX);
+	auto start_mask = m_mask_textures.find(BIG_CAT_MASK);
+	auto start_alpha = m_alpha_textures.find(CHUNKY_ALPHA);
+
+
 	m_fur_gs_material = new FurMaterial();
-	m_fur_gs_material->CreateShaders("Fur_Vertex_Shader.cso",
-		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
-	m_fur_gs_material->LoadStandardTextures("./Big_Cat_Albedo.png",
-		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
-	m_fur_gs_material->LoadFurTextures(_renderer, "./Big_Cat_Fur_Mask.png", "./Fur_Alpha.png");
+	m_fur_gs_material->CreateShaders("Fur_Vertex_Shader.cso", "Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
+	m_fur_gs_material->SetStandardTextures(start_tex->second.albedo, start_tex->second.roughness, start_tex->second.specular);
+	m_fur_gs_material->SetFurTextures(start_alpha->second, start_mask->second);
 	m_fur_gs_material->SetFurParameters(m_fur_parameters);
 
 
@@ -113,6 +133,38 @@ void Game::CreateModel(Renderer& _renderer)
 	m_sphere->SetAllModelMaterials(m_fur_gs_material);
 	m_axe->SetAllModelMaterials(m_fur_gs_material);
 	m_current_model = m_big_cat.get();
+}
+
+
+void Game::LoadTextureSets(Renderer& _renderer)
+{
+	
+	TextureSet big_cat_textures;
+	big_cat_textures.albedo = new Texture(_renderer, "./Big_Cat_Albedo.png");
+	big_cat_textures.roughness = new Texture(_renderer, "./Big_Cat_Roughness.png");
+	big_cat_textures.specular = new Texture(_renderer, "./Big_Cat_Specular.png");
+
+	m_textures.insert(std::pair<TextureSets, TextureSet>(BIG_CAT_TEX, std::move(big_cat_textures)));
+
+	TextureSet giraffe_textures;
+	giraffe_textures.albedo = new Texture(_renderer, "./Giraffe_Albedo.png");
+	giraffe_textures.roughness = new Texture(_renderer, "./White.png");
+	giraffe_textures.specular = new Texture(_renderer, "./White.png");
+	m_textures.insert(std::pair<TextureSets, TextureSet>(GIRAFFE_TEX, std::move(giraffe_textures)));
+
+	TextureSet no_textures;
+	no_textures.albedo = new Texture(_renderer, "./White.png");
+	no_textures.roughness = new Texture(_renderer, "./White.png");
+	no_textures.specular = new Texture(_renderer, "./White.png");
+	m_textures.insert(std::pair<TextureSets, TextureSet>(NO_TEX, std::move(no_textures)));
+
+
+	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(CHUNKY_ALPHA, new Texture(_renderer, "./Fur_Alpha.png")));
+	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(FINE_APHA, new Texture(_renderer, "./Fur_Alpha_Fine.png")));
+
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(BIG_CAT_MASK, new Texture(_renderer, "./Big_Cat_Fur_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(GIRAFFE_MASK, new Texture(_renderer, "./Giraffe_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(NO_MASK, new Texture(_renderer, "./White.png")));
 }
 
 
@@ -130,6 +182,7 @@ void Game::CreateGameData(InputManager& _input)
 	m_game_data->input->BindKey(QUIT, "X");//oversight, can't bind escape
 	m_game_data->input->BindKey(SWITCH, "F");
 }
+
 
 #pragma endregion
 
@@ -187,21 +240,38 @@ void Game::CreateDebugUI()
 	CreateModelBar();
 	CreateModelBarElements();
 
+	CreateTextureBar();
+	CreateTextureBarElements();
+
 	CreateHelpBar();//only element also added
 }
 
 
-void TW_CALL TWSwitchMaterials(void * _game)
+void TW_CALL TWSwitchMaterials(void* _game)
 {
 	auto temp = static_cast<Game*>(_game);
 	temp->SwitchMaterials();
 }
 
 
-void TW_CALL TWSwapModel(void * _game)
+void TW_CALL TWSwapModel(void* _game)
 {
 	auto temp = static_cast<Game*>(_game);
 	temp->SwapModel();
+}
+
+
+void TW_CALL TWUpdateTextures(void* _game)
+{
+	auto temp = static_cast<Game*>(_game);
+	temp->UpdateTextureInputs();
+}
+
+
+void TW_CALL TWUpdateStrandAlpha(void* _game)
+{
+	auto temp = static_cast<Game*>(_game);
+	temp->UpdateTextureInputs();
 }
 
 
@@ -235,8 +305,8 @@ void Game::CreateFurBarElements()
 
 	TwDefine("Fur_Shader_Prototype/Mask_Multiplier   step=0.1 ");
 	TwDefine("Fur_Shader_Prototype/Max_Length   step=0.1 min=0.1");
-	TwDefine("Fur_Shader_Prototype/Layer_Count   step=1 min=0 max= 16");
-	TwDefine("Fur_Shader_Prototype/Base_Clip   step=0.01 ");
+	TwDefine("Fur_Shader_Prototype/Layer_Count   step=1 min=0 max= 32");
+	TwDefine("Fur_Shader_Prototype/Base_Clip   step=0.01");
 	TwDefine("Fur_Shader_Prototype/Shadowing   step=0.01 min=0 max= 1");
 
 	TwAddVarRW(m_fur_bar, "Gravity_X", TW_TYPE_FLOAT, &m_fur_parameters.gravity.x, "");
@@ -312,6 +382,38 @@ void Game::CreateHelpBar()
 	TwDefine("Help valueswidth=fit");
 
 	TwAddButton(m_help_bar, "help", nullptr, nullptr, "label='Please press Alt + Enter to go full screen'");//best way to just display text
+}
+
+
+void Game::CreateTextureBar()
+{
+	m_texture_bar = TwNewBar("Textures");
+	TwDefine("Textures label='Texture Swapper' ");
+	TwDefine("Textures color='46 53 49' text=light ");
+	TwDefine("Textures alpha=255");
+	TwDefine("Textures size='250 150'");
+	TwDefine("Textures position= '200 560'");
+	TwDefine("Textures valueswidth=fit");
+}
+
+
+void Game::CreateTextureBarElements()
+{
+	TwEnumVal texture_sets[] = { { BIG_CAT_TEX, "Big cat textures" },{ GIRAFFE_TEX, "Giraffe textures" },{ NO_TEX, "No textures" } };
+	m_tw_texture_type = TwDefineEnum("Textures", texture_sets, 3);//create antweak enum
+	TwAddVarRW(m_texture_bar, "Texture Set", m_tw_texture_type, &m_texture_set, nullptr);//add enum
+
+	TwEnumVal texture_alphas[] = { { CHUNKY_ALPHA, "Chunky" },{ FINE_APHA, "Fine" }};
+	m_tw_fur_alpha_texture_type = TwDefineEnum("Alphas", texture_alphas, 2);//create antweak enum
+	TwAddVarRW(m_texture_bar, "Strand Alpha", m_tw_fur_alpha_texture_type, &m_fur_alpha_texture, nullptr);//add enum
+
+
+	TwEnumVal texture_masks[] = { { BIG_CAT_MASK, "Big cat mask" },{ GIRAFFE_MASK, "Giraffe mask" }, {NO_MASK, "No mask"} };
+	m_tw_fur_mask_texture_type = TwDefineEnum("Masks", texture_masks, 3);//create antweak enum
+	TwAddVarRW(m_texture_bar, "Fur Mask", m_tw_fur_mask_texture_type, &m_fur_mask_texture, nullptr);//add enum
+
+
+	TwAddButton(m_texture_bar, "Update Textures", TWUpdateTextures, static_cast<void*>(this), " label='Update Textures'");//create button
 }
 
 

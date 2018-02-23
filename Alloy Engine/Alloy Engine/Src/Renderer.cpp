@@ -17,7 +17,6 @@ Renderer::Renderer(Window& _window)
 	CreateDepthStencilView();
 	CreateRasterState();
 	CreateAlphaBlendStates();
-	//TurnOnAlphaBlending();
 }
 
 
@@ -221,7 +220,7 @@ void Renderer::CreateRasterState()
 	HRESULT result{};
 	D3D11_RASTERIZER_DESC rasterDesc;
 	rasterDesc.AntialiasedLineEnable = false;
-	rasterDesc.CullMode = D3D11_CULL_BACK;
+	rasterDesc.CullMode = D3D11_CULL_NONE;// should be for back face cull D3D11_CULL_BACK
 	rasterDesc.DepthBias = 0;
 	rasterDesc.DepthBiasClamp = 0.0f;
 	rasterDesc.DepthClipEnable = true;
@@ -259,7 +258,7 @@ void Renderer::CreateAlphaBlendStates()
 	blendStateDescription.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 	blendStateDescription.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 	blendStateDescription.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	blendStateDescription.RenderTarget[0].RenderTargetWriteMask = 0x0f;
+	blendStateDescription.RenderTarget[0].RenderTargetWriteMask = 15;
 	
 	result = m_device->CreateBlendState(&blendStateDescription, &m_alpha_enable_blending_state);// Create the blend state
 	if (FAILED(result))
