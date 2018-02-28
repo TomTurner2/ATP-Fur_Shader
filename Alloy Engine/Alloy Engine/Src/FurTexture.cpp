@@ -68,7 +68,7 @@ void FurTexture::CreateTexture(Renderer& _renderer, unsigned int _width, unsigne
 	desc.MiscFlags = 0;
 
 	static const float start_colour = 0;
-	D3D11_SUBRESOURCE_DATA start_pixels = { &start_colour, sizeof(float), 0 };//set start pixels all to black with no alpha
+	D3D11_SUBRESOURCE_DATA start_pixels = { &start_colour, sizeof(float), 0 };// Set start pixels all to black with no alpha.
 
 	HRESULT result {};
 	

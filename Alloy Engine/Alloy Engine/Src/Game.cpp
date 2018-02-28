@@ -21,10 +21,10 @@ Game::Game(Renderer& _renderer, InputManager& _input)
 
 void Game::SwitchMaterials()
 {
-	m_default_material_on = !m_default_material_on;
+	m_default_material_on = !m_default_material_on;// Toggle Material.
 	if (m_default_material_on)
 	{
-		m_big_cat->SetAllModelMaterials(m_fur_gs_material);
+		m_big_cat->SetAllModelMaterials(m_fur_gs_material);// Apply to all models.
 		m_sphere->SetAllModelMaterials(m_fur_gs_material);
 		m_axe->SetAllModelMaterials(m_fur_gs_material);
 		return;
@@ -45,8 +45,8 @@ void Game::SwapModel()
 	case SPHERE: m_current_model = m_sphere.get();
 		break;
 	case AXE: m_current_model = m_axe.get();
-		m_default_material_on = true;//set it to useing fur then swap
-		SwitchMaterials();//axe should not use fur unless switched to
+		m_default_material_on = true;// Set it to useing fur then swap.
+		SwitchMaterials();// Axe should not use fur unless switched to.
 		break;
 	}
 }
@@ -54,7 +54,7 @@ void Game::SwapModel()
 
 void Game::UpdateTextureInputs()
 {
-	auto texture_set = m_textures.find(m_texture_set);
+	auto texture_set = m_textures.find(m_texture_set);// Find Texture set from map.
 	m_fur_gs_material->SetStandardTextures(texture_set->second.albedo,
 		texture_set->second.roughness, texture_set->second.specular);
 
@@ -129,17 +129,23 @@ void Game::LoadStandardTextures(Renderer& _renderer)
 
 void Game::LoadAlphaTextures(Renderer& _renderer)
 {
-	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(CHUNKY_ALPHA, new Texture(_renderer, "./Fur_Alpha.png")));
-	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(FINE_APHA, new Texture(_renderer, "./Fur_Alpha_Fine.png")));
+	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(CHUNKY_ALPHA,
+		new Texture(_renderer, "./Fur_Alpha.png")));
+	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(FINE_APHA,
+		new Texture(_renderer, "./Fur_Alpha_Fine.png")));
 }
 
 
 void Game::LoadMaskTextures(Renderer& _renderer)
 {
-	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(BIG_CAT_MASK, new Texture(_renderer, "./Big_Cat_Optimised_Mask.png")));
-	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(TIGER_MASK, new Texture(_renderer, "./Tiger_Mask.png")));
-	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(STAR_MASK, new Texture(_renderer, "./Star_Mask.png")));
-	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(NO_MASK, new Texture(_renderer, "./White.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(BIG_CAT_MASK,
+		new Texture(_renderer, "./Big_Cat_Optimised_Mask.png")));// Link texture to enum.
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(TIGER_MASK,
+		new Texture(_renderer, "./Tiger_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(STAR_MASK,
+		new Texture(_renderer, "./Star_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(NO_MASK,
+		new Texture(_renderer, "./White.png")));
 }
 
 
@@ -158,7 +164,7 @@ void Game::SetKeyBindings() const
 	m_game_data->input->BindKey(RIGHT, "D");
 	m_game_data->input->BindKey(UP, "E");
 	m_game_data->input->BindKey(DOWN, "Q");
-	m_game_data->input->BindKey(QUIT, "X");//oversight, can't bind escape
+	m_game_data->input->BindKey(QUIT, "X");// Oversight, can't bind escape.
 	m_game_data->input->BindKey(SWITCH, "F");
 }
 
@@ -187,7 +193,7 @@ void Game::CreateStandardMaterial(Renderer& _renderer)
 void Game::CreateFurMaterial(Renderer& _renderer)
 {
 	LoadTextures(_renderer);
-	auto start_tex = m_textures.find(BIG_CAT_TEX);
+	auto start_tex = m_textures.find(BIG_CAT_TEX);// Find starting textures.
 	auto start_mask = m_mask_textures.find(BIG_CAT_MASK);
 	auto start_alpha = m_alpha_textures.find(CHUNKY_ALPHA);
 
@@ -214,19 +220,18 @@ void Game::Tick()
 	if (m_game_data->input->GetGameAction(GameAction::QUIT, InputManager::PRESSED))
 		exit(0);
 
-	m_game_data->delta_time = CalculateDeltaTime();
+	m_game_data->delta_time = CalculateDeltaTime();// Probably don't really need in this project, force of habit.
 
 	m_camera->Tick(*m_game_data.get());
 	m_current_model->Tick(*m_game_data.get());
 
-	UpdateMaterialsParameters();
-
+	UpdateMaterialsParameters();// May need updating because of UI.
 }
 
 
 void Game::Draw(Renderer& _renderer) const
 {
-	UpdateRenderData(_renderer, *m_camera);
+	UpdateRenderData(_renderer, *m_camera);// Update info such as camera position.
 	m_current_model->Draw(_renderer);
 }
 
@@ -250,8 +255,8 @@ void Game::UpdateMaterialsParameters() const
 
 float Game::CalculateDeltaTime()
 {
-	DWORD currentTime = GetTickCount();
-	float  dt = min(static_cast<float>((currentTime - m_playTime) / 1000.0f), 0.1f);
+	auto currentTime = GetTickCount();
+	float  dt = min(static_cast<float>((currentTime - m_playTime) / 1000.0f), 0.1f);// DT should be no more than 0.1.
 	m_playTime = currentTime;
 	return dt;
 }

@@ -34,7 +34,7 @@ private:
 	std::unique_ptr<Model> m_sphere { nullptr };
 	std::unique_ptr<Model> m_axe{ nullptr };
 
-	friend class FurDemoUI;//not good practice but this is a protoype
+	friend class FurDemoUI;// Not good practice but this is a protoype.
 	std::unique_ptr<FurDemoUI> m_demo_ui{ nullptr };	
 
 	enum Models : int

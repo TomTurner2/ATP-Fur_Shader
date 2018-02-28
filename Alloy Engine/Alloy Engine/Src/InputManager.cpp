@@ -8,19 +8,19 @@ void InputManager::ProcessMessage(UINT _msg, WPARAM _wParam)
 	case WM_KEYDOWN:
 		for (auto& keyBind : m_key_binds)
 		{
-			keyBind.second.oldDown = keyBind.second.down;//set previous state
+			keyBind.second.oldDown = keyBind.second.down;// Set previous state.
 
 			if (_wParam == keyBind.second.key)
-				keyBind.second.down = true;//set new state
+				keyBind.second.down = true;// Set new state.
 		}
 		break;
 	case WM_KEYUP:
 		for (auto& keyBind : m_key_binds)
 		{
-			keyBind.second.oldDown = keyBind.second.down;//set previous state
+			keyBind.second.oldDown = keyBind.second.down;// Set previous state.
 
 			if (_wParam == keyBind.second.key)
-				keyBind.second.down = false;//set new state
+				keyBind.second.down = false;// Set new state.
 		}
 		break;
 	}	

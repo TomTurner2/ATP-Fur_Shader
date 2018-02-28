@@ -2,7 +2,7 @@
 #include "Base_PS_Buffers.hlsl"
 
 
-// must be same as vs struct
+// Must be same as vs struct.
 struct VertexOut
 {
 	float4 position : SV_POSITION;

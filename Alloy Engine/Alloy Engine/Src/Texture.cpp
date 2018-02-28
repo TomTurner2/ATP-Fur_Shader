@@ -3,7 +3,7 @@
 #include "WICTextureLoader.h"
 
 
-wchar_t* CharToWChar(const char* _text)//stupid windows types
+wchar_t* CharToWChar(const char* _text)// Stupid windows types.
 {
 	auto size = strlen(_text) + 1;
 	static wchar_t* wa = nullptr;
@@ -29,7 +29,7 @@ void Texture::LoadTexture(Renderer & _renderer, std::string _path)
 	HRESULT result{};
 
 	result = DirectX::CreateWICTextureFromFile(_renderer.GetDevice(), CharToWChar(_path.c_str()),
-		&m_texture_resource, &m_texture, 4096);
+		&m_texture_resource, &m_texture, 2048);// Could be 4096, but setting to 2048 saves a few mb of memory.
 
 	if (result != MB_OK)
 	{

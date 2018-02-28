@@ -34,7 +34,7 @@ void DebugSystem::DrawDebugUI() const
 
 void DebugSystem::Log(std::string _message)
 {
-	if (AllocConsole())//only allow print if a console is allocated
+	if (AllocConsole())// Only allow print if a console is allocated.
 		return;
 	
 	printf("%s\n", _message.c_str());

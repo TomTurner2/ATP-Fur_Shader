@@ -10,7 +10,7 @@ public:
 	InputManager() = default;
 	~InputManager() = default;
 
-	enum TriggerType : unsigned int//states that can be checked
+	enum TriggerType : unsigned int// States that can be checked.
 	{
 		PRESSED,
 		HELD

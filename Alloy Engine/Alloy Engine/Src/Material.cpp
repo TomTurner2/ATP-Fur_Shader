@@ -248,7 +248,7 @@ void Material::MapPSFrameBuffer(Renderer& _renderer)
 
 void Material::MapPSSceneBuffer(Renderer& _renderer)
 {
-	if (!m_ps_per_scene.first)//if outdated
+	if (!m_ps_per_scene.first)// If outdated.
 		return;
 
 	HRESULT result{};
@@ -269,7 +269,7 @@ void Material::MapPSSceneBuffer(Renderer& _renderer)
 }
 
 
-//map your buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers
+// Map buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers.
 void Material::UpdateAndAddCustomBuffers(Renderer& _renderer){}
 
 
@@ -284,7 +284,7 @@ void Material::RegisterAllBuffers()
 void Material::RegisterVertexBuffers()
 {
 	m_vs_buffers.clear();
-	m_vs_buffers.reserve(5);
+	m_vs_buffers.reserve(2);
 	m_vs_buffers.push_back(m_vs_per_object_buffer);
 	m_vs_buffers.push_back(m_vs_per_frame_buffer);
 }
@@ -293,7 +293,7 @@ void Material::RegisterVertexBuffers()
 void Material::RegisterPixelBuffers()
 {
 	m_ps_buffers.clear();
-	m_ps_buffers.reserve(5);
+	m_ps_buffers.reserve(3);
 	m_ps_buffers.push_back(m_ps_per_frame_buffer);
 	m_ps_buffers.push_back(m_ps_per_scene_buffer);
 	m_ps_buffers.push_back(m_ps_per_object_buffer);
@@ -314,7 +314,7 @@ void Material::RegisterResources()
 	m_gs_resources.clear();
 	m_ps_resources.clear();
 
-	m_ps_resources.reserve(5);
+	m_ps_resources.reserve(3);
 	if (m_albedo_texture != nullptr)
 		m_ps_resources.push_back(m_albedo_texture->GetTexture());
 

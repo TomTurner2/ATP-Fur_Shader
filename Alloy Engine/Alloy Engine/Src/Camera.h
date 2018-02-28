@@ -19,7 +19,7 @@ public:
 
 private:
 	Matrix m_projection;
-	std::pair<bool, Matrix> m_view_matrix;//dirty pattern to reduce unneccessary calculations
+	std::pair<bool, Matrix> m_view_matrix;// Dirty pattern to reduce unneccessary calculations.
 	float m_move_speed = 100;
 
 	Vector3 m_forward = Vector3::Forward;

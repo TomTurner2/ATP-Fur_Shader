@@ -218,7 +218,7 @@ void Renderer::CreateRasterState()
 
 	//Set up rasteriser description.
 	rasterizer_desc.AntialiasedLineEnable = false;
-	rasterizer_desc.CullMode = D3D11_CULL_BACK;// back face cuulling
+	rasterizer_desc.CullMode = D3D11_CULL_BACK;// Back face culling.
 	rasterizer_desc.DepthBias = 0;
 	rasterizer_desc.DepthBiasClamp = 0.0f;
 	rasterizer_desc.DepthClipEnable = true;
@@ -266,7 +266,7 @@ void Renderer::CreateAlphaBlendStates()
 		exit(0);
 	}
 
-	// MDisabled blend state description.
+	// Disabled blend state description.
 	blend_desc.RenderTarget[0].BlendEnable = false;
 
 	// Create disabled blend state.
@@ -359,7 +359,7 @@ Window* Renderer::GetTargetWindow() const
 }
 
 
-//returns width, height in a pair
+// Returns <width, height> in a pair.
 std::pair<float, float> Renderer::GetViewportDimensions() const
 {
 	return std::pair<float, float>(m_back_buffer_desc.Width, m_back_buffer_desc.Height);

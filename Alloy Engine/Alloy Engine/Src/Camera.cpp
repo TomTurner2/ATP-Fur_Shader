@@ -128,7 +128,7 @@ Matrix Camera::GetViewMatrix()
 	if (m_view_matrix.first)// If dirty.
 	{
 		Vector3 target = m_transform.GetPosition();
-		target += m_transform.GetRelativeDir(Vector3::Forward);//Place look target just in front of the camera.
+		target += m_transform.GetRelativeDir(Vector3::Forward);// Place look target just in front of the camera.
 
 		m_view_matrix.second = Matrix::LookAt(m_transform.GetPosition(), target,
 			m_transform.GetRelativeDir(Vector3::Up));

@@ -5,6 +5,6 @@
 struct GameData
 {
 	float delta_time;
-	float fixed_delta_time;//used for physics update
+	float fixed_delta_time;// Used for physics update.
 	InputManager* input;
 };

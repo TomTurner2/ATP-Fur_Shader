@@ -10,8 +10,8 @@
 
 int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)
 {
-	CoInitialize(nullptr);//initialise WIC texture loading
-	srand(time(nullptr));//seed rand
+	CoInitialize(nullptr);// Initialise WIC texture loading.
+	srand(time(nullptr));// Seed rand.
 
 	Window window("Alloy Engine", 1366, 768);
 	Renderer renderer(window);
@@ -32,7 +32,7 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 
-			input_manager->ProcessMessage(msg.message, msg.wParam);//polls for input
+			input_manager->ProcessMessage(msg.message, msg.wParam);// Polls for input.
 
 			if (msg.message == WM_QUIT)
 				break;

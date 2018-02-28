@@ -50,21 +50,21 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 
 		for (unsigned int vert_id = 0; vert_id < mesh->mNumVertices; ++vert_id)
 		{
-			//Get position.
+			// Get position.
 			auto vert = mesh->mVertices[vert_id];
 			auto vertex_position = Vector3::Zero;
 			vertex_position.x = vert.x;
 			vertex_position.y = vert.y;
 			vertex_position.z = vert.z;
 
-			//Get normals.
+			// Get normals.
 			auto normal_in = mesh->mNormals[vert_id];
 			auto normal = Vector3::Zero;
 			normal.x = normal_in.x;
 			normal.y = normal_in.y;
 			normal.z = normal_in.z;
 
-			//Get UV coordinates.
+			// Get UV coordinates.
 			float u = mesh->mTextureCoords[0][vert_id].x;
 			float v = 1-mesh->mTextureCoords[0][vert_id].y;
 
@@ -90,8 +90,8 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 			}
 		}
 
-		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));//Add new mesh giving it its loaded name.
-		m_meshes.back().CreateMesh(verts, indicies, _renderer);//Create the mesh just added.
+		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));// Add new mesh giving it its loaded name.
+		m_meshes.back().CreateMesh(verts, indicies, _renderer);// Create the mesh just added.
 	}
 }
 
@@ -125,7 +125,7 @@ void Model::SetAllMaterialParams(PBRMaterialParams _pbr_params)
 
 Mesh* Model::GetMeshByName(std::string _name)
 {
-	std::vector<Mesh>::iterator it = std::find_if(m_meshes.begin(),
+	auto it = std::find_if(m_meshes.begin(),
 		m_meshes.end(), [&_name](const Mesh& mesh) { return _name == mesh.GetName(); });
 
 	if (it != m_meshes.end())

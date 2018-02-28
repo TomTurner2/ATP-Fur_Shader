@@ -12,7 +12,7 @@ const Vector3 Vector3::Forward = Vector3(0, 0, 1);
 const float Vector3::Epsilon = std::numeric_limits<float>::epsilon();
 
 
-Vector3::Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}//three value constructor
+Vector3::Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 
 
 Vector3 Vector3::ComponentProduct(const Vector3& _vector_a, const Vector3& _vector_b)
