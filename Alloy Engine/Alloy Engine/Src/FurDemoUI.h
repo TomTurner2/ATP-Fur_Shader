@@ -35,4 +35,7 @@ private:
 	void CreateHelpBar();
 	void CreateTextureBar();
 	void CreateTextureBarElements();
+	void CreateTextureSetElement();
+	void CreateTextureAlphasElement();
+	void CreateTextureMasksElement();
 };

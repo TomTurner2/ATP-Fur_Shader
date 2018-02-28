@@ -98,7 +98,6 @@ void FurDemoUI::CreateLightBar()
 	TwDefine("Light position= '20 340'");
 
 	CreateLightBarElements();
-
 }
 
 
@@ -170,18 +169,49 @@ void FurDemoUI::CreateHelpBar()
 
 
 void FurDemoUI::CreateTextureBarElements()
-{
-	TwEnumVal texture_sets[] = { {Game::BIG_CAT_TEX, "Big cat textures" },{Game::GIRAFFE_TEX, "Giraffe textures" },{Game::NO_TEX, "No textures" } };
-	m_tw_texture_type = TwDefineEnum("Textures", texture_sets, 3);//create antweak enum
-	TwAddVarRW(m_texture_bar, "Texture Set", m_tw_texture_type, &m_game->m_texture_set, nullptr);//add enum
-
-	TwEnumVal texture_alphas[] = { {Game::CHUNKY_ALPHA, "Chunky" },{Game::FINE_APHA, "Fine" } };
-	m_tw_fur_alpha_texture_type = TwDefineEnum("Alphas", texture_alphas, 2);//create antweak enum
-	TwAddVarRW(m_texture_bar, "Strand Alpha", m_tw_fur_alpha_texture_type, &m_game->m_fur_alpha_texture, nullptr);//add enum
-
-	TwEnumVal texture_masks[] = { {Game::BIG_CAT_MASK, "Big cat mask" },{Game::GIRAFFE_MASK, "Giraffe mask" },{ Game::STAR_MASK, "Star mask" }, {Game::NO_MASK, "No mask" } };
-	m_tw_fur_mask_texture_type = TwDefineEnum("Masks", texture_masks, 4);//create antweak enum
-	TwAddVarRW(m_texture_bar, "Fur Mask", m_tw_fur_mask_texture_type, &m_game->m_fur_mask_texture, nullptr);//add enum
+{	
+	CreateTextureSetElement();
+	CreateTextureAlphasElement();
+	CreateTextureMasksElement();	
 
 	TwAddButton(m_texture_bar, "Update Textures", TWUpdateTextures, static_cast<void*>(m_game), " label='Update Textures'");//create button
+}
+
+
+void FurDemoUI::CreateTextureSetElement()
+{
+	TwEnumVal texture_sets[] =
+	{
+		{ Game::BIG_CAT_TEX, "Big cat textures" },
+		{ Game::TIGER_TEX, "Tiger textures" },
+		{ Game::NO_TEX, "No textures" }
+	};
+	m_tw_texture_type = TwDefineEnum("Textures", texture_sets, 3);//create antweak enum
+	TwAddVarRW(m_texture_bar, "Texture Set", m_tw_texture_type, &m_game->m_texture_set, nullptr);//add enum
+}
+
+
+void FurDemoUI::CreateTextureAlphasElement()
+{
+	TwEnumVal texture_alphas[] =
+	{
+		{ Game::CHUNKY_ALPHA, "Chunky" },
+		{ Game::FINE_APHA, "Fine" }
+	};
+	m_tw_fur_alpha_texture_type = TwDefineEnum("Alphas", texture_alphas, 2);//create antweak enum
+	TwAddVarRW(m_texture_bar, "Strand Alpha", m_tw_fur_alpha_texture_type, &m_game->m_fur_alpha_texture, nullptr);//add enum
+}
+
+
+void FurDemoUI::CreateTextureMasksElement()
+{
+	TwEnumVal texture_masks[] =
+	{
+		{ Game::BIG_CAT_MASK, "Big cat mask" },
+		{ Game::TIGER_MASK, "Tiger mask" },
+		{ Game::STAR_MASK, "Star mask" },
+		{ Game::NO_MASK, "No mask" }
+	};
+	m_tw_fur_mask_texture_type = TwDefineEnum("Masks", texture_masks, 4);//create antweak enum
+	TwAddVarRW(m_texture_bar, "Fur Mask", m_tw_fur_mask_texture_type, &m_game->m_fur_mask_texture, nullptr);//add enum
 }

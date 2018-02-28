@@ -48,7 +48,7 @@ private:
 	enum TextureSets : int
 	{
 		BIG_CAT_TEX,
-		GIRAFFE_TEX,
+		TIGER_TEX,
 		NO_TEX
 	} m_texture_set = BIG_CAT_TEX;
 	std::map<TextureSets, TextureSet> m_textures;
@@ -63,7 +63,7 @@ private:
 	enum FurTextureMasks : int
 	{
 		BIG_CAT_MASK,
-		GIRAFFE_MASK,
+		TIGER_MASK,
 		STAR_MASK,
 		NO_MASK
 	} m_fur_mask_texture = BIG_CAT_MASK;
