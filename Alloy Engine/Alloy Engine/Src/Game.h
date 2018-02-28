@@ -64,6 +64,7 @@ private:
 	{
 		BIG_CAT_MASK,
 		GIRAFFE_MASK,
+		STAR_MASK,
 		NO_MASK
 	} m_fur_mask_texture = BIG_CAT_MASK;
 	std::map<FurTextureMasks, Texture*> m_mask_textures;

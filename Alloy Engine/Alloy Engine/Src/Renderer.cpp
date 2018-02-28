@@ -3,7 +3,7 @@
 #include "Macros.h"
 
 
-Renderer::Renderer(Window& _window, bool _start_fullscreen = true)
+Renderer::Renderer(Window& _window, bool _start_fullscreen)
 {
 	m_render_data = std::make_unique<RenderData>();
 	m_target_window = &_window;
@@ -274,6 +274,34 @@ void Renderer::CreateAlphaBlendStates()
 }
 
 
+void Renderer::SetCulling(bool _enabled)
+{
+	HRESULT result{};
+	D3D11_RASTERIZER_DESC rasterizer_desc{};
+
+	//Set up rasteriser description.
+	rasterizer_desc.AntialiasedLineEnable = false;
+	rasterizer_desc.CullMode = _enabled ? D3D11_CULL_BACK : D3D11_CULL_NONE;// determine cull type based on bool
+	rasterizer_desc.DepthBias = 0;
+	rasterizer_desc.DepthBiasClamp = 0.0f;
+	rasterizer_desc.DepthClipEnable = true;
+	rasterizer_desc.FillMode = D3D11_FILL_SOLID;
+	rasterizer_desc.FrontCounterClockwise = false;
+	rasterizer_desc.MultisampleEnable = true;
+	rasterizer_desc.ScissorEnable = false;
+	rasterizer_desc.SlopeScaledDepthBias = 0.0f;
+
+	// Create the rasterizer state from the description we just filled out.
+	result = m_device->CreateRasterizerState(&rasterizer_desc, &m_raster_state);
+	if (FAILED(result))
+	{
+		MessageBox(nullptr, "[Renderer](CreateDepthBuffer) Failed to create raster state", "Error", MB_OK);
+		exit(0);
+	}
+
+	// Now set the rasterizer state.
+	m_device_context->RSSetState(m_raster_state);
+}
 
 
 void Renderer::TurnOnAlphaBlending() const

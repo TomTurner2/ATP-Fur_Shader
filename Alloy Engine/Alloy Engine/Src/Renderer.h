@@ -8,7 +8,7 @@ class Window;
 class Renderer
 {
 public:
-	explicit Renderer(Window& _window, bool _start_fullscreen = true);
+	Renderer(Window& _window, bool _start_fullscreen = true);
 	~Renderer();
 
 	void BeginFrame() const;
@@ -21,6 +21,7 @@ public:
 	std::pair<float, float> GetViewportDimensions() const;
 	float GetViewportAspectRatio() const;
 
+	void SetCulling(bool _enabled);
 	void TurnOnAlphaBlending() const;
 	void TurnOffAlphaBlending() const;
 
@@ -50,6 +51,7 @@ private:
 	void CreateDepthStencilView();
 	void CreateRasterState();
 	void CreateAlphaBlendStates();
+	
 
 	void SetViewPort() const;
 	void ClearViews() const;

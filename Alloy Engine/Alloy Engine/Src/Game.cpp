@@ -138,6 +138,7 @@ void Game::LoadMaskTextures(Renderer& _renderer)
 {
 	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(BIG_CAT_MASK, new Texture(_renderer, "./Big_Cat_Optimised_Mask.png")));
 	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(GIRAFFE_MASK, new Texture(_renderer, "./Giraffe_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(STAR_MASK, new Texture(_renderer, "./Star_Mask.png")));
 	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(NO_MASK, new Texture(_renderer, "./White.png")));
 }
 
