@@ -75,9 +75,9 @@ void FurDemoUI::CreateFurBarElements() const
 	TwDefine("Fur_Shader_Prototype/Base_Clip   step=0.01");
 	TwDefine("Fur_Shader_Prototype/Shadowing   step=0.01 min=0 max= 1");
 
-	TwAddVarRW(m_fur_bar, "Gravity_X", TW_TYPE_FLOAT, &m_game->m_fur_parameters.gravity.x, "");
-	TwAddVarRW(m_fur_bar, "Gravity_Y", TW_TYPE_FLOAT, &m_game->m_fur_parameters.gravity.y, "");
-	TwAddVarRW(m_fur_bar, "Gravity_Z", TW_TYPE_FLOAT, &m_game->m_fur_parameters.gravity.z, "");
+	TwAddVarRW(m_fur_bar, "Gravity_X", TW_TYPE_FLOAT, &m_game->m_fur_parameters.gravity.x, "step=0.01  min=-0.1 max= 0.1");
+	TwAddVarRW(m_fur_bar, "Gravity_Y", TW_TYPE_FLOAT, &m_game->m_fur_parameters.gravity.y, "step=0.01  min=-0.1 max= 0.1");
+	TwAddVarRW(m_fur_bar, "Gravity_Z", TW_TYPE_FLOAT, &m_game->m_fur_parameters.gravity.z, "step=0.01  min=-0.1 max= 0.1");
 
 	TwDefine("Fur_Shader_Prototype/Gravity_X   group=Gravity_Direction");
 	TwDefine("Fur_Shader_Prototype/Gravity_Y   group=Gravity_Direction");
@@ -148,7 +148,7 @@ void FurDemoUI::CreateTextureBar()
 	TwDefine("Textures color='46 53 49' text=light ");
 	TwDefine("Textures alpha=255");
 	TwDefine("Textures size='300 150'");
-	TwDefine("Textures position= '280 100'");
+	TwDefine("Textures position= '280 20'");
 	TwDefine("Textures valueswidth=fit");
 
 	CreateTextureBarElements();
