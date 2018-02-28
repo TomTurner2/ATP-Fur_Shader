@@ -67,11 +67,11 @@ void Game::UpdateTextureInputs()
 #pragma region Creation Functions
 void Game::CreateLight()
 {
-	m_light.position = Vector3(0, 6, -115.0f);
+	m_light.position = Vector3(0, -6, -540.0f);
 	m_light.colour[0] = 1;
 	m_light.colour[1] = 1;
 	m_light.colour[2] = 1;
-	m_light.intensity = 1;
+	m_light.intensity = 1.43;
 }
 
 
@@ -85,7 +85,7 @@ void Game::CreateCamera(Renderer& _renderer)
 void Game::CreateModels(Renderer& _renderer)
 {
 	m_big_cat = std::make_unique<Model>();
-	m_big_cat->LoadModel("./Big_Cat.obj", _renderer);
+	m_big_cat->LoadModel("./Big_Cat_Optimised.obj", _renderer);
 
 	m_sphere = std::make_unique<Model>();
 	m_sphere->LoadModel("./Sphere.obj", _renderer);
@@ -108,7 +108,7 @@ void Game::LoadTextures(Renderer& _renderer)
 }
 
 
-void Game::LoadTextureSet(Renderer & _renderer, TextureSets _set_identifier,
+void Game::LoadTextureSet(Renderer& _renderer, TextureSets _set_identifier,
 	std::string _albedo_path, std::string _roughness_path, std::string _specular_path)
 {
 	TextureSet textures;
@@ -119,24 +119,24 @@ void Game::LoadTextureSet(Renderer & _renderer, TextureSets _set_identifier,
 }
 
 
-void Game::LoadStandardTextures(Renderer & _renderer)
+void Game::LoadStandardTextures(Renderer& _renderer)
 {
-	LoadTextureSet(_renderer, BIG_CAT_TEX, "./Big_Cat_Albedo.png", "./Big_Cat_Roughness.png", "./Big_Cat_Specular.png");
+	LoadTextureSet(_renderer, BIG_CAT_TEX, "./Big_Cat_Optimised_Albedo.png", "./Grey.png", "./Big_Cat_Optimised_Specular.png");
 	LoadTextureSet(_renderer, GIRAFFE_TEX, "./Giraffe_Albedo.png", "./White.png", "./White.png");
 	LoadTextureSet(_renderer, NO_TEX, "./White.png", "./White.png", "./White.png");
 }
 
 
-void Game::LoadAlphaTextures(Renderer & _renderer)
+void Game::LoadAlphaTextures(Renderer& _renderer)
 {
 	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(CHUNKY_ALPHA, new Texture(_renderer, "./Fur_Alpha.png")));
 	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(FINE_APHA, new Texture(_renderer, "./Fur_Alpha_Fine.png")));
 }
 
 
-void Game::LoadMaskTextures(Renderer & _renderer)
+void Game::LoadMaskTextures(Renderer& _renderer)
 {
-	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(BIG_CAT_MASK, new Texture(_renderer, "./Big_Cat_Fur_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(BIG_CAT_MASK, new Texture(_renderer, "./Big_Cat_Optimised_Mask.png")));
 	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(GIRAFFE_MASK, new Texture(_renderer, "./Giraffe_Mask.png")));
 	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(NO_MASK, new Texture(_renderer, "./White.png")));
 }
@@ -162,28 +162,28 @@ void Game::SetKeyBindings() const
 }
 
 
-void Game::CreateMaterials(Renderer & _renderer)
+void Game::CreateMaterials(Renderer& _renderer)
 {
 	CreateStandardMaterial(_renderer);
 	CreateFurMaterial(_renderer);
 }
 
 
-void Game::CreateStandardMaterial(Renderer & _renderer)
+void Game::CreateStandardMaterial(Renderer& _renderer)
 {
 	m_standard_material = new Material();
 	m_standard_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
 		"Standard_Material_Pixel_Shader.cso", _renderer);
 
 	material_params.roughness = 1;
-	material_params.specular = 1;
+	material_params.specular = 0.3;
 	material_params.diffuse[0] = 1;
 	material_params.diffuse[1] = 1;
 	material_params.diffuse[2] = 1;
 }
 
 
-void Game::CreateFurMaterial(Renderer & _renderer)
+void Game::CreateFurMaterial(Renderer& _renderer)
 {
 	LoadTextures(_renderer);
 	auto start_tex = m_textures.find(BIG_CAT_TEX);

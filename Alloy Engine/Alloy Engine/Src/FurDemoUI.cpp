@@ -36,7 +36,7 @@ void FurDemoUI::CreateDebugUI()
 	CreateLightBar();
 	CreateModelBar();
 	CreateTextureBar();
-	CreateHelpBar();
+	//CreateHelpBar();
 }
 
 
@@ -134,7 +134,7 @@ void FurDemoUI::CreateModelBar()
 
 void FurDemoUI::CreateModelBarElements()
 {
-	TwEnumVal models[] = { {Game::BIG_CAT, "Big cat (high poly)" },{Game::SPHERE, "Sphere" },{Game::AXE, "Axe (high poly)" } };
+	TwEnumVal models[] = { {Game::BIG_CAT, "Big cat" },{Game::SPHERE, "Sphere" },{Game::AXE, "Axe" } };
 	m_tw_model_type = TwDefineEnum("Models", models, 3);//create antweak enum
 	TwAddVarRW(m_model_bar, "Model Type", m_tw_model_type, &m_game->m_model_type, nullptr);//add enum
 	TwAddButton(m_model_bar, "Swap Model", TWSwapModel, static_cast<void*>(m_game), " label='Swap Model'");//create button

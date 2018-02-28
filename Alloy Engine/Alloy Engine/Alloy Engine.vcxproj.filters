@@ -269,5 +269,8 @@
     <None Include="Src\Base_VS_Buffers.hlsl">
       <Filter>Resource Files %28Shaders In Here%29\Shaders</Filter>
     </None>
+    <None Include="Big_Cat_Optimised.obj">
+      <Filter>Resource Files %28Shaders In Here%29\Models</Filter>
+    </None>
   </ItemGroup>
 </Project>

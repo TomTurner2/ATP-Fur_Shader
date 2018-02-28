@@ -3,7 +3,7 @@
 #include "Macros.h"
 
 
-Renderer::Renderer(Window& _window)
+Renderer::Renderer(Window& _window, bool _start_fullscreen = true)
 {
 	m_render_data = std::make_unique<RenderData>();
 	m_target_window = &_window;
@@ -16,6 +16,8 @@ Renderer::Renderer(Window& _window)
 	CreateDepthStencilView();
 	CreateRasterState();
 	CreateAlphaBlendStates();
+
+	m_swap_chain->SetFullscreenState(_start_fullscreen, nullptr);
 }
 
 

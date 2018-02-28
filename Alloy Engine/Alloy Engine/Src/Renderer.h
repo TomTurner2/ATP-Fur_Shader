@@ -8,7 +8,7 @@ class Window;
 class Renderer
 {
 public:
-	explicit Renderer(Window& _window);
+	explicit Renderer(Window& _window, bool _start_fullscreen = true);
 	~Renderer();
 
 	void BeginFrame() const;
