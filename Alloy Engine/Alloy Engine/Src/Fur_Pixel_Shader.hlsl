@@ -32,15 +32,14 @@ float4 main(FurLayer pin) : SV_TARGET
 	float3 alpha_mask = m_alpha.Sample(m_sampler_state, pin.uv);// Sample fur strand alpha.
 	alpha_mask *= m_mask.Sample(m_sampler_state, pin.uv);// Apply fur height mask.
 	alpha_mask = saturate(alpha_mask);// Normalise.
+
 	float alpha = smoothstep(base_clip, alpha_mask.x, 0.5f);// Clip the strands.
-
-
 	alpha = lerp(1, alpha, max(pin.layer, 0));// Replaces if statement below (optimisation).
-	//if (pin.layer <= 0)
+	//if (pin.layer <= 0)// First layer should have no transparency.
 	//	alpha = 1;
 
 	float threshold = 0.5f * pin.layer * base_clip;
-	if (alpha <= threshold )// If zero discard the pixel.
+	if (alpha <= threshold )// If below threshold discard the pixel.
 		discard;
 
 	// Calculate after the discard, no point calculating colour for unwanted pixel (optimisation).

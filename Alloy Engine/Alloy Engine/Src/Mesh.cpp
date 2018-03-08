@@ -1,6 +1,5 @@
 #include "Mesh.h"
 #include "Renderer.h"
-#include "Macros.h"
 
 
 Mesh::Mesh(std::string _name)
@@ -45,11 +44,11 @@ void Mesh::CreateMesh(const std::vector<Vertex3D>& _vertices, const std::vector<
 
 	// Create Vertex Buffer Desc.
 	vertex_buffer_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertex_buffer_desc.CPUAccessFlags = 0x00;
-	vertex_buffer_desc.MiscFlags = 0x00;
+	vertex_buffer_desc.CPUAccessFlags = 0;
+	vertex_buffer_desc.MiscFlags = 0;
 	vertex_buffer_desc.ByteWidth = sizeof(Vertex3D) * _vertices.size();
 	vertex_buffer_desc.Usage = D3D11_USAGE_IMMUTABLE;
-	vertex_buffer_desc.StructureByteStride = 0x00;
+	vertex_buffer_desc.StructureByteStride = 0;
 
 	// Create buffer (Passed to GPU VRAM).
 	D3D11_SUBRESOURCE_DATA vertex_data = { nullptr };
@@ -64,11 +63,11 @@ void Mesh::CreateMesh(const std::vector<Vertex3D>& _vertices, const std::vector<
 
 	D3D11_BUFFER_DESC indicie_buffer_desc {};
 	indicie_buffer_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indicie_buffer_desc.CPUAccessFlags = 0x00;
-	indicie_buffer_desc.MiscFlags = 0x00;
+	indicie_buffer_desc.CPUAccessFlags = 0;
+	indicie_buffer_desc.MiscFlags = 0;
 	indicie_buffer_desc.ByteWidth = sizeof(unsigned int) * static_cast<UINT>(_indicies.size());
 	indicie_buffer_desc.Usage = D3D11_USAGE_IMMUTABLE;
-	indicie_buffer_desc.StructureByteStride = 0x00;
+	indicie_buffer_desc.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA index_data {};
 	index_data.pSysMem = &_indicies[0];
@@ -102,7 +101,7 @@ void Mesh::Draw(Renderer& _renderer)
 	device_context->PSSetShader(m_material->GetPixelShader(), nullptr, 0);
 
 	// Bind vertex buffer.
-	auto stride = sizeof(Vertex3D);// How far the VB must move to access the next vertex.
+	UINT stride = sizeof(Vertex3D);// How far the VB must move to access the next vertex.
 	UINT offset = 0;// Offset between each structure (used to skip info).
 	
 	_renderer.TurnOnAlphaBlending();
