@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "WICTextureLoader.h"
 #include <ctime>
+#include <iostream>
 
 
 int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _cmd_line, int _cmd_count)
@@ -13,17 +14,24 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 	CoInitialize(nullptr);// Initialise WIC texture loading.
 	srand(time(nullptr));// Seed rand.
 
-	Window window("Alloy Engine", 1366, 768);
+	Window window("Alloy Engine", 1920, 1080);
 	Renderer renderer(window);
 
 	DebugSystem debugger;
-	//debugger.CreateConsoleWindow();
+	debugger.CreateConsoleWindow();
 	debugger.InitAntTweakBar(renderer);
 
 	std::unique_ptr<InputManager> input_manager = std::make_unique<InputManager>();
 	std::unique_ptr<Game> game = std::make_unique<Game>(renderer, *input_manager);
 
 	MSG msg { nullptr };
+
+	std::vector<int> bleh{ 1, 2, 3, 4 };
+	for (int i = bleh.size() - 1; i > 0; --i)
+		std::swap(bleh[i], bleh[rand() % bleh.size() + (i + 1)]);
+
+	for (int i = bleh.size() - 1; i > 0; --i)
+		std::cout << bleh[i];
 
 	while (true)
 	{
@@ -44,6 +52,7 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 		debugger.DrawDebugUI();
 		renderer.EndFrame();	
 	}
+
 
 	return 0;
 }

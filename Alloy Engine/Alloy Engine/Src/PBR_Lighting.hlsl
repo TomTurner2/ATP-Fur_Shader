@@ -33,10 +33,10 @@ float3 DirectDiffuseBRDF(float3 _diffuse_albedo, float _normal_dot_light)
 }
 
 
-float BeckmannDistribution(float _roughness_squared, float _nrml_dot_half_vec)
+float TrowbridgeReitz(float _roughness_squared, float _nrml_dot_half_vec)
 {
 	return _roughness_squared / (Pi * pow(_nrml_dot_half_vec *
-	_nrml_dot_half_vec * (_roughness_squared - 1) + 1, 2.0f));// Beckmann distribution.
+	_nrml_dot_half_vec * (_roughness_squared - 1) + 1, 2.0f));// Trowbridge-Reitz.
 }
 
 
@@ -52,7 +52,7 @@ float3 DirectSpecularBRDF(float3 _roughness, float3 _specular_albedo, float3 _po
 
 	float roughness_squared = _roughness * _roughness;
 
-	float  d = BeckmannDistribution(roughness_squared, nrml_dot_half_vec);// Distribution term.
+	float  d = TrowbridgeReitz(roughness_squared, nrml_dot_half_vec);// Distribution term.
 
 	float3 f = SchlickFresnel(_specular_albedo, half_vec, _light_dir);// Fresnel term.
 
