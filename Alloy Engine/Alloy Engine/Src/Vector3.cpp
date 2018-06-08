@@ -12,7 +12,7 @@ const Vector3 Vector3::Forward = Vector3(0, 0, 1);
 const float Vector3::Epsilon = std::numeric_limits<float>::epsilon();
 
 
-Vector3::Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}//three value constructor
+Vector3::Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 
 
 Vector3 Vector3::ComponentProduct(const Vector3& _vector_a, const Vector3& _vector_b)
@@ -279,7 +279,7 @@ bool Vector3::operator==(const Vector3& _vector) const
 {
 	return (x > _vector.x - Vector3::Epsilon && x < _vector.x + Vector3::Epsilon &&
 		y > _vector.y - Vector3::Epsilon && y < _vector.y + Vector3::Epsilon &&
-		z > _vector.z - Vector3::Epsilon && z < _vector.z + Vector3::Epsilon);//epsilon to avoid floating point inaccuracy
+		z > _vector.z - Vector3::Epsilon && z < _vector.z + Vector3::Epsilon);// Epsilon to avoid floating point inaccuracy.
 }
 
 

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 
-Material::Material()
+Material::Material(): m_sample_state(nullptr)
 {
 	m_vs_per_object.first = true;
 	m_vs_per_frame.first = true;
@@ -34,16 +34,17 @@ void Material::CreateShaders(std::string _vertex_shader, std::string _pixel_shad
 	std::ifstream ps_file(_pixel_shader, std::ios::binary);
 	std::ifstream gs_file(_geometry_shader, std::ios::binary);
 
-	// Load file data
+	// Load file data.
 	std::vector<char> vs_data = { std::istreambuf_iterator<char>(vs_file), std::istreambuf_iterator<char>() };
 	std::vector<char> ps_data = { std::istreambuf_iterator<char>(ps_file), std::istreambuf_iterator<char>() };
 	std::vector<char> gs_data = { std::istreambuf_iterator<char>(gs_file), std::istreambuf_iterator<char>() };
-	HRESULT hr{};
-	hr = _renderer.GetDevice()->CreateVertexShader(vs_data.data(), vs_data.size(), nullptr, &m_vertex_shader);
-	hr = _renderer.GetDevice()->CreatePixelShader(ps_data.data(), ps_data.size(), nullptr, &m_pixel_shader);
-	hr =_renderer.GetDevice()->CreateGeometryShader(gs_data.data(), gs_data.size(), nullptr, &m_geometry_shader);
 
-	// Create input layouts
+	HRESULT result {};
+	result = _renderer.GetDevice()->CreateVertexShader(vs_data.data(), vs_data.size(), nullptr, &m_vertex_shader);
+	result = _renderer.GetDevice()->CreatePixelShader(ps_data.data(), ps_data.size(), nullptr, &m_pixel_shader);
+	result =_renderer.GetDevice()->CreateGeometryShader(gs_data.data(), gs_data.size(), nullptr, &m_geometry_shader);
+
+	// Create input layouts.
 	D3D11_INPUT_ELEMENT_DESC layout[]
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -53,10 +54,11 @@ void Material::CreateShaders(std::string _vertex_shader, std::string _pixel_shad
 
 	unsigned int element_count = _countof(layout);
 
-	auto result = _renderer.GetDevice()->CreateInputLayout(layout, element_count, vs_data.data(),
+	result = _renderer.GetDevice()->CreateInputLayout(layout, element_count, vs_data.data(),
 		vs_data.size(), &m_input_layout);
 
 	CreateBuffers(_renderer);
+	CreateSamplerState(_renderer);
 
 	if (result == S_OK)
 		return;
@@ -75,53 +77,41 @@ void Material::LoadStandardTextures(std::string _albedo_path, std::string _rough
 
 void Material::CreateBuffers(Renderer& _renderer)
 {
-	D3D11_BUFFER_DESC buffer_desc = {};
+	D3D11_BUFFER_DESC buffer_desc {};
 	buffer_desc.Usage = D3D11_USAGE_DYNAMIC;
 	buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	buffer_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	buffer_desc.MiscFlags = 0x00;
 	buffer_desc.StructureByteStride = 0x00;
 
-	HRESULT hr = {};
+	HRESULT result {};
 
 	buffer_desc.ByteWidth = sizeof(m_vs_per_object.second);
-	hr = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_vs_per_object_buffer);
-	if (hr != MB_OK)
-	{
-		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
-	}
+	result = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_vs_per_object_buffer);
 
 	buffer_desc.ByteWidth = sizeof(m_vs_per_frame.second);
-	hr = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_vs_per_frame_buffer);
-	if (hr != MB_OK)
-	{
-		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
-	}
-
+	result = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_vs_per_frame_buffer);
 
 	buffer_desc.ByteWidth = sizeof(m_ps_per_frame.second);
-	hr = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_frame_buffer);
-	if (hr != MB_OK)
-	{
-		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
-	}
+	result = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_frame_buffer);
 
 	buffer_desc.ByteWidth = sizeof(m_ps_per_scene.second);
-	hr = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_scene_buffer);
-	if (hr != MB_OK)
-	{
-		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
-	}
-
+	result = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_scene_buffer);
 
 	buffer_desc.ByteWidth = sizeof(m_ps_per_object.second);
-	hr = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_object_buffer);
-	if (hr != MB_OK)
+	result = _renderer.GetDevice()->CreateBuffer(&buffer_desc, nullptr, &m_ps_per_object_buffer);
+
+	if (result != MB_OK)
 	{
 		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create buffer", "Error", MB_OK);
-	}
+	}	
+}
 
-	D3D11_SAMPLER_DESC sampler_desc;
+
+void Material::CreateSamplerState(Renderer& _renderer)
+{
+	D3D11_SAMPLER_DESC sampler_desc{};
+
 	sampler_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	sampler_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	sampler_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -136,9 +126,11 @@ void Material::CreateBuffers(Renderer& _renderer)
 	sampler_desc.MinLOD = 0;
 	sampler_desc.MaxLOD = D3D11_FLOAT32_MAX;
 
+	HRESULT result {};
+
 	// Create the texture sampler state.
-	hr = _renderer.GetDevice()->CreateSamplerState(&sampler_desc, &m_sample_state);
-	if (hr != MB_OK)
+	result = _renderer.GetDevice()->CreateSamplerState(&sampler_desc, &m_sample_state);
+	if (result != MB_OK)
 	{
 		MessageBox(nullptr, "[Material](CreateBuffers) Failed to create sampler state", "Error", MB_OK);
 	}
@@ -147,124 +139,191 @@ void Material::CreateBuffers(Renderer& _renderer)
 
 void Material::UpdateBuffers(Renderer& _renderer)
 {
-	HRESULT hr = {};
+	SetProjection(_renderer.GetRenderData()->camera_projection_matrix.Transpose());
+	SetView(_renderer.GetRenderData()->camera_view_matrix.Transpose());
+	SetLight(_renderer.GetRenderData()->light);
 
-	if (m_vs_per_object.first)//if outdated
-	{
-		D3D11_MAPPED_SUBRESOURCE vs_per_object_mapping { nullptr };
-		hr = _renderer.GetDeviceContext()->Map(m_vs_per_object_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0, &vs_per_object_mapping);//map across buffer
+	MapVSObjectBuffer(_renderer);
+	MapVSFrameBuffer(_renderer);
 
-		memcpy(vs_per_object_mapping.pData, &m_vs_per_object.second, sizeof(VSPerObjectBuffer));
-		/*printf("VSPerObjectBuffer %d\n VSPerFrameBuffer %d\n PSPerFrameBuffer %d\n PSPerSceneBuffer %d\n PSPerObjectBuffer %d",
-			sizeof(VSPerObjectBuffer), sizeof(VSPerFrameBuffer), sizeof(PSPerFrameBuffer), sizeof(PSPerSceneBuffer), sizeof(PSPerObjectBuffer));*/
+	MapPSObjectBuffer(_renderer);
+	MapPSFrameBuffer(_renderer);
+	MapPSSceneBuffer(_renderer);
 
-		if (hr != MB_OK)
-		{
-			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
-		}
-		m_vs_per_object.first = false;//is not outdated
-	}
-
-
-	if (m_vs_per_frame.first)//if outdated
-	{
-		D3D11_MAPPED_SUBRESOURCE vs_per_frame_mapping { nullptr };
-		hr = _renderer.GetDeviceContext()->Map(m_vs_per_frame_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0, &vs_per_frame_mapping);
-
-		memcpy(vs_per_frame_mapping.pData, &m_vs_per_frame.second, sizeof(VSPerFrameBuffer));
-
-		if (hr != MB_OK)
-		{
-			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
-		}
-		m_vs_per_frame.first = false;
-	}
-
-
-	if (m_ps_per_frame.first)//if outdated
-	{
-		D3D11_MAPPED_SUBRESOURCE ps_per_frame_mapping { nullptr };
-		hr = _renderer.GetDeviceContext()->Map(m_ps_per_frame_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0, &ps_per_frame_mapping);
-
-		memcpy(ps_per_frame_mapping.pData, &m_ps_per_frame.second, sizeof(PSPerFrameBuffer));
-
-		if (hr != MB_OK)
-		{
-			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
-		}
-		m_ps_per_frame.first = false;
-	}
-
-
-	if (m_ps_per_scene.first)//if outdated
-	{
-		D3D11_MAPPED_SUBRESOURCE ps_per_scene_mapping{ nullptr };
-		hr = _renderer.GetDeviceContext()->Map(m_ps_per_scene_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0, &ps_per_scene_mapping);
-
-		memcpy(ps_per_scene_mapping.pData, &m_ps_per_scene.second, sizeof(PSPerSceneBuffer));
-
-		if (hr != MB_OK)
-		{
-			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
-		}
-		m_ps_per_scene.first = false;
-	}
-
-
-	if (m_ps_per_object.first)//if outdated
-	{
-		D3D11_MAPPED_SUBRESOURCE ps_per_object_mapping{ nullptr };
-		hr = _renderer.GetDeviceContext()->Map(m_ps_per_object_buffer, 0, D3D11_MAP_WRITE_DISCARD,
-			0, &ps_per_object_mapping);
-
-		memcpy(ps_per_object_mapping.pData, &m_ps_per_object.second, sizeof(PSPerObjectBuffer));
-
-		if (hr != MB_OK)
-		{
-			MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
-		}
-		m_ps_per_object.first = false;
-	}
-
-	m_vs_buffers.clear();
-	m_vs_buffers.reserve(5);
-	m_vs_buffers.push_back(m_vs_per_object_buffer);
-	m_vs_buffers.push_back(m_vs_per_frame_buffer);
-
-	m_ps_buffers.clear();
-	m_ps_buffers.reserve(5);
-	m_ps_buffers.push_back(m_ps_per_frame_buffer);
-	m_ps_buffers.push_back(m_ps_per_scene_buffer);
-	m_ps_buffers.push_back(m_ps_per_object_buffer);
-
-	m_gs_buffers.clear();
-	m_gs_buffers.reserve(2);
-	m_gs_buffers.push_back(m_vs_per_object_buffer);
-	m_gs_buffers.push_back(m_vs_per_frame_buffer);
-
-	m_ps_resources.clear();
-	m_ps_resources.reserve(5);
-	if (m_albedo_texture != nullptr)
-		m_ps_resources.push_back(m_albedo_texture->GetTexture());
-	if (m_rougness_texture != nullptr)
-	m_ps_resources.push_back(m_rougness_texture->GetTexture());
-	if (m_specular_texture != nullptr)
-	m_ps_resources.push_back(m_specular_texture->GetTexture());
-	
-	m_gs_resources.clear();
-
+	RegisterAllBuffers();
+	RegisterResources();
 	UpdateAndAddCustomBuffers(_renderer);
 	SetBuffers(_renderer);
 }
 
 
-//map your buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers
-void Material::UpdateAndAddCustomBuffers(Renderer& _renderer)
-{}
+void Material::MapVSObjectBuffer(Renderer& _renderer)
+{
+	if (!m_vs_per_object.first)// If not dirty.
+		return;
+
+	HRESULT result {};
+	D3D11_MAPPED_SUBRESOURCE vs_per_object_mapping { nullptr };
+
+	result  = _renderer.GetDeviceContext()->Map(m_vs_per_object_buffer, 0, D3D11_MAP_WRITE_DISCARD,
+		0, &vs_per_object_mapping);// Map across buffer.
+
+	memcpy(vs_per_object_mapping.pData, &m_vs_per_object.second, sizeof(VSPerObjectBuffer));
+	_renderer.GetDeviceContext()->Unmap(m_vs_per_object_buffer, 0);
+
+	if (result  != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
+	}
+	m_vs_per_object.first = false;// Is not dirty.
+}
+
+
+void Material::MapVSFrameBuffer(Renderer& _renderer)
+{
+	if (!m_vs_per_frame.first)
+		return;
+
+	HRESULT result{};
+	D3D11_MAPPED_SUBRESOURCE vs_per_frame_mapping{ nullptr };
+
+	result = _renderer.GetDeviceContext()->Map(m_vs_per_frame_buffer, 0, D3D11_MAP_WRITE_DISCARD,
+		0, &vs_per_frame_mapping);
+
+	memcpy(vs_per_frame_mapping.pData, &m_vs_per_frame.second, sizeof(VSPerFrameBuffer));
+	_renderer.GetDeviceContext()->Unmap(m_vs_per_frame_buffer, 0);
+
+	if (result != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
+	}
+	m_vs_per_frame.first = false;
+}
+
+
+void Material::MapPSObjectBuffer(Renderer& _renderer)
+{
+	if (!m_ps_per_object.first)
+		return;
+
+	HRESULT result{};
+	D3D11_MAPPED_SUBRESOURCE ps_per_object_mapping{ nullptr };
+
+	result = _renderer.GetDeviceContext()->Map(m_ps_per_object_buffer, 0, D3D11_MAP_WRITE_DISCARD,
+		0, &ps_per_object_mapping);
+
+	memcpy(ps_per_object_mapping.pData, &m_ps_per_object.second, sizeof(PSPerObjectBuffer));
+	_renderer.GetDeviceContext()->Unmap(m_ps_per_object_buffer, 0);
+
+	if (result != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
+	}
+	m_ps_per_object.first = false;
+}
+
+
+void Material::MapPSFrameBuffer(Renderer& _renderer)
+{
+	if (!m_ps_per_frame.first)
+		return;
+
+	HRESULT result {};
+	D3D11_MAPPED_SUBRESOURCE ps_per_frame_mapping{ nullptr };
+
+	result = _renderer.GetDeviceContext()->Map(m_ps_per_frame_buffer, 0, D3D11_MAP_WRITE_DISCARD,
+		0, &ps_per_frame_mapping);
+
+	memcpy(ps_per_frame_mapping.pData, &m_ps_per_frame.second, sizeof(PSPerFrameBuffer));
+	_renderer.GetDeviceContext()->Unmap(m_ps_per_frame_buffer, 0);
+
+	if (result != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
+	}
+	m_ps_per_frame.first = false;
+
+}
+
+
+void Material::MapPSSceneBuffer(Renderer& _renderer)
+{
+	if (!m_ps_per_scene.first)// If outdated.
+		return;
+
+	HRESULT result{};
+	D3D11_MAPPED_SUBRESOURCE ps_per_scene_mapping{ nullptr };
+
+	result = _renderer.GetDeviceContext()->Map(m_ps_per_scene_buffer, 0, D3D11_MAP_WRITE_DISCARD,
+		0, &ps_per_scene_mapping);
+
+	memcpy(ps_per_scene_mapping.pData, &m_ps_per_scene.second, sizeof(PSPerSceneBuffer));
+	_renderer.GetDeviceContext()->Unmap(m_ps_per_scene_buffer, 0);
+
+	if (result != MB_OK)
+	{
+		MessageBox(nullptr, "[Material](UpdateBuffers) Failed to update buffer", "Error", MB_OK);
+	}
+	m_ps_per_scene.first = false;
+
+}
+
+
+// Map buffers then Add any vs buffers to m_vs_buffers and add any ps buffers to m_ps_buffers.
+void Material::UpdateAndAddCustomBuffers(Renderer& _renderer){}
+
+
+void Material::RegisterAllBuffers()
+{
+	RegisterVertexBuffers();
+	RegisterPixelBuffers();
+	RegisterGeometryBuffers();
+}
+
+
+void Material::RegisterVertexBuffers()
+{
+	m_vs_buffers.clear();
+	m_vs_buffers.reserve(2);
+	m_vs_buffers.push_back(m_vs_per_object_buffer);
+	m_vs_buffers.push_back(m_vs_per_frame_buffer);
+}
+
+
+void Material::RegisterPixelBuffers()
+{
+	m_ps_buffers.clear();
+	m_ps_buffers.reserve(3);
+	m_ps_buffers.push_back(m_ps_per_frame_buffer);
+	m_ps_buffers.push_back(m_ps_per_scene_buffer);
+	m_ps_buffers.push_back(m_ps_per_object_buffer);
+}
+
+
+void Material::RegisterGeometryBuffers()
+{
+	m_gs_buffers.clear();
+	m_gs_buffers.reserve(2);
+	m_gs_buffers.push_back(m_vs_per_object_buffer);
+	m_gs_buffers.push_back(m_vs_per_frame_buffer);
+}
+
+
+void Material::RegisterResources()
+{
+	m_gs_resources.clear();
+	m_ps_resources.clear();
+
+	m_ps_resources.reserve(3);
+	if (m_albedo_texture != nullptr)
+		m_ps_resources.push_back(m_albedo_texture->GetTexture());
+
+	if (m_rougness_texture != nullptr)
+		m_ps_resources.push_back(m_rougness_texture->GetTexture());
+
+	if (m_specular_texture != nullptr)
+		m_ps_resources.push_back(m_specular_texture->GetTexture());
+}
 
 
 void Material::SetBuffers(Renderer& _renderer)
@@ -309,6 +368,14 @@ ID3D11GeometryShader * Material::GetGeometryShader() const
 ID3D11InputLayout* Material::GetInputLayout() const
 {
 	return m_input_layout;
+}
+
+
+void Material::SetStandardTextures(Texture* _albedo, Texture* _roughness, Texture* _specular)
+{
+	m_albedo_texture = _albedo;
+	m_rougness_texture = _roughness;
+	m_specular_texture = _specular;
 }
 
 

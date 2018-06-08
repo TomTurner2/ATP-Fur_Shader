@@ -1,11 +1,11 @@
 #include "Texture.h"
 #include "Renderer.h"
 #include "WICTextureLoader.h"
-#include "Macros.h"
 
-wchar_t* CharToWChar(const char* _text)//stupid windows types
+
+wchar_t* CharToWChar(const char* _text)// Stupid windows types.
 {
-	size_t size = strlen(_text) + 1;
+	auto size = strlen(_text) + 1;
 	static wchar_t* wa = nullptr;
 	if (wa)
 	{
@@ -26,23 +26,16 @@ Texture::Texture(Renderer& _renderer, std::string _path)
 
 void Texture::LoadTexture(Renderer & _renderer, std::string _path)
 {
-	HRESULT hr{};
+	HRESULT result{};
 
-	hr = DirectX::CreateWICTextureFromFile(_renderer.GetDevice(), CharToWChar(_path.c_str()),
-		&m_texture_resource, &m_texture, 4096);
+	result = DirectX::CreateWICTextureFromFile(_renderer.GetDevice(), CharToWChar(_path.c_str()),
+		&m_texture_resource, &m_texture, 2048);// Could be 4096, but setting to 2048 saves a few mb of memory.
 
-	if (hr != MB_OK)
+	if (result != MB_OK)
 	{
 		MessageBox(nullptr, "[Texture](Constructor) Failed to load texture", "Error", MB_OK);
 		exit(0);
 	}
-}
-
-
-Texture::~Texture()
-{
-	/*SAFE_RELEASE(m_texture);
-	SAFE_RELEASE(m_texture_resource);*/
 }
 
 

@@ -4,154 +4,214 @@
 #include "Window.h"
 #include "TMath.h"
 #include "Model.h"
-#include <AntTweakBar.h>
+#include "TextureSet.h"
 
 
 Game::Game(Renderer& _renderer, InputManager& _input)
 {
 	CreateLight();
 	CreateCamera(_renderer);
-	CreateModel(_renderer);
+	CreateMaterials(_renderer);
+	CreateModels(_renderer);
 	CreateGameData(_input);
-	CreateDebugUI();
-	BindParamsToUI();
+	SetKeyBindings();
+	m_demo_ui = std::make_unique<FurDemoUI>(*this);
 }
 
-void Game::SwitchMaterials() const
+
+void Game::SwitchMaterials()
 {
+	m_default_material_on = !m_default_material_on;// Toggle Material.
 	if (m_default_material_on)
 	{
-		m_model->SetAllModelMaterials(m_fur_gs_material);
+		m_big_cat->SetAllModelMaterials(m_fur_gs_material);// Apply to all models.
+		m_sphere->SetAllModelMaterials(m_fur_gs_material);
+		m_axe->SetAllModelMaterials(m_fur_gs_material);
 		return;
 	}
 
-	m_model->SetAllModelMaterials(m_standard_material);
+	m_big_cat->SetAllModelMaterials(m_standard_material);
+	m_sphere->SetAllModelMaterials(m_standard_material);
+	m_axe->SetAllModelMaterials(m_standard_material);
+}
+
+
+void Game::SwapModel()
+{
+	switch(m_model_type)
+	{
+	case BIG_CAT: m_current_model = m_big_cat.get();
+		break;
+	case SPHERE: m_current_model = m_sphere.get();
+		break;
+	case AXE: m_current_model = m_axe.get();
+		m_default_material_on = true;// Set it to useing fur then swap.
+		SwitchMaterials();// Axe should not use fur unless switched to.
+		break;
+	}
+}
+
+
+void Game::UpdateTextureInputs()
+{
+	auto texture_set = m_textures.find(m_texture_set);// Find Texture set from map.
+	m_fur_gs_material->SetStandardTextures(texture_set->second.albedo,
+		texture_set->second.roughness, texture_set->second.specular);
+
+	auto alpha = m_alpha_textures.find(m_fur_alpha_texture);
+	auto mask = m_mask_textures.find(m_fur_mask_texture);
+	m_fur_gs_material->SetFurTextures(alpha->second, mask->second);
 }
 
 
 #pragma region Creation Functions
 void Game::CreateLight()
 {
-	m_light.position = Vector3(0, 6, -115.0f);
+	m_light.position = Vector3(0, -6, -540.0f);
 	m_light.colour[0] = 1;
 	m_light.colour[1] = 1;
 	m_light.colour[2] = 1;
-	m_light.intensity = 1;
+	m_light.intensity = 1.43;
 }
 
 
-void Game::CreateCamera(Renderer & _renderer)
+void Game::CreateCamera(Renderer& _renderer)
 {
 	m_camera = std::make_unique<Camera>(Vector3(-3, -27, -138), Quaternion(Vector3::Forward, TMath::Radians(0)),
 		Vector3::One, TMath::Radians(70), _renderer.GetViewportAspectRatio(), 5, 500);
 }
 
 
-void Game::CreateModel(Renderer& _renderer)
+void Game::CreateModels(Renderer& _renderer)
 {
-	m_model = std::make_unique<Model>();
-	m_model->LoadModel("./Big_Cat.obj", _renderer);
+	m_big_cat = std::make_unique<Model>();
+	m_big_cat->LoadModel("./Big_Cat_Optimised.obj", _renderer);
 
-	material_params.roughness = 1;
-	material_params.specular = 1;
-	material_params.diffuse[0] = 1; 
-	material_params.diffuse[1] = 1;
-	material_params.diffuse[2] = 1;
+	m_sphere = std::make_unique<Model>();
+	m_sphere->LoadModel("./Sphere.obj", _renderer);
 
-	m_standard_material = new Material();
-	m_standard_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
-		"Standard_Material_Pixel_Shader.cso", _renderer);
+	m_axe = std::make_unique<Model>();
+	m_axe->LoadModel("./Axe.obj", _renderer);
 
-	m_fur_parameters.fur_mask_multiplier = 1;
-	m_fur_parameters.base_clip = 0.9f;
-	m_fur_parameters.end_clip = 0.9f;
-	m_fur_parameters.max_fur_length = 4;
-	m_fur_parameters.layer_step = .25f;
-	m_fur_parameters.gravity = Vector3::Zero;
-	
+	m_big_cat->SetAllModelMaterials(m_fur_gs_material);
+	m_sphere->SetAllModelMaterials(m_fur_gs_material);
+	m_axe->SetAllModelMaterials(m_fur_gs_material);
+	m_current_model = m_big_cat.get();
+}
 
-	m_fur_gs_material = new FurMaterial();
-	m_fur_gs_material->CreateShaders("Fur_Vertex_Shader.cso",
-		"Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
-	m_fur_gs_material->LoadStandardTextures("./Big_Cat_Albedo.png",
-		"./Big_Cat_Roughness.png", "./Big_Cat_Specular.png", _renderer);
-	m_fur_gs_material->LoadFurTextures(_renderer, "./Big_Cat_Fur_Mask.png", "./Big_Cat_Fur_Alpha.png");
-	m_fur_gs_material->SetFurParameters(m_fur_parameters);
-	m_model->SetAllModelMaterials(m_standard_material);
+
+void Game::LoadTextures(Renderer& _renderer)
+{
+	LoadStandardTextures(_renderer);
+	LoadAlphaTextures(_renderer);
+	LoadMaskTextures(_renderer);	
+}
+
+
+void Game::LoadTextureSet(Renderer& _renderer, TextureSets _set_identifier,
+	std::string _albedo_path, std::string _roughness_path, std::string _specular_path)
+{
+	TextureSet textures;
+	textures.albedo = new Texture(_renderer, _albedo_path);
+	textures.roughness = new Texture(_renderer, _roughness_path);
+	textures.specular = new Texture(_renderer, _specular_path);
+	m_textures.insert(std::pair<TextureSets, TextureSet>(_set_identifier, std::move(textures)));
+}
+
+
+void Game::LoadStandardTextures(Renderer& _renderer)
+{
+	LoadTextureSet(_renderer, BIG_CAT_TEX, "./Big_Cat_Optimised_Albedo.png", "./Grey.png", "./Big_Cat_Optimised_Specular.png");
+	LoadTextureSet(_renderer, TIGER_TEX, "./Tiger_Fur_Albedo.png", "./White.png", "./White.png");
+	LoadTextureSet(_renderer, NO_TEX, "./White.png", "./White.png", "./White.png");
+}
+
+
+void Game::LoadAlphaTextures(Renderer& _renderer)
+{
+	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(CHUNKY_ALPHA,
+		new Texture(_renderer, "./Fur_Alpha.png")));
+	m_alpha_textures.insert(std::pair<FurTextureAlphas, Texture*>(FINE_APHA,
+		new Texture(_renderer, "./Fur_Alpha_Fine.png")));
+}
+
+
+void Game::LoadMaskTextures(Renderer& _renderer)
+{
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(BIG_CAT_MASK,
+		new Texture(_renderer, "./Big_Cat_Optimised_Mask.png")));// Link texture to enum.
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(TIGER_MASK,
+		new Texture(_renderer, "./Tiger_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(STAR_MASK,
+		new Texture(_renderer, "./Star_Mask.png")));
+	m_mask_textures.insert(std::pair<FurTextureMasks, Texture*>(NO_MASK,
+		new Texture(_renderer, "./White.png")));
 }
 
 
 void Game::CreateGameData(InputManager& _input)
 {
 	m_game_data = std::make_unique<GameData>();
-
 	m_game_data->input = &_input;
+}
+
+
+void Game::SetKeyBindings() const
+{
 	m_game_data->input->BindKey(FORWARD, "W");
 	m_game_data->input->BindKey(BACKWARD, "S");
 	m_game_data->input->BindKey(LEFT, "A");
 	m_game_data->input->BindKey(RIGHT, "D");
 	m_game_data->input->BindKey(UP, "E");
 	m_game_data->input->BindKey(DOWN, "Q");
-	m_game_data->input->BindKey(QUIT, "X");
+	m_game_data->input->BindKey(QUIT, "X");// Oversight, can't bind escape.
 	m_game_data->input->BindKey(SWITCH, "F");
 }
 
 
-void Game::CreateDebugUI()
+void Game::CreateMaterials(Renderer& _renderer)
 {
-	m_bar = TwNewBar("Fur_Shader_Prototype");
-	TwDefine("Fur_Shader_Prototype label='Fur Shader Prototype' ");
-	TwDefine("Fur_Shader_Prototype color='46 53 49' text=light ");
-	TwDefine("Fur_Shader_Prototype alpha=255");
+	CreateStandardMaterial(_renderer);
+	CreateFurMaterial(_renderer);
 }
 
 
-void Game::BindParamsToUI()
+void Game::CreateStandardMaterial(Renderer& _renderer)
 {
-	//bing light to UI
-	TwAddVarRW(m_bar, "Light Colour", TW_TYPE_COLOR3F, &m_light.colour, " colormode=hls ");
-	TwAddVarRW(m_bar, "light_intensity", TW_TYPE_FLOAT, &m_light.intensity, "");
-	TwAddVarRW(m_bar, "light_X", TW_TYPE_FLOAT, &m_light.position.x, "");
-	TwAddVarRW(m_bar, "light_Y", TW_TYPE_FLOAT, &m_light.position.y, "");
-	TwAddVarRW(m_bar, "light_Z", TW_TYPE_FLOAT, &m_light.position.z, "");
+	m_standard_material = new Material();
+	m_standard_material->CreateShaders("Standard_Material_Vertex_Shader.cso",
+		"Standard_Material_Pixel_Shader.cso", _renderer);
 
-	//move light position to group
-	TwDefine("Fur_Shader_Prototype/light_X   group=Light_Position");
-	TwDefine("Fur_Shader_Prototype/light_Y   group=Light_Position");
-	TwDefine("Fur_Shader_Prototype/light_Z   group=Light_Position");
-
-
-	TwAddVarRW(m_bar, "Diffuse", TW_TYPE_COLOR3F, &material_params.diffuse, " colormode=hls ");
-	TwAddVarRW(m_bar, "Rough", TW_TYPE_FLOAT, &material_params.roughness, "");
-	TwAddVarRW(m_bar, "Specular", TW_TYPE_FLOAT, &material_params.specular, "");
-
-	TwDefine("Fur_Shader_Prototype/Rough  min=0.1 max=1 ");
-	TwDefine("Fur_Shader_Prototype/Specular  min=0.1 max=1 ");
-
-	TwDefine("Fur_Shader_Prototype/Rough   step=0.1 ");
-	TwDefine("Fur_Shader_Prototype/Specular   step=0.1 ");
-
-	TwAddVarRW(m_bar, "Max_Length", TW_TYPE_FLOAT, &m_fur_parameters.max_fur_length, "");
-	TwAddVarRW(m_bar, "Layer_Step", TW_TYPE_FLOAT, &m_fur_parameters.layer_step, "");
-	TwAddVarRW(m_bar, "Base_Clip", TW_TYPE_FLOAT, &m_fur_parameters.base_clip, "");
-	TwAddVarRW(m_bar, "End_Clip", TW_TYPE_FLOAT, &m_fur_parameters.end_clip, "");
-
-	TwDefine("Fur_Shader_Prototype/Mask_Multiplier   step=0.1 ");
-	TwDefine("Fur_Shader_Prototype/Max_Length   step=0.1 ");
-	TwDefine("Fur_Shader_Prototype/Layer_Step   step=0.1 ");
-	TwDefine("Fur_Shader_Prototype/Base_Clip   step=0.01 ");
-	TwDefine("Fur_Shader_Prototype/End_Clip   step=0.01 ");
-
-	TwAddVarRW(m_bar, "Gravity_X", TW_TYPE_FLOAT, &m_fur_parameters.gravity.x, "");
-	TwAddVarRW(m_bar, "Gravity_Y", TW_TYPE_FLOAT, &m_fur_parameters.gravity.y, "");
-	TwAddVarRW(m_bar, "Gravity_Z", TW_TYPE_FLOAT, &m_fur_parameters.gravity.z, "");
-
-	TwDefine("Fur_Shader_Prototype/Gravity_X   group=Gravity_Direction");
-	TwDefine("Fur_Shader_Prototype/Gravity_Y   group=Gravity_Direction");
-	TwDefine("Fur_Shader_Prototype/Gravity_Z   group=Gravity_Direction");
-
-	TwAddVarRW(m_bar, "Fur on", TW_TYPE_BOOLCPP, &m_default_material_on, "");
+	material_params.roughness = 1;
+	material_params.specular = 0.3;
+	material_params.diffuse[0] = 1;
+	material_params.diffuse[1] = 1;
+	material_params.diffuse[2] = 1;
 }
+
+
+void Game::CreateFurMaterial(Renderer& _renderer)
+{
+	LoadTextures(_renderer);
+	auto start_tex = m_textures.find(BIG_CAT_TEX);// Find starting textures.
+	auto start_mask = m_mask_textures.find(BIG_CAT_MASK);
+	auto start_alpha = m_alpha_textures.find(CHUNKY_ALPHA);
+
+	m_fur_gs_material = new FurMaterial();
+	m_fur_gs_material->CreateShaders("Fur_Vertex_Shader.cso", "Fur_Pixel_Shader.cso", _renderer, "Fur_Shell_Geometry_Shader.cso");
+	m_fur_gs_material->SetStandardTextures(start_tex->second.albedo, start_tex->second.roughness, start_tex->second.specular);
+	m_fur_gs_material->SetFurTextures(start_alpha->second, start_mask->second);
+	m_fur_gs_material->SetFurParameters(m_fur_parameters);
+
+	m_fur_parameters.fur_mask_multiplier = 1;
+	m_fur_parameters.base_clip = 0.71f;
+	m_fur_parameters.shadow_intensity = 0.95f;
+	m_fur_parameters.max_fur_length = 4;
+	m_fur_parameters.layer_count = 16;
+	m_fur_parameters.gravity = Vector3::Zero;
+}
+
+
 #pragma endregion
 
 
@@ -160,21 +220,19 @@ void Game::Tick()
 	if (m_game_data->input->GetGameAction(GameAction::QUIT, InputManager::PRESSED))
 		exit(0);
 
-	SwitchMaterials();
+	m_game_data->delta_time = CalculateDeltaTime();// Probably don't really need in this project, force of habit.
 
-	m_game_data->delta_time = CalculateDeltaTime();
 	m_camera->Tick(*m_game_data.get());
-	m_model->Tick(*m_game_data.get());
-	m_standard_material->SetMaterialParams(material_params);
-	m_fur_gs_material->SetMaterialParams(material_params);
-	m_fur_gs_material->SetFurParameters(m_fur_parameters);
+	m_current_model->Tick(*m_game_data.get());
+
+	UpdateMaterialsParameters();// May need updating because of UI.
 }
 
 
 void Game::Draw(Renderer& _renderer) const
 {
-	UpdateRenderData(_renderer, *m_camera);
-	m_model->Draw(_renderer);
+	UpdateRenderData(_renderer, *m_camera);// Update info such as camera position.
+	m_current_model->Draw(_renderer);
 }
 
 
@@ -187,10 +245,18 @@ void Game::UpdateRenderData(Renderer& _renderer, Camera& _camera) const
 }
 
 
+void Game::UpdateMaterialsParameters() const
+{
+	m_standard_material->SetMaterialParams(material_params);
+	m_fur_gs_material->SetMaterialParams(material_params);
+	m_fur_gs_material->SetFurParameters(m_fur_parameters);
+}
+
+
 float Game::CalculateDeltaTime()
 {
-	DWORD currentTime = GetTickCount();
-	float  dt = min(static_cast<float>((currentTime - m_playTime) / 1000.0f), 0.1f);
+	auto currentTime = GetTickCount();
+	float  dt = min(static_cast<float>((currentTime - m_playTime) / 1000.0f), 0.1f);// DT should be no more than 0.1.
 	m_playTime = currentTime;
 	return dt;
 }

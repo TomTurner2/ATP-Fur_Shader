@@ -13,7 +13,7 @@ struct Vertex2D
 struct Vertex3D
 {
 	Vector3 position;
-	float one;//so it maps to float 4
+	float one;// Padding.
 	Vector3 normal;
 	float two;
 	float u, v;

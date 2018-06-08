@@ -22,8 +22,10 @@
   <ItemGroup>
     <ClInclude Include="Src\Camera.h" />
     <ClInclude Include="Src\DebugSystem.h" />
+    <ClInclude Include="Src\FurDemoUI.h" />
     <ClInclude Include="Src\FurMaterial.h" />
     <ClInclude Include="Src\FurParameters.h" />
+    <ClInclude Include="Src\FurTexture.h" />
     <ClInclude Include="Src\Game.h" />
     <ClInclude Include="Src\GameAction.h" />
     <ClInclude Include="Src\GameData.h" />
@@ -35,6 +37,7 @@
     <ClInclude Include="Src\Material.h" />
     <ClInclude Include="Src\PBRMaterialParams.h" />
     <ClInclude Include="Src\Texture.h" />
+    <ClInclude Include="Src\TextureSet.h" />
     <ClInclude Include="Src\TMath.h" />
     <ClInclude Include="Src\Matrix.h" />
     <ClInclude Include="Src\Mesh.h" />
@@ -52,7 +55,9 @@
   <ItemGroup>
     <ClCompile Include="Src\Camera.cpp" />
     <ClCompile Include="Src\DebugSystem.cpp" />
+    <ClCompile Include="Src\FurDemoUI.cpp" />
     <ClCompile Include="Src\FurMaterial.cpp" />
+    <ClCompile Include="Src\FurTexture.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
     <ClCompile Include="Src\InputManager.cpp" />
@@ -183,6 +188,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Big_Cat.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Big_Cat_Optimised.obj">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

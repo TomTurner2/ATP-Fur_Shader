@@ -1,13 +1,13 @@
 struct Input
 {
-	float2 position : POSITION;// 2D position
+	float2 position : POSITION;// 2D position.
 	float3 colour : COLOR;
 };
 
 
 struct Output
 {
-	float4 position : SV_POSITION;// Must be float 4 (x, y, z, w)
+	float4 position : SV_POSITION;
 	float3 colour : COLOR;
 };
 

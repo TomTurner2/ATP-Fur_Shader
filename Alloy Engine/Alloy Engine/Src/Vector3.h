@@ -21,7 +21,7 @@ public:
 
 	static const float Epsilon;
 
-	//operator overrides
+	// Operator overrides.
 	Vector3	operator-() const;
 	Vector3	operator-(const Vector3& _vector) const;
 	Vector3	operator+(const Vector3& _vector) const;
@@ -36,7 +36,7 @@ public:
 	bool operator==(const Vector3& _vector) const;
 	bool operator!=(const Vector3& _vector) const;
 
-	//static vector functions
+	// Static vector functions.
 	static Vector3 ComponentProduct(const Vector3& _vector_a, const Vector3& _vector_b);
 	static Vector3 Cross(const Vector3& _vector_a, const Vector3& _vector_b);
 	static float Dot(const Vector3& _vector_a, const Vector3& _vector_b);
@@ -50,7 +50,7 @@ public:
 	static Vector3 Transform(Vector3& _position, Matrix& _matrix);
 
 
-	//vector functions
+	// Vector functions.
 	Vector3 Cross(const Vector3& _vector_b) const;
 	float Dot(const Vector3& _vector) const;
 	float Distance(const Vector3& _vector_b) const;
@@ -65,6 +65,6 @@ public:
 	void ToPolar(float _x, float _y, float _z);
 	void ToCartesian(float _radius, float __angle, float _z);
 		
-	//utility functions
+	// Utility functions.
 	void Display() const;
 };

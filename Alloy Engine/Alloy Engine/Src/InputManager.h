@@ -10,7 +10,7 @@ public:
 	InputManager() = default;
 	~InputManager() = default;
 
-	enum TriggerType : unsigned int//states that can be checked
+	enum TriggerType : unsigned int// States that can be checked.
 	{
 		PRESSED,
 		HELD
@@ -21,6 +21,6 @@ public:
 	void BindKey(GameAction _action, std::string _key);
 
 private:
-	std::map<GameAction, KeyState> key_binds;
+	std::map<GameAction, KeyState> m_key_binds;
 };
 

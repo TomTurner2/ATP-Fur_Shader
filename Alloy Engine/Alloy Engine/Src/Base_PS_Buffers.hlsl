@@ -1,4 +1,4 @@
-//this file contains all the base pixel shader constant buffers
+// This file contains all the base pixel shader constant buffers.
 
 cbuffer PerFrame : register(b0)
 {
@@ -38,7 +38,7 @@ cbuffer PerObject : register(b2)
 }
 
 
-//default texture maps
+// Default texture maps.
 SamplerState m_sampler_state : register(s0);
 Texture2D m_albedo : register(t0);
 Texture2D m_roughness : register(t1);

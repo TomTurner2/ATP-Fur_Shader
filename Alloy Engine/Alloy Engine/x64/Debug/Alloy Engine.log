@@ -1,27 +1,21 @@
-﻿C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(43,8-46): warning X3206: implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(49,13-61): warning X3206: 'GSmith': implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(32,9-61): warning X3206: implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(44,27): warning X3206: 'DirectLighting': implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(44,27): warning X3206: 'DirectLighting': implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(44,27): warning X3206: 'DirectLighting': implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(48,9-60): warning X3206: implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(49,2-53): warning X3206: implicit truncation of vector type
-  
+﻿C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(53,8-50): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(32,9-60): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(33,2-53): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(46,9-61): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(58,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(58,27): warning X3206: 'DirectLighting': implicit truncation of vector type
   compilation object save succeeded; see C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Fur_Pixel_Shader.cso
-  compilation object save succeeded; see C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Fur_Shell_Geometry_Shader.cso
-  compilation object save succeeded; see C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Fur_Vertex_Shader.cso
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(43,8-46): warning X3206: implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(49,13-61): warning X3206: 'GSmith': implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(17,9-61): warning X3206: implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(30,27): warning X3206: 'DirectLighting': implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(30,27): warning X3206: 'DirectLighting': implicit truncation of vector type
-C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(30,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Fur_Pixel_Shader.hlsl(58,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+  
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\PBR_Lighting.hlsl(53,8-50): warning X3206: implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(24,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(24,27): warning X3206: 'DirectLighting': implicit truncation of vector type
+C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Src\Standard_Material_Pixel_Shader.hlsl(24,27): warning X3206: 'DirectLighting': implicit truncation of vector type
   
   compilation object save succeeded; see C:\DirectX Engines\Project-Metallurgy\Alloy Engine\Alloy Engine\Standard_Material_Pixel_Shader.cso
-  WICTextureLoader.cpp
-  Texture.cpp
-  FurMaterial.cpp
-  Generating Code...
-  LINK : C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.exe not found or not built by the last incremental link; performing full link
+  main.cpp
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\main.cpp(15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\main.cpp(30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\directx engines\project-metallurgy\alloy engine\alloy engine\src\main.cpp(33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.exe
   Alloy Engine.vcxproj -> C:\DirectX Engines\Project-Metallurgy\Alloy Engine\x64\Debug\Alloy Engine.pdb (Partial PDB)

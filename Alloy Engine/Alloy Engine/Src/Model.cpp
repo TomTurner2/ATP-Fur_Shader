@@ -31,8 +31,7 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 		aiProcess_FindInvalidData |
 		0;
 
-	const aiScene* scene = aiImportFile(_model_name.c_str(), process_flags);
-
+	auto scene = aiImportFile(_model_name.c_str(), process_flags);
 	if (scene == nullptr)
 	{
 		printf("[Model](LoadModel) Failed to load model file\n" );
@@ -44,28 +43,28 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 
 	for (unsigned int mesh_id = 0; mesh_id < scene->mNumMeshes; ++mesh_id)
 	{
-		aiMesh* mesh = scene->mMeshes[mesh_id];
+		auto mesh = scene->mMeshes[mesh_id];
 
 		std::vector<Vertex3D> verts;
 		verts.reserve(mesh->mNumVertices);
 
 		for (unsigned int vert_id = 0; vert_id < mesh->mNumVertices; ++vert_id)
 		{
-			//get position
-			aiVector3D vert = mesh->mVertices[vert_id];
-			Vector3 vertex_position = Vector3::Zero;
+			// Get position.
+			auto vert = mesh->mVertices[vert_id];
+			auto vertex_position = Vector3::Zero;
 			vertex_position.x = vert.x;
 			vertex_position.y = vert.y;
 			vertex_position.z = vert.z;
 
-			//get normals
-			aiVector3D normal_in = mesh->mNormals[vert_id];
-			Vector3 normal = Vector3::Zero;
+			// Get normals.
+			auto normal_in = mesh->mNormals[vert_id];
+			auto normal = Vector3::Zero;
 			normal.x = normal_in.x;
 			normal.y = normal_in.y;
 			normal.z = normal_in.z;
 
-			//get UV coordinates
+			// Get UV coordinates.
 			float u = mesh->mTextureCoords[0][vert_id].x;
 			float v = 1-mesh->mTextureCoords[0][vert_id].y;
 
@@ -83,16 +82,16 @@ void Model::LoadModel(std::string _model_name, Renderer& _renderer)
 		std::vector<unsigned int> indicies;
 		indicies.reserve(mesh->mNumFaces * 3);
 
-		for (unsigned int faceIdx = 0; faceIdx < mesh->mNumFaces; ++faceIdx)
+		for (unsigned int face_index = 0; face_index < mesh->mNumFaces; ++face_index)
 		{
-			for (unsigned int i = 0; i < mesh->mFaces[faceIdx].mNumIndices; ++i)
+			for (unsigned int i = 0; i < mesh->mFaces[face_index].mNumIndices; ++i)
 			{
-				indicies.push_back(mesh->mFaces[faceIdx].mIndices[i]);
+				indicies.push_back(mesh->mFaces[face_index].mIndices[i]);
 			}
 		}
 
-		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));//add new mesh giving it its loaded name
-		m_meshes.back().CreateMesh(verts, indicies, _renderer);//create the mesh just added
+		m_meshes.push_back(Mesh(scene->mMeshes[mesh_id]->mName.C_Str()));// Add new mesh giving it its loaded name.
+		m_meshes.back().CreateMesh(verts, indicies, _renderer);// Create the mesh just added.
 	}
 }
 
@@ -126,11 +125,23 @@ void Model::SetAllMaterialParams(PBRMaterialParams _pbr_params)
 
 Mesh* Model::GetMeshByName(std::string _name)
 {
-	std::vector<Mesh>::iterator it = std::find_if(m_meshes.begin(),
+	auto it = std::find_if(m_meshes.begin(),
 		m_meshes.end(), [&_name](const Mesh& mesh) { return _name == mesh.GetName(); });
 
 	if (it != m_meshes.end())
 		return it._Ptr;
 
 	return nullptr;
+}
+
+
+int Model::GetVertexCount()
+{
+	int count = 0;
+	for (auto &mesh : m_meshes)
+	{
+		count += mesh.GetVertexCount();
+	}
+
+	return count;
 }

@@ -1,6 +1,6 @@
 #include "Base_VS_Buffers.hlsl"
 
-//pixel that is output
+// Pixel that is output.
 struct VertexOut
 {
 	float4 position : SV_POSITION;
@@ -14,14 +14,14 @@ VertexOut main(VertexIn vin)
 {
 	VertexOut vout;
 
-	vout.position = mul(vin.position, m_model);//convert to world space
+	vout.position = mul(vin.position, m_model);// Convert to world space.
 
-	//place in front of camera
+	// Place in front of camera.
 	vout.position = mul(vout.position, m_view);
 	vout.position = mul(vout.position, m_proj);
 
-	vout.world_position = mul(vin.position, m_model);//convert to world space
-	vout.normal = mul(vin.normal, m_model);//convert to world space normals
+	vout.world_position = mul(vin.position, m_model);// Convert to world space.
+	vout.normal = mul(vin.normal, m_model);// Convert to world space normals.
 	vout.uv = vin.uv;
 
 	return vout;
