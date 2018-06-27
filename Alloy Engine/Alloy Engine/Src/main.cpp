@@ -26,13 +26,6 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 
 	MSG msg { nullptr };
 
-	std::vector<int> bleh{ 1, 2, 3, 4 };
-	for (int i = bleh.size() - 1; i > 0; --i)
-		std::swap(bleh[i], bleh[rand() % bleh.size() + (i + 1)]);
-
-	for (int i = bleh.size() - 1; i > 0; --i)
-		std::cout << bleh[i];
-
 	while (true)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -50,7 +43,7 @@ int CALLBACK WinMain(HINSTANCE _app_instance, HINSTANCE _prev_instance, LPSTR _c
 		renderer.BeginFrame();
 		game->Draw(renderer);
 		debugger.DrawDebugUI();
-		renderer.EndFrame();	
+		renderer.EndFrame();
 	}
 
 
